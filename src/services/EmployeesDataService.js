@@ -1,6 +1,6 @@
 import http from '../http-common';
 
-class EmployeeDataService{
+class EmployeesDataService{
 
     get(id){
         return http.get(`/employees/${id}`);
@@ -11,7 +11,7 @@ class EmployeeDataService{
     }
 
     create(data){
-        return http.post("/employees`", data);
+        return http.post('/employees', data);
     }
 
     update(id, data){
@@ -21,6 +21,6 @@ class EmployeeDataService{
     delete(id){
         return http.delete(`/employees/${id}`);
     }
-}
+};
 
-export default new EmployeeDataService();
+export default new EmployeesDataService();

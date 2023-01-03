@@ -1,4 +1,4 @@
-import {createRouter, createWebHistory} from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router';
 
 const router=createRouter({
     history: createWebHistory(),
@@ -10,6 +10,6 @@ const router=createRouter({
         {path:'/addEmployee', name:'addEmployee', component:()=>import("../components/AddEmployee.vue")},
         {path:'/addCar', name:'addCar', component:()=>import("../components/AddCar.vue")}
     ]
-})
+});
 
-export default router
+export default router;
