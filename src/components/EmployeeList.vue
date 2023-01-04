@@ -19,7 +19,7 @@
                     <label><strong>ФИО:</strong></label> {{ currentEmployee.name }}
                 </div>
                 <div>
-                    <label><strong>Должность:</strong></label> {{ currentEmployee.position }}
+                    <label><strong>Должность:</strong></label> {{ currentEmployee.position.position }}
                 </div>
                 <div>
                     <label><strong>Подразделение (факт):</strong></label> {{ currentEmployee.fuctDeparrtment }}
@@ -46,7 +46,7 @@
                     <label><strong>Дата рождения:</strong></label> {{ currentEmployee.birthday }}
                 </div>
                 <div>
-                    <label><strong>Автомобиль:</strong></label> {{ currentEmployee.car }}
+                    <label><strong>Автомобиль:</strong></label> {{ currentEmployee.car.carNumber }}, {{ currentEmployee.car.carModel.carModel }}, ***Комментарий: {{ currentEmployee.car.carComment }}
                 </div>
                 <div>
                     <label><strong>Комментарий:</strong></label> {{ currentEmployee.employeeComment }}

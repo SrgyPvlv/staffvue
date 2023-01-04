@@ -19,6 +19,12 @@
                     <label><strong>Номер:</strong></label> {{ currentCar.carNumber }}
                 </div>
                 <div>
+                    <label><strong>Модель:</strong></label> {{ currentCar.carModel.carModel }}
+                </div>
+                <div>
+                    <label><strong>Водитель:</strong></label> {{ currentCar.employee.name }}
+                </div>
+                <div>
                     <label><strong>Комментарий:</strong></label> {{ currentCar.carComment }}
                 </div>
                 
