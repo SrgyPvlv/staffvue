@@ -1,7 +1,7 @@
 <template>
 <div id="app">
   <nav class="navbar navbar-expand bg-primary navbar-dark p-2">
-    <RouterLink to="/" class="navbar-brand">ОЭРП</RouterLink>
+    <img src="./components/icons/logooerp.jpg" alt="Логотип" style="width:40px;" class="rounded-pill"> <span class="oerplogo"> ОЭРП</span>
     <ul class="navbar-nav">
       <li class="nav-item">
         <RouterLink to="/employees" class="nav-link">Cотрудники</RouterLink>
@@ -35,3 +35,10 @@ export default{
   name:"app"
 }
 </script>
+
+<style>
+.oerplogo{
+  margin-left:5px;
+  margin-right:10px
+}
+</style>

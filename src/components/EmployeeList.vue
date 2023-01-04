@@ -3,7 +3,7 @@
         <div class="col-md-4">
             <h3> Список сотрудников </h3>
             <ul class="list-group list-group-flush list-group-numbered">
-                <li class="list-group-item" 
+                <li class="list-group-item employee" 
                 :class="{ active: index == currentIndex }"
                 v-for="(employee, index) in employees"
                 :key="index"
@@ -19,7 +19,7 @@
                     <label><strong>ФИО:</strong></label> {{ currentEmployee.name }}
                 </div>
                 <div>
-                    <label><strong>Должность:</strong></label> {{ currentEmployee.position.position }}
+                    <label><strong>Должность:</strong></label> {{ currentEmployee.position!=null?currentEmployee.position.position:'' }}
                 </div>
                 <div>
                     <label><strong>Подразделение (факт):</strong></label> {{ currentEmployee.fuctDeparrtment }}
@@ -43,16 +43,18 @@
                     <label><strong>Табельный номер:</strong></label> {{ currentEmployee.employeeId }}
                 </div>
                 <div>
-                    <label><strong>Дата рождения:</strong></label> {{ currentEmployee.birthday }}
+                    <label><strong>Дата рождения:</strong></label> {{ currentEmployee.birthday!=null?currentEmployee.birthday.split('-').reverse().join('.'):'' }}
                 </div>
                 <div>
-                    <label><strong>Автомобиль:</strong></label> {{ currentEmployee.car.carNumber }}, {{ currentEmployee.car.carModel.carModel }}, ***Комментарий: {{ currentEmployee.car.carComment }}
+                    <label><strong>Автомобиль:</strong></label> {{ currentEmployee.car!=null?currentEmployee.car.carNumber+',':'' }}
+                     {{ currentEmployee.car!=null?currentEmployee.car.carModel.carModel+',':'' }}
+                     {{ currentEmployee.car!==null?'***Комментарий: '+currentEmployee.car.carComment:'' }}
                 </div>
                 <div>
                     <label><strong>Комментарий:</strong></label> {{ currentEmployee.employeeComment }}
                 </div>
 
-                <RouterLink :to="'/employees/'+currentEmployee.id" class="badge rounded-pill bg-info">Редактировать</RouterLink>
+                <RouterLink :to="'/employees/'+currentEmployee.id" class="badge rounded-pill bg-info edit">Редактировать</RouterLink>
 
             </div>
             <div v-else>
@@ -101,5 +103,15 @@ export default{
         }
 };
 </script>
+
+<style>
+.edit{
+    margin-top:10px;
+    text-decoration:none
+}
+.employee{
+    cursor:pointer
+}
+</style>
 
 
