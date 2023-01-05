@@ -21,6 +21,10 @@ class EmployeesDataService{
     delete(id){
         return http.delete(`/employees/${id}`);
     }
+
+    findByNameMobilePosition(filter){
+        return http.get(`/employees?filter=${filter}`);
+    }
 };
 
 export default new EmployeesDataService();

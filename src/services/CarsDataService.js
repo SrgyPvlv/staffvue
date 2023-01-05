@@ -21,6 +21,10 @@ class CarsDataService{
     delete(id){
         return http.delete(`/cars/${id}`);
     }
+
+    findByNumberModel(filter){
+        return http.get(`/cars?filter=${filter}`);
+    }
 };
 
 export default new CarsDataService();

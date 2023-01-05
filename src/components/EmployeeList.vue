@@ -1,5 +1,18 @@
 <template>
     <div class="list row">
+        <div class="col-md-6">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Поиск по ФИО, мобильному, должности" v-model="filter" />
+                <div class="input-group-append ms-3">
+                <button type="button" class="btn btn-outline-secondary" @click="findByNameMobilePosition">Поиск</button>
+                </div>
+                <div class="input-group-append ms-3">
+                <button type="button" class="btn btn-outline-danger" @click="refreshList">Сбросить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="list row">
         <div class="col-md-4">
             <h3> Список сотрудников </h3>
             <ul class="list-group list-group-flush list-group-numbered">
@@ -76,7 +89,8 @@ export default{
         return{
             employees:[],
             currentEmployee:null,
-            currentIndex:-1
+            currentIndex:-1,
+            filter:""
         };
     },
     methods:{
@@ -92,12 +106,24 @@ export default{
             this.retrieveEmployees();
             this.currentEmployee = null;
             this.currentIndex = -1;
+            this.filter=""
         },
         setActiveEmployee(employee,index){
             this.currentEmployee = employee;
             this.currentIndex = employee ? index : -1;
-        }       
-    },
+        },
+        findByNameMobilePosition(){
+            EmployeesDataService.findByNameMobilePosition(this.filter).
+            then(response=>{
+                this.employees=response.data;
+                this.currentEmployee = null;
+                this.currentIndex = -1;
+                console.log(response.data);
+            })
+            .catch(e=>{console.log(e)});
+        }
+        },       
+
     mounted(){
             this.retrieveEmployees();
         }
