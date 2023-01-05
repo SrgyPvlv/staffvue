@@ -57,7 +57,7 @@
                     <label><strong>Логин:</strong></label> {{ currentEmployee.login }}
                 </div>
                 <div>
-                    <label><strong>E-mail:</strong></label> {{ currentEmployee.email }}
+                    <label><strong>E-mail:</strong></label> <a :href= "`mailto:${ currentEmployee.email }`">{{ currentEmployee.email }}</a>
                 </div>
                 <div>
                     <label><strong>Табельный номер:</strong></label> {{ currentEmployee.employeeId }}
@@ -69,7 +69,7 @@
                     <label><strong>Автомобиль:</strong></label> 
                     {{ currentEmployee.car!=null?currentEmployee.car.carNumber+',':'' }}
                     {{ currentEmployee.car!=null?currentEmployee.car.carModel.carModel+',':'' }}
-                    {{ currentEmployee.car!==null?'***Комментарий: '+currentEmployee.car.carComment:'' }}
+                    {{ currentEmployee.car!=null?'***Комментарий: '+currentEmployee.car.carComment:'' }}
                 </div>
                 <div>
                     <label><strong>Комментарий:</strong></label> {{ currentEmployee.employeeComment }}
