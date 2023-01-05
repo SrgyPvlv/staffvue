@@ -35,10 +35,17 @@
                     <label><strong>Должность:</strong></label> {{ currentEmployee.position!=null?currentEmployee.position.position:'' }}
                 </div>
                 <div>
-                    <label><strong>Подразделение (факт):</strong></label> {{ currentEmployee.fuctDeparrtment }}
+                    <label><strong>Подразделение (факт):</strong></label> 
+                    {{ currentEmployee.factDepartment!=null?currentEmployee.factDepartment.division.division+'/':'' }}
+                    {{ currentEmployee.factDepartment!=null?currentEmployee.factDepartment.groupe.groupe+'/':'' }}
+                    {{ currentEmployee.factDepartment!=null?currentEmployee.factDepartment.functionGroup.functionGroup:'' }}
+
                 </div>
                 <div>
-                    <label><strong>Подразделение (по штату):</strong></label> {{ currentEmployee.staffDepartment }}
+                    <label><strong>Подразделение (по штату):</strong></label> 
+                    {{ currentEmployee.staffDepartment!=null?currentEmployee.staffDepartment.division.division+'/':'' }}
+                    {{ currentEmployee.staffDepartment!=null?currentEmployee.staffDepartment.groupe.groupe+'/':'' }}
+                    {{ currentEmployee.staffDepartment!=null?currentEmployee.staffDepartment.functionGroup.functionGroup:'' }}
                 </div>
                 <div>
                     <label><strong>Мобильный телефон:</strong></label> {{ currentEmployee.mobilePhone }}
@@ -59,9 +66,10 @@
                     <label><strong>Дата рождения:</strong></label> {{ currentEmployee.birthday!=null?currentEmployee.birthday.split('-').reverse().join('.'):'' }}
                 </div>
                 <div>
-                    <label><strong>Автомобиль:</strong></label> {{ currentEmployee.car!=null?currentEmployee.car.carNumber+',':'' }}
-                     {{ currentEmployee.car!=null?currentEmployee.car.carModel.carModel+',':'' }}
-                     {{ currentEmployee.car!==null?'***Комментарий: '+currentEmployee.car.carComment:'' }}
+                    <label><strong>Автомобиль:</strong></label> 
+                    {{ currentEmployee.car!=null?currentEmployee.car.carNumber+',':'' }}
+                    {{ currentEmployee.car!=null?currentEmployee.car.carModel.carModel+',':'' }}
+                    {{ currentEmployee.car!==null?'***Комментарий: '+currentEmployee.car.carComment:'' }}
                 </div>
                 <div>
                     <label><strong>Комментарий:</strong></label> {{ currentEmployee.employeeComment }}
