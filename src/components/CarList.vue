@@ -15,7 +15,7 @@
     <div class="list row">
         <div class="col-md-4">
             <h3> Список автомобилей </h3>
-            <ul class="list-group list-group-flush list-group-numbered">
+            <ul class="list-group list-group-flush list-group-numbered shadow">
                 <li class="list-group-item car" 
                 :class="{ active: index == currentIndex }"
                 v-for="(car, index) in cars"

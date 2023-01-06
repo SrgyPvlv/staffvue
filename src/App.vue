@@ -1,6 +1,6 @@
 <template>
 <div id="app">
-  <nav class="navbar navbar-expand bg-primary navbar-dark p-2">
+  <nav class="navbar navbar-expand bg-primary navbar-dark p-2 sticky-top">
     <img src="./components/icons/logooerp.jpg" alt="Логотип" style="width:40px;" class="rounded-pill"> <span class="oerplogo"> ОЭРП</span>
     <ul class="navbar-nav">
       <li class="nav-item">

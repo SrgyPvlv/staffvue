@@ -13,9 +13,9 @@
         </div>
     </div>
     <div class="list row">
-        <div class="col-md-4">
+        <div class="col-md-4 ">
             <h3> Список сотрудников </h3>
-            <ul class="list-group list-group-flush list-group-numbered">
+            <ul class="list-group list-group-flush list-group-numbered shadow">
                 <li class="list-group-item employee" 
                 :class="{ active: index == currentIndex }"
                 v-for="(employee, index) in employees"
@@ -36,16 +36,16 @@
                 </div>
                 <div>
                     <label><strong>Подразделение (факт):</strong></label> 
-                    {{ currentEmployee.factDepartment!=null?currentEmployee.factDepartment.division.division+'/':'' }}
-                    {{ currentEmployee.factDepartment!=null?currentEmployee.factDepartment.groupe.groupe+'/':'' }}
-                    {{ currentEmployee.factDepartment!=null?currentEmployee.factDepartment.functionGroup.functionGroup:'' }}
+                    {{ currentEmployee.factDepartment!=null & currentEmployee.factDepartment.division!=null? currentEmployee.factDepartment.division.division:'' }}
+                    {{ currentEmployee.factDepartment!=null & currentEmployee.factDepartment.groupe!=null? '/ '+currentEmployee.factDepartment.groupe.groupe:'' }}
+                    {{ currentEmployee.factDepartment!=null & currentEmployee.factDepartment.functionGroup!=null? '/ '+currentEmployee.factDepartment.functionGroup.functionGroup:'' }}
 
                 </div>
                 <div>
                     <label><strong>Подразделение (по штату):</strong></label> 
-                    {{ currentEmployee.staffDepartment!=null?currentEmployee.staffDepartment.division.division+'/':'' }}
-                    {{ currentEmployee.staffDepartment!=null?currentEmployee.staffDepartment.groupe.groupe+'/':'' }}
-                    {{ currentEmployee.staffDepartment!=null?currentEmployee.staffDepartment.functionGroup.functionGroup:'' }}
+                    {{ currentEmployee.staffDepartment!=null & currentEmployee.staffDepartment.division!=null? currentEmployee.staffDepartment.division.division:'' }}
+                    {{ currentEmployee.staffDepartment!=null & currentEmployee.staffDepartment.groupe!=null? '/ '+currentEmployee.staffDepartment.groupe.groupe:'' }}
+                    {{ currentEmployee.staffDepartment!=null & currentEmployee.staffDepartment.functionGroup!=null? '/ '+currentEmployee.staffDepartment.functionGroup.functionGroup:'' }}
                 </div>
                 <div>
                     <label><strong>Мобильный телефон:</strong></label> {{ currentEmployee.mobilePhone }}
@@ -67,9 +67,9 @@
                 </div>
                 <div>
                     <label><strong>Автомобиль:</strong></label> 
-                    {{ currentEmployee.car!=null?currentEmployee.car.carNumber+',':'' }}
-                    {{ currentEmployee.car!=null?currentEmployee.car.carModel.carModel+',':'' }}
-                    {{ currentEmployee.car!=null?'***Комментарий: '+currentEmployee.car.carComment:'' }}
+                    {{ currentEmployee.car!=null? currentEmployee.car.carNumber:'' }}
+                    {{ currentEmployee.car!=null? ', '+currentEmployee.car.carModel.carModel:'' }}
+                    {{ currentEmployee.car!=null? ', ***Комментарий: '+currentEmployee.car.carComment:'' }}
                 </div>
                 <div>
                     <label><strong>Комментарий:</strong></label> {{ currentEmployee.employeeComment }}
