@@ -27,6 +27,10 @@
   <div class="container mt-3">
     <RouterView />
   </div>
+  
+  <div class="text-center p-1 text-light fixed-bottom footer">
+    © SrgyPvlv <a href="mailto:spavlov@mts.ru?subject=Вопрос по Приложению: Сотрудники." class="ms-2 text-light text-decoration-none"> &#128386 </a>
+  </div>
 </div>
 </template>
 
@@ -40,5 +44,8 @@ export default{
 .oerplogo{
   margin-left:5px;
   margin-right:10px
+}
+.footer{
+  background: #778899;
 }
 </style>

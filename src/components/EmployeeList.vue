@@ -159,9 +159,6 @@ export default{
 .indiv{
     position: absolute   
 }
-.outdiv::-webkit-scrollbar{
-    display: none
-}
 </style>
 
 
