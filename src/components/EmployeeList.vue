@@ -14,8 +14,10 @@
     </div>
     <div class="list row">
         <div class="col-md-4 ">
-            <h3> Список сотрудников </h3>
-            <ul class="list-group list-group-flush list-group-numbered shadow">
+        <h3> Список сотрудников </h3>
+        <div class="col-md-12 outdiv shadow">
+            <div class="col-md-12 indiv">
+            <ul class="list-group list-group-flush list-group-numbered">
                 <li class="list-group-item employee" 
                 :class="{ active: index == currentIndex }"
                 v-for="(employee, index) in employees"
@@ -24,6 +26,8 @@
                 {{ employee.name }}
                 </li>
             </ul>
+            </div>
+        </div>
         </div>
         <div class="col-md-8">
             <div v-if="currentEmployee">
@@ -145,6 +149,18 @@ export default{
 }
 .employee{
     cursor:pointer
+}
+.outdiv{
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 500px;
+    position: relative;
+}
+.indiv{
+    position: absolute   
+}
+.outdiv::-webkit-scrollbar{
+    display: none
 }
 </style>
 

@@ -14,8 +14,10 @@
     </div>
     <div class="list row">
         <div class="col-md-4">
-            <h3> Список автомобилей </h3>
-            <ul class="list-group list-group-flush list-group-numbered shadow">
+        <h3> Список автомобилей </h3>
+        <div class="col-md-12 outdiv shadow">
+            <div class="col-md-12 indiv">
+            <ul class="list-group list-group-flush list-group-numbered">
                 <li class="list-group-item car" 
                 :class="{ active: index == currentIndex }"
                 v-for="(car, index) in cars"
@@ -24,6 +26,8 @@
                 {{ car.carNumber }}
                 </li>
             </ul>
+            </div>
+        </div>
         </div>
         <div class="col-md-8">
             <div v-if="currentCar">
@@ -106,10 +110,22 @@ export default{
 
 <style>
 .edit{
-    margin-top:10px;
-    text-decoration:none
+    margin-top: 10px;
+    text-decoration: none
 }
 .car{
-    cursor:pointer
+    cursor: pointer
+}
+.outdiv{
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 500px;
+    position: relative;
+}
+.indiv{
+    position: absolute   
+}
+.outdiv::-webkit-scrollbar{
+    display: none
 }
 </style>
