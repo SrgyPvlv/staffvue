@@ -1,6 +1,6 @@
 <template>
     <div class="list row">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="input-group mb-3">
                 <input type="text" class="form-control" placeholder="Поиск по ФИО, мобильному, должности" v-model="filter" />
                 <div class="input-group-append ms-3">
@@ -9,12 +9,27 @@
                 <div class="input-group-append ms-3">
                 <button type="button" class="btn btn-outline-danger" @click="refreshList">Сбросить</button>
                 </div>
+                <div class="input-group-append text-primary ms-3">
+                    <select class="form-select border border-primary customselect" v-model="selected">
+                        <option disabled>Подразделение</option>
+                        <option value="Аварийно-профилактическая группа">Аварийно-профилактическая группа</option>
+                        <option value="ФГ Север">Функциональная группа Север</option>
+                        <option value="ФГ Юг">Функциональная группа Юг</option>
+                        <option value="ФГ Запад">Функциональная группа Запад</option>
+                        <option value="ФГ Восток">Функциональная группа Восток</option>
+                        <option value="Группа модернизации и расширения">Группа модернизации и расширения</option>
+                        <option value="ФГ эксплуатации локальных радиоподсистем">Функциональная группа эксплуатации локальных радиоподсистем</option>
+                        <option value="Группа эксплуатации РРЛ">Группа эксплуатации РРЛ</option>
+                        <option value="Группа эксплуатации инфраструктуры объектов радиоподсистемы">Группа эксплуатации инфраструктуры объектов радиоподсистемы</option>
+                    </select>               
+                </div>               
             </div>
         </div>
     </div>
     <div class="list row">
         <div class="col-md-4 ">
         <h3> Список сотрудников </h3>
+        <p class="text-primary"> {{selected!='Подразделение'?selected:''}}</p>
         <div class="col-md-12 outdiv shadow">
             <div class="col-md-12 indiv">
             <ul class="list-group list-group-flush list-group-numbered">
@@ -84,7 +99,7 @@
             </div>
             <div v-else>
                 <br>
-                <p>"Нажмите" на сотрудника...</p>
+                <p>Выберите сотрудника...</p>
             </div>
 
         </div>
@@ -102,7 +117,8 @@ export default{
             employees:[],
             currentEmployee:null,
             currentIndex:-1,
-            filter:""
+            filter:"",
+            selected:"Подразделение"
         };
     },
     methods:{
@@ -118,7 +134,8 @@ export default{
             this.retrieveEmployees();
             this.currentEmployee = null;
             this.currentIndex = -1;
-            this.filter=""
+            this.filter="";
+            this.selected="Подразделение"
         },
         setActiveEmployee(employee,index){
             this.currentEmployee = employee;
@@ -130,6 +147,7 @@ export default{
                 this.employees=response.data;
                 this.currentEmployee = null;
                 this.currentIndex = -1;
+                this.selected="Подразделение";
                 console.log(response.data);
             })
             .catch(e=>{console.log(e)});
@@ -179,6 +197,9 @@ export default{
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #b30000; 
+}
+.customselect{
+    width:170px;
 }
 </style>
 
