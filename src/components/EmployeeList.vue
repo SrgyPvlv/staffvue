@@ -10,8 +10,8 @@
                 <button type="button" class="btn btn-outline-danger" @click="refreshList">Сбросить</button>
                 </div>
                 <div class="input-group-append text-primary ms-3">
-                    <select class="form-select border border-primary customselect" v-model="selected">
-                        <option disabled>Подразделение</option>
+                    <select class="form-select border border-primary customselect" @change="findByFactDepartment"  v-model="selected">
+                        <option disabled>Подразделение(факт)</option>
                         <option value="Аварийно-профилактическая группа">Аварийно-профилактическая группа</option>
                         <option value="ФГ Север">Функциональная группа Север</option>
                         <option value="ФГ Юг">Функциональная группа Юг</option>
@@ -22,14 +22,14 @@
                         <option value="Группа эксплуатации РРЛ">Группа эксплуатации РРЛ</option>
                         <option value="Группа эксплуатации инфраструктуры объектов радиоподсистемы">Группа эксплуатации инфраструктуры объектов радиоподсистемы</option>
                     </select>               
-                </div>               
+                </div>                
             </div>
         </div>
     </div>
     <div class="list row">
-        <div class="col-md-4 ">
+        <div class="col-md-5 ">
         <h3> Список сотрудников </h3>
-        <p class="text-primary"> {{selected!='Подразделение'?selected:''}}</p>
+        <p class="text-primary"> {{selected!='Подразделение(факт)'?selected:''}}</p>
         <div class="col-md-12 outdiv shadow">
             <div class="col-md-12 indiv">
             <ul class="list-group list-group-flush list-group-numbered">
@@ -38,13 +38,13 @@
                 v-for="(employee, index) in employees"
                 :key="index"
                 @click="setActiveEmployee(employee,index)">
-                {{ employee.name }}
+                {{ employee.name }} <sub>{{employee.position.position}}</sub>
                 </li>
             </ul>
             </div>
         </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-7">
             <div v-if="currentEmployee">
                 <h3> Сотрудник </h3>
                 <div>
@@ -118,7 +118,7 @@ export default{
             currentEmployee:null,
             currentIndex:-1,
             filter:"",
-            selected:"Подразделение"
+            selected:"Подразделение(факт)"
         };
     },
     methods:{
@@ -135,7 +135,7 @@ export default{
             this.currentEmployee = null;
             this.currentIndex = -1;
             this.filter="";
-            this.selected="Подразделение"
+            this.selected="Подразделение(факт)"
         },
         setActiveEmployee(employee,index){
             this.currentEmployee = employee;
@@ -147,10 +147,20 @@ export default{
                 this.employees=response.data;
                 this.currentEmployee = null;
                 this.currentIndex = -1;
-                this.selected="Подразделение";
+                this.selected="Подразделение(факт)";
                 console.log(response.data);
             })
             .catch(e=>{console.log(e)});
+        },
+        findByFactDepartment (){
+            EmployeesDataService.findByGroupeOrFunctionGroupOrderByNameAsc(this.selected).
+            then(response=>{
+                this.employees=response.data;
+                this.currentEmployee = null;
+                this.currentIndex = -1;
+                console.log(response.data);
+                })
+                .catch(e=>{console.log(e)});
         }
         },       
 
@@ -199,7 +209,7 @@ export default{
   background: #b30000; 
 }
 .customselect{
-    width:170px;
+    width:210px;
 }
 </style>
 

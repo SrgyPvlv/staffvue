@@ -25,6 +25,10 @@ class EmployeesDataService{
     findByNameMobilePosition(filter){
         return http.get(`/employees?filter=${filter}`);
     }
+
+    findByGroupeOrFunctionGroupOrderByNameAsc(selected){
+        return http.get(`/employees/factdepartment?filter=${selected}`);
+    }
 };
 
 export default new EmployeesDataService();
