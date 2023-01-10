@@ -26,8 +26,12 @@ class EmployeesDataService{
         return http.get(`/employees?filter=${filter}`);
     }
 
-    findByGroupeOrFunctionGroupOrderByNameAsc(selected){
+    findByFactDivisionOrGroupeOrFunctionGroupOrderByNameAsc(selected){
         return http.get(`/employees/factdepartment?filter=${selected}`);
+    }
+
+    findByStaffDivisionOrGroupeOrFunctionGroupOrderByNameAsc(selected){
+        return http.get(`/employees/staffdepartment?filter=${selected}`);
     }
 };
 

@@ -9,27 +9,51 @@
                 <div class="input-group-append ms-3">
                 <button type="button" class="btn btn-outline-danger" @click="refreshList">Сбросить</button>
                 </div>
-                <div class="input-group-append text-primary ms-3">
-                    <select class="form-select border border-primary customselect" @change="findByFactDepartment"  v-model="selected">
-                        <option disabled>Подразделение(факт)</option>
-                        <option value="Аварийно-профилактическая группа">Аварийно-профилактическая группа</option>
-                        <option value="ФГ Север">Функциональная группа Север</option>
-                        <option value="ФГ Юг">Функциональная группа Юг</option>
-                        <option value="ФГ Запад">Функциональная группа Запад</option>
-                        <option value="ФГ Восток">Функциональная группа Восток</option>
-                        <option value="Группа модернизации и расширения">Группа модернизации и расширения</option>
-                        <option value="ФГ эксплуатации локальных радиоподсистем">Функциональная группа эксплуатации локальных радиоподсистем</option>
-                        <option value="Группа эксплуатации РРЛ">Группа эксплуатации РРЛ</option>
-                        <option value="Группа эксплуатации инфраструктуры объектов радиоподсистемы">Группа эксплуатации инфраструктуры объектов радиоподсистемы</option>
-                    </select>               
-                </div>                
+                <div class="input-group-append ms-3">                                         
+                <div class="dropdown">
+                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown">Подразделение</button>
+                   <ul class="dropdown-menu customselect">
+                      <li>
+                      <select class="form-select" @change="findByFactDepartment" v-model="factSelected">
+                      <option disabled style="font-weight: bold">Подразделение (факт)</option>
+                      <option value="Отдел эксплуатации радиоподсистемы">Отдел эксплуатации радиоподсистемы</option>
+                      <option value="Аварийно-профилактическая группа">Аварийно-профилактическая группа</option>
+                      <option value="ФГ Север">Функциональная группа Север</option>
+                      <option value="ФГ Юг">Функциональная группа Юг</option>
+                      <option value="ФГ Запад">Функциональная группа Запад</option>
+                      <option value="ФГ Восток">Функциональная группа Восток</option>
+                      <option value="Группа модернизации и расширения">Группа модернизации и расширения</option>
+                      <option value="ФГ эксплуатации локальных радиоподсистем">Функциональная группа эксплуатации локальных радиоподсистем</option>
+                      <option value="Группа эксплуатации РРЛ">Группа эксплуатации РРЛ</option>
+                      <option value="Группа эксплуатации инфраструктуры объектов радиоподсистемы">Группа эксплуатации инфраструктуры объектов радиоподсистемы</option>
+                      </select>
+                      </li>
+                      <li>
+                      <select class="form-select" @change="findByStaffDepartment" v-model="staffSelected">
+                      <option disabled style="font-weight: bold">Подразделение (штат)</option>
+                      <option value="Отдел эксплуатации радиоподсистемы">Отдел эксплуатации радиоподсистемы</option>
+                      <option value="Аварийно-профилактическая группа">Аварийно-профилактическая группа</option>
+                      <option value="ФГ Север">Функциональная группа Север</option>
+                      <option value="ФГ Юг">Функциональная группа Юг</option>
+                      <option value="ФГ Запад">Функциональная группа Запад</option>
+                      <option value="ФГ Восток">Функциональная группа Восток</option>
+                      <option value="Группа модернизации и расширения">Группа модернизации и расширения</option>
+                      <option value="ФГ эксплуатации локальных радиоподсистем">Функциональная группа эксплуатации локальных радиоподсистем</option>
+                      <option value="Группа эксплуатации РРЛ">Группа эксплуатации РРЛ</option>
+                      <option value="Группа эксплуатации инфраструктуры объектов радиоподсистемы">Группа эксплуатации инфраструктуры объектов радиоподсистемы</option>
+                      </select>
+                      </li>
+                    </ul>
+                </div>
+                </div>                                              
             </div>
         </div>
     </div>
     <div class="list row">
         <div class="col-md-5 ">
         <h3> Список сотрудников </h3>
-        <p class="text-primary"> {{selected!='Подразделение(факт)'?selected:''}}</p>
+        <p class="text-primary" v-if="factSelected!='Подразделение (факт)'"> {{factSelected}}</p>
+        <p class="text-primary" v-if="staffSelected!='Подразделение (штат)'"> {{staffSelected}}</p>
         <div class="col-md-12 outdiv shadow">
             <div class="col-md-12 indiv">
             <ul class="list-group list-group-flush list-group-numbered">
@@ -118,7 +142,8 @@ export default{
             currentEmployee:null,
             currentIndex:-1,
             filter:"",
-            selected:"Подразделение(факт)"
+            factSelected:"Подразделение (факт)",
+            staffSelected:"Подразделение (штат)"
         };
     },
     methods:{
@@ -135,7 +160,8 @@ export default{
             this.currentEmployee = null;
             this.currentIndex = -1;
             this.filter="";
-            this.selected="Подразделение(факт)"
+            this.factSelected="Подразделение (факт)";
+            this.staffSelected="Подразделение (штат)";
         },
         setActiveEmployee(employee,index){
             this.currentEmployee = employee;
@@ -147,17 +173,30 @@ export default{
                 this.employees=response.data;
                 this.currentEmployee = null;
                 this.currentIndex = -1;
-                this.selected="Подразделение(факт)";
+                this.factSelected="Подразделение (факт)";
+                this.staffSelected="Подразделение (штат)";
                 console.log(response.data);
             })
             .catch(e=>{console.log(e)});
         },
         findByFactDepartment (){
-            EmployeesDataService.findByGroupeOrFunctionGroupOrderByNameAsc(this.selected).
+            EmployeesDataService.findByFactDivisionOrGroupeOrFunctionGroupOrderByNameAsc(this.factSelected).
             then(response=>{
                 this.employees=response.data;
                 this.currentEmployee = null;
                 this.currentIndex = -1;
+                this.staffSelected="Подразделение (штат)";
+                console.log(response.data);
+                })
+                .catch(e=>{console.log(e)});
+        },
+        findByStaffDepartment (){
+            EmployeesDataService.findByStaffDivisionOrGroupeOrFunctionGroupOrderByNameAsc(this.staffSelected).
+            then(response=>{
+                this.employees=response.data;
+                this.currentEmployee = null;
+                this.currentIndex = -1;
+                this.factSelected="Подразделение (факт)";
                 console.log(response.data);
                 })
                 .catch(e=>{console.log(e)});
@@ -209,7 +248,8 @@ export default{
   background: #b30000; 
 }
 .customselect{
-    width:210px;
+    border:none;
+    width:215px
 }
 </style>
 
