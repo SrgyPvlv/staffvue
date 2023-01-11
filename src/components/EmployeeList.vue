@@ -3,7 +3,7 @@
         <div class="col-md-8">
             <div class="input-group mb-3">
                 <input type="text" class="form-control" placeholder="Поиск по ФИО, мобильному, должности" v-model="filter" />
-                <div class="input-group-append ms-3">
+                <div class="input-group-append ms-2">
                 <button type="button" class="btn btn-outline-secondary" @click="findByNameMobilePosition">Поиск</button>
                 </div>
                 <div class="input-group-append ms-3">
