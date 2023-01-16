@@ -119,7 +119,7 @@ export default{
 .outdiv{
     overflow-y: auto;
     overflow-x: hidden;
-    height: 500px;
+    height: 700px;
     position: relative;
 }
 .indiv{
