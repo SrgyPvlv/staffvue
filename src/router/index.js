@@ -1,7 +1,7 @@
-import {createRouter, createWebHistory} from 'vue-router';
+import {createRouter, createWebHashHistory} from 'vue-router';
 
 const router=createRouter({
-    history: createWebHistory(),
+    history: createWebHashHistory(),
     routes:[
         {path:'/', alias:'/employees', name:'employees', component:()=>import("../components/EmployeeList.vue")},
         {path:'/cars', name:'cars', component:()=>import("../components/CarList.vue")},
