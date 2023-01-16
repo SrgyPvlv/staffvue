@@ -220,7 +220,6 @@ export default{
 .outdiv{
     overflow-y: auto;
     overflow-x: hidden;
-    height: 500px;
     position: relative;
 }
 .indiv{
