@@ -24,7 +24,7 @@
     </ul>
   </nav>
 
-  <div class="container mt-3 mb-5">
+  <div class="container ms-5 mt-3 mb-5">
     <RouterView />
   </div>
   
