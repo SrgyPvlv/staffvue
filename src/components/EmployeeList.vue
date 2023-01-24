@@ -68,7 +68,7 @@
             </div>
         </div>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-4">
             <div v-if="currentEmployee">
                 <h3> Сотрудник </h3>
                 <div>
@@ -127,6 +127,23 @@
             </div>
 
         </div>
+        <div class="col-md-3 text-end">
+            <div class="col-md-12">
+            <h5 class="text-danger">Дни Рождения</h5>
+                <h6>В этом месяце</h6>
+                <ul>
+                <li v-for="(birthdayBoy, index) in birthdayBoys" :key="index" class="listyle">
+                {{ birthdayBoy.name.split(' ')[0]}} {{ birthdayBoy.name.split(' ')[1]}} {{ birthdayBoy.birthday.split('-').reverse().join('.').slice(0,5)}}
+                </li>
+                </ul>
+                <h6>В следующем месяце</h6>
+                <ul>
+                <li v-for="(nextMonthBirthdayBoy, index) in nextMonthBirthdayBoys" :key="index" class="listyle">
+                {{ nextMonthBirthdayBoy.name.split(' ')[0]}} {{ nextMonthBirthdayBoy.name.split(' ')[1]}} {{ nextMonthBirthdayBoy.birthday.split('-').reverse().join('.').slice(0,5)}}
+                </li>
+                </ul>
+            </div>
+        </div>
 
     </div>
 </template>
@@ -146,6 +163,15 @@ export default{
             staffSelected:"Подразделение (штат)"
         };
     },
+    computed:{
+        birthdayBoys(){
+            return this.employees.filter((e)=> e.birthday!=null).filter((e) => new Date(e.birthday).getMonth()==new Date().getMonth()).sort((a,b)=>new Date(a.birthday).getDate()-new Date(b.birthday).getDate());
+        },
+        nextMonthBirthdayBoys(){
+            return this.employees.filter((e)=> e.birthday!=null).filter((e) => new Date(e.birthday).getMonth()==new Date().getMonth()+1).sort((a,b)=>new Date(a.birthday).getDate()-new Date(b.birthday).getDate());
+        }
+    },
+
     methods:{
         retrieveEmployees(){
             EmployeesDataService.getAll().
@@ -250,6 +276,9 @@ export default{
 .customselect{
     border:none;
     width:215px
+}
+.listyle{
+    list-style-type: none;
 }
 </style>
 
