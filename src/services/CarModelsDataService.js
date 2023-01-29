@@ -1,6 +1,6 @@
 import http from '../http-common';
 
-class CarModelDataService{
+class CarModelsDataService{
 
     get(id){
         return http.get(`/carmodels/${id}`);
@@ -23,4 +23,4 @@ class CarModelDataService{
     }
 };
 
-export default new CarModelDataService();
+export default new CarModelsDataService();

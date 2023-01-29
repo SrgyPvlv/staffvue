@@ -43,7 +43,7 @@
   
   <script>
   import CarsDataService from '../services/CarsDataService'
-  import CarModelDataService from '../services/CarModelDataService'
+  import CarModelsDataService from '../services/CarModelsDataService'
   
   export default {
     name: "add-car",
@@ -84,7 +84,7 @@
       },
 
       retrieveCarModel(){
-            CarModelDataService.getAll().
+            CarModelsDataService.getAll().
             then(response=>{
                 this.carmodels=response.data;
                 console.log(response.data);
