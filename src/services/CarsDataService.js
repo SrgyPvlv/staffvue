@@ -14,8 +14,12 @@ class CarsDataService{
         return http.post('/cars', data);
     }
 
-    update(id, data){
+    edit(id, data){
         return http.put(`/cars/${id}`, data);
+    }
+
+    update(id, data){
+        return http.patch(`/cars/${id}`, data);
     }
 
     delete(id){
