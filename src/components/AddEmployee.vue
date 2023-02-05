@@ -115,7 +115,9 @@
         submitted: false,
         positions:[],
         cars:[],
-        departments:[]
+        departments:[],
+        carz:[],
+        newcar:""
       };
     },
     methods: {
@@ -163,7 +165,10 @@
           retrieveCars(){
             CarsDataService.getAll().
             then(response=>{
-                this.cars=response.data;
+                this.carz=response.data;
+                this.cars = this.carz.filter(e=>e.employee==null).map(c => {
+                this.newcar = {id: c.id, carNumber : c.carNumber, carComment : c.carComment, carModel: c.carModel};
+                return this.newcar;});
                 console.log(response.data);
             })
             .catch(e=>{console.log(e)});
