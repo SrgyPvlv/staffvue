@@ -1,7 +1,7 @@
 <template>
     <div v-if="currentEmployee" class="edit-form">
       <h4>Сотрудник</h4>
-      <form>
+      <form class="was-validated">
         <div class="form-group">
           <label for="name" class="fw-bold">ФИО сотрудника</label>
           <input type="text" class="form-control mt-1" id="name" required v-model="currentEmployee.name" name="name" placeholder="Фамилия Имя Отчество"/>
@@ -73,9 +73,9 @@
 
         <div class="form-group mt-3">
           <label for="car" class="fw-bold">Автомобиль</label>
-          <p>{{nowCar}}</p>
           <select class="form-select mt-1" id="car" name="car" v-model="currentEmployee.car">
-           <option v-if="currentEmployee.car!=null" :value="currentEmployee.car">{{currentEmployee.carNumber}}</option>
+           <option :value="null">Нет</option>
+           <option v-if="currentEmployee.car!=null" :value="currentEmployee.car">{{currentEmployee.car.carNumber}}</option>
            <option v-for="(car,index) in cars" :key="index" :value="car">{{car.carNumber}}</option>
           </select>
         </div>
@@ -109,19 +109,20 @@ export default {
       message:"",
       cars:[],
       positions:[],
-      departments:[],
-      carz:[],
-      newcar:""
+      departments:[]
     };
   },
-  
+
   methods: {
       getEmployee(id) {
       EmployeesDataService.get(id)
       .then(response => {
         var currentEmployeeResponse = response.data;
-        var currentEmployeeResponseCar = {id: currentEmployeeResponse.car.id, carNumber : currentEmployeeResponse.car.carNumber, carComment : currentEmployeeResponse.car.carComment, carModel: currentEmployeeResponse.car.carModel};
+        if(currentEmployeeResponse.car!=null){
+        var currentEmployeeCar = {id: currentEmployeeResponse.car.id, carNumber : currentEmployeeResponse.car.carNumber, carComment : currentEmployeeResponse.car.carComment, carModel: currentEmployeeResponse.car.carModel};}
+        else {currentEmployeeCar==null};
         this.currentEmployee = {
+          id: currentEmployeeResponse.id,
           name: currentEmployeeResponse.name,
           mobilePhone: currentEmployeeResponse.mobilePhone,
           birthday: currentEmployeeResponse.birthday,
@@ -130,13 +131,12 @@ export default {
           login: currentEmployeeResponse.login,
           email: currentEmployeeResponse.email,
           employeeComment: currentEmployeeResponse.employeeComment,
-          factDepartment: currentEmployeeResponse.factDepartmentSelected,
-          staffDepartment: currentEmployeeResponse.staffDepartmentSelected,
-          car: currentEmployeeResponseCar,
-          position: currentEmployeeResponse.positionSelected
+          factDepartment: currentEmployeeResponse.factDepartment,
+          staffDepartment: currentEmployeeResponse.staffDepartment,
+          car: currentEmployeeCar,
+          position: currentEmployeeResponse.position
         };
-        console.log(response.data);
-        return this.currentEmployee;
+        console.log(response.data)
       })
       .catch(e => {
         console.log(e);
@@ -177,10 +177,10 @@ export default {
           retrieveCars(){
             CarsDataService.getAll().
             then(response=>{
-                this.carz=response.data;
-                this.cars = this.carz.filter(e=>e.employee==null).map(c => {
-                this.newcar = {id: c.id, carNumber : c.carNumber, carComment : c.carComment, carModel: c.carModel};
-                return this.newcar;});
+                var carz=response.data;
+                this.cars = carz.filter(e=>e.employee==null).map(c => {
+                var newcar = {id: c.id, carNumber : c.carNumber, carComment : c.carComment, carModel: c.carModel};
+                return newcar;});
                 console.log(response.data);
                 })
             .catch(e=>{console.log(e)});

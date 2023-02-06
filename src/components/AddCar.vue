@@ -1,5 +1,5 @@
 <template>
-    <div class="submit-form">
+    <div class="submit-form was-validated">
       <div v-if="!submitted">
         <div class="form-group">
           <label for="number" class="fw-bold">Госномер автомобиля</label>

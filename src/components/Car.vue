@@ -1,7 +1,7 @@
 <template>
       <div v-if="currentCar" class="edit-form">
         <h4>Автомобиль</h4>
-        <form>
+        <form class="was-validated">
         <div class="form-group mt-3">
           <label for="number" class="fw-bold">Госномер автомобиля</label>
           <input type="text" class="form-control mt-1" id="number" required v-model="currentCar.carNumber" name="number" placeholder="Введите номер в данном формате: A 111 AA 198"/>

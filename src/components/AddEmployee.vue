@@ -1,5 +1,5 @@
 <template>
-    <div class="submit-form">
+    <div class="submit-form was-validated">
       <div v-if="!submitted">
         <div class="form-group">
           <label for="name" class="fw-bold">ФИО сотрудника</label>
@@ -109,15 +109,13 @@
           employeeComment:"",
           factDepartmentSelected:"",
           staffDepartmentSelected:"",
-          carSelected:"",
+          carSelected:null,
           positionSelected: ""
         },
         submitted: false,
         positions:[],
         cars:[],
-        departments:[],
-        carz:[],
-        newcar:""
+        departments:[]
       };
     },
     methods: {
@@ -165,10 +163,10 @@
           retrieveCars(){
             CarsDataService.getAll().
             then(response=>{
-                this.carz=response.data;
-                this.cars = this.carz.filter(e=>e.employee==null).map(c => {
-                this.newcar = {id: c.id, carNumber : c.carNumber, carComment : c.carComment, carModel: c.carModel};
-                return this.newcar;});
+                var carz=response.data;
+                this.cars = carz.filter(e=>e.employee==null).map(c => {
+                var newcar = {id: c.id, carNumber : c.carNumber, carComment : c.carComment, carModel: c.carModel};
+                return newcar;});
                 console.log(response.data);
             })
             .catch(e=>{console.log(e)});
