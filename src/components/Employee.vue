@@ -75,7 +75,7 @@
           <label for="car" class="fw-bold">Автомобиль</label>
           <p>{{nowCar}}</p>
           <select class="form-select mt-1" id="car" name="car" v-model="currentEmployee.car">
-           <option v-if="currentEmployee.car!=null" :value="nowCar">{{nowCar.carNumber}}</option>
+           <option v-if="currentEmployee.car!=null" :value="currentEmployee.car">{{currentEmployee.carNumber}}</option>
            <option v-for="(car,index) in cars" :key="index" :value="car">{{car.carNumber}}</option>
           </select>
         </div>
@@ -114,20 +114,29 @@ export default {
       newcar:""
     };
   },
-
-  computed:{
-    nowCar(){
-      var nowcar = {id: this.currentEmployee.car.id, carNumber : this.currentEmployee.car.carNumber, carComment : this.currentEmployee.car.carComment, carModel: this.currentEmployee.car.carModel};
-      return nowcar;
-    }
-  },
-
+  
   methods: {
       getEmployee(id) {
       EmployeesDataService.get(id)
       .then(response => {
-        this.currentEmployee = response.data;
+        var currentEmployeeResponse = response.data;
+        var currentEmployeeResponseCar = {id: currentEmployeeResponse.car.id, carNumber : currentEmployeeResponse.car.carNumber, carComment : currentEmployeeResponse.car.carComment, carModel: currentEmployeeResponse.car.carModel};
+        this.currentEmployee = {
+          name: currentEmployeeResponse.name,
+          mobilePhone: currentEmployeeResponse.mobilePhone,
+          birthday: currentEmployeeResponse.birthday,
+          localPhone: currentEmployeeResponse.localPhone,
+          employeeId: currentEmployeeResponse.employeeId,
+          login: currentEmployeeResponse.login,
+          email: currentEmployeeResponse.email,
+          employeeComment: currentEmployeeResponse.employeeComment,
+          factDepartment: currentEmployeeResponse.factDepartmentSelected,
+          staffDepartment: currentEmployeeResponse.staffDepartmentSelected,
+          car: currentEmployeeResponseCar,
+          position: currentEmployeeResponse.positionSelected
+        };
         console.log(response.data);
+        return this.currentEmployee;
       })
       .catch(e => {
         console.log(e);
