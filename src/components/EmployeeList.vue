@@ -118,7 +118,9 @@
                     <label><strong>Комментарий:</strong></label> {{ currentEmployee.employeeComment }}
                 </div>
 
+                <div v-if="showAdminBoard">
                 <RouterLink :to="'/employees/'+currentEmployee.id" class="badge rounded-pill bg-info edit">Редактировать</RouterLink>
+                </div>
 
             </div>
             <div v-else>
@@ -169,6 +171,15 @@ export default{
         },
         nextMonthBirthdayBoys(){
             return this.employees.filter((e)=> e.birthday!=null).filter((e) => new Date(e.birthday).getMonth()==new Date().getMonth()+1).sort((a,b)=>new Date(a.birthday).getDate()-new Date(b.birthday).getDate());
+        },
+        currentUser() {
+            return this.$store.state.auth.user;
+        },
+        showAdminBoard() {
+            if (this.currentUser && this.currentUser['roles']) {
+              return this.currentUser['roles'].includes('ROLE_ADMIN');
+        }
+      return false;
         }
     },
 

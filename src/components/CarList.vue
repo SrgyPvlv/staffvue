@@ -44,9 +44,10 @@
                 <div>
                     <label><strong>Комментарий:</strong></label> {{ currentCar.carComment }}
                 </div>
-                
 
+                <div v-if="showAdminBoard">             
                 <RouterLink :to="'/cars/'+currentCar.id" class="badge rounded-pill bg-info edit" style="margin-top:15px">Редактировать</RouterLink>
+                </div>
 
             </div>
             <div v-else>
@@ -72,6 +73,17 @@ export default{
             filter:""
         };
     },
+    computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+    showAdminBoard() {
+      if (this.currentUser && this.currentUser['roles']) {
+        return this.currentUser['roles'].includes('ROLE_ADMIN');
+      }
+      return false;
+    }
+  },
     methods:{
         retrieveCars(){
             CarsDataService.getAll().
