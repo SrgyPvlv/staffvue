@@ -10,17 +10,17 @@
         <Form @submit="handleRegister" :validation-schema="schema">
           <div v-if="!successful">
             <div class="form-group">
-              <label for="username">Логин</label>
-              <Field name="username" type="text" class="form-control" />
+              <label for="username" class="fw-bold">Логин</label>
+              <Field name="username" type="text" class="form-control mt-1" />
               <ErrorMessage name="username" class="error-feedback" />
             </div>
-            <div class="form-group">
-              <label for="password">Пароль</label>
-              <Field name="password" type="password" class="form-control" />
+            <div class="form-group mt-3">
+              <label for="password" class="fw-bold">Пароль</label>
+              <Field name="password" type="password" class="form-control mt-1" />
               <ErrorMessage name="password" class="error-feedback" />
             </div>
   
-            <div class="form-group">
+            <div class="form-group mt-3">
               <button class="btn btn-primary btn-block" :disabled="loading">
                 <span
                   v-show="loading"
@@ -34,7 +34,7 @@
   
         <div
           v-if="message"
-          class="alert"
+          class="alert mt-3"
           :class="successful ? 'alert-success' : 'alert-danger'"
         >
           {{ message }}
@@ -83,7 +83,7 @@
     },
     mounted() {
       if (this.loggedIn) {
-        this.$router.push("/profile");
+        this.$router.push("/register");
       }
     },
     methods: {
@@ -116,7 +116,7 @@
 
 <style>
 .myregisterform {
-  max-width: 450px;
+  max-width: 350px;
 }
 .error-feedback {
   color: red;

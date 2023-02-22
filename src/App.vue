@@ -20,35 +20,24 @@
           </li>
         </ul>
       </li>
-
-      <div v-if="!currentUser" class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <router-link to="/register" class="nav-link">
-            <font-awesome-icon icon="user-plus" /> Зарегистрировать
-          </router-link>
-        </li>
-        <li class="nav-item">
-          <router-link to="/login" class="nav-link">
-            <font-awesome-icon icon="sign-in-alt" /> Вход
-          </router-link>
-        </li>
-      </div>
-
-      <div v-if="currentUser" class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <router-link to="/profile" class="nav-link">
-            <font-awesome-icon icon="user" />
-            {{ currentUser.username }}
-          </router-link>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" @click.prevent="logOut">
-            <font-awesome-icon icon="sign-out-alt" /> Выйти
-          </a>
-        </li>
-      </div>
-
     </ul>
+
+    <div v-if="currentUser" class="navbar-nav ms-auto">
+        <li v-if="currentUser" class="nav-item">
+          <RouterLink to="/register" class="nav-link"><font-awesome-icon icon="user-plus" /> Новый пользователь</RouterLink>
+        </li>
+        <li class="nav-item">
+          <RouterLink to="/profile" class="nav-link"><font-awesome-icon icon="user" /> {{ currentUser.username }}</RouterLink>
+        </li>
+        <li v-if="currentUser" class="nav-item">
+          <a class="nav-link exitpointer" @click.prevent="logOut"><font-awesome-icon icon="sign-out-alt" /> Выйти</a>
+        </li>
+    </div>
+    <div v-if="!currentUser" class="navbar-nav ms-auto">
+      <li  class="nav-item">
+          <RouterLink to="/login" class="nav-link"><font-awesome-icon icon="sign-in-alt" /> Войти</RouterLink>
+      </li>
+    </div>
   </nav>
 
   <div class="container ms-5 mt-3 mb-5">
@@ -79,7 +68,7 @@ export default{
     methods: {
     logOut() {
       this.$store.dispatch('auth/logout');
-      this.$router.push('/login');
+      this.$router.push('/');
     }
   }
 };
@@ -92,6 +81,9 @@ export default{
 }
 .footer{
   background: #778899;
+}
+.exitpointer{
+  cursor:pointer;
 }
 /* width */
 ::-webkit-scrollbar {
