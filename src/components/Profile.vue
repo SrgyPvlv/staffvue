@@ -5,10 +5,6 @@
           <strong>Пользователь: </strong>{{currentUser.username}}
         </p>
       </header>
-      <p>
-        <strong>Token:</strong>
-        {{currentUser.accessToken.substring(0, 20)}} ... {{currentUser.accessToken.substr(currentUser.accessToken.length - 20)}}
-      </p>
       <strong>Уровень доступа:</strong>
       <ul>
         <li v-for="role in currentUser.roles" :key="role">{{role}}</li>

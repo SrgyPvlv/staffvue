@@ -22,7 +22,6 @@
 
         <div class="mt-3">
         <button @click="updateCar" class="btn btn-outline-success me-3">Обновить</button>
-        <button @click="deleteCar" class="btn btn-outline-danger">Удалить</button>
         </div>
 
         <h5 class="mt-3 text-success">{{ message }}</h5>
@@ -74,19 +73,7 @@
           console.log(e);
         });
     },
-
-    deleteCar() {
-      CarsDataService.delete(this.currentCar.id)
-        .then(response => {
-          console.log(response.data);
-          this.$router.push({ name: "cars" });
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
-
-      retrieveCarModel(){
+    retrieveCarModel(){
             CarModelsDataService.getAll().
             then(response=>{
                 this.carmodels=response.data;

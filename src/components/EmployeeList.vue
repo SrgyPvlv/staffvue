@@ -1,6 +1,7 @@
 <template>
     <div class="list row">
         <div class="col-md-8">
+            <form @submit="findByNameMobilePosition">
             <div class="input-group mb-3">
                 <input type="text" class="form-control" placeholder="Поиск по ФИО, мобильному, должности" v-model="filter" />
                 <div class="input-group-append ms-2">
@@ -47,6 +48,7 @@
                 </div>
                 </div>                                              
             </div>
+            </form>
         </div>
     </div>
     <div class="list row">
@@ -120,6 +122,7 @@
 
                 <div v-if="showAdminBoard">
                 <RouterLink :to="'/employees/'+currentEmployee.id" class="badge rounded-pill bg-info edit">Редактировать</RouterLink>
+                <button @click="deleteEmployee" class="badge rounded-pill bg-danger ms-3 border-0 delete">Удалить</button>
                 </div>
 
             </div>
@@ -200,6 +203,14 @@ export default{
             this.factSelected="Подразделение (факт)";
             this.staffSelected="Подразделение (штат)";
         },
+        deleteEmployee() {
+            EmployeesDataService.delete(this.currentEmployee.id).
+            then(response => {
+                console.log(response.data);
+                this.refreshList();
+            })
+            .catch(e => {console.log(e);});
+        },
         setActiveEmployee(employee,index){
             this.currentEmployee = employee;
             this.currentIndex = employee ? index : -1;
@@ -250,6 +261,9 @@ export default{
 .edit{
     margin-top:10px;
     text-decoration:none
+}
+.delete{
+    text-decoration: none
 }
 .employee{
     cursor:pointer

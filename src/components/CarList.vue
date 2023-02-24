@@ -1,7 +1,8 @@
 <template>
     <div class="list row">
         <div class="col-md-6">
-            <div class="input-group mb-3">
+            <form @submit="findByNumberModel">
+            <div class="input-group mb-3"> 
                 <input type="text" class="form-control" placeholder="Поиск по номеру, модели" v-model="filter" />
                 <div class="input-group-append ms-3">
                 <button type="button" class="btn btn-outline-secondary" @click="findByNumberModel">Поиск</button>
@@ -10,6 +11,7 @@
                 <button type="button" class="btn btn-outline-danger" @click="refreshList">Сбросить</button>
                 </div>
             </div>
+            </form>
         </div>
     </div>
     <div class="list row">
@@ -47,6 +49,7 @@
 
                 <div v-if="showAdminBoard">             
                 <RouterLink :to="'/cars/'+currentCar.id" class="badge rounded-pill bg-info edit" style="margin-top:15px">Редактировать</RouterLink>
+                <button @click="deleteCar" class="badge rounded-pill bg-danger ms-3 border-0 delete">Удалить</button>
                 </div>
 
             </div>
@@ -93,6 +96,15 @@ export default{
             })
             .catch(e=>{console.log(e)});
         },
+        deleteCar() {
+            CarsDataService.delete(this.currentCar.id).
+            then(response => {
+                console.log(response.data);
+                this.refreshList();
+            })
+            .catch(e => {
+            console.log(e);});
+        },
         refreshList(){
             this.retrieveCars();
             this.currentCar = null;
@@ -123,6 +135,9 @@ export default{
 <style>
 .edit{
     margin-top: 10px;
+    text-decoration: none
+}
+.delete{
     text-decoration: none
 }
 .car{

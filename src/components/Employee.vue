@@ -83,7 +83,6 @@
 
       <div class="mt-3">
       <button @click="updateEmployee" class="btn btn-outline-success me-3">Обновить</button>
-      <button @click="deleteEmployee" class="btn btn-outline-danger">Удалить</button>
       </div>
 
       <h5 class="mt-3 text-success">{{ message }}</h5>
@@ -148,17 +147,6 @@ export default {
       .then(response => {
         console.log(response.data);
         this.message = 'Данные по сотруднику успешно обновлены!';
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  },
-
-  deleteEmployee() {
-    EmployeesDataService.delete(this.currentEmployee.id)
-      .then(response => {
-        console.log(response.data);
-        this.$router.push({ name: "employees" });
       })
       .catch(e => {
         console.log(e);
