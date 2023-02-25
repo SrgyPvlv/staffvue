@@ -11,7 +11,9 @@ const router=createRouter({
         {path:'/addCar', name:'addCar', component:()=>import("../components/AddCar.vue")},
         {path: "/profile", name: 'profile',component:()=>import("../components/Profile.vue")},
         {path: "/login", name:'login', component:()=>import("../components/Login.vue")},
-        {path: "/register", name:'register', component:()=>import("../components/Register.vue")}
+        {path: "/register", name:'register', component:()=>import("../components/Register.vue")},
+        {path:'/positions', name:'positions', component:()=>import("../components/PositionList.vue")},
+
     ]
 });
 
