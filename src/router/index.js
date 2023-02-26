@@ -13,6 +13,10 @@ const router=createRouter({
         {path: "/login", name:'login', component:()=>import("../components/Login.vue")},
         {path: "/register", name:'register', component:()=>import("../components/Register.vue")},
         {path:'/positions', name:'positions', component:()=>import("../components/PositionList.vue")},
+        {path:'/departments', name:'departments', component:()=>import("../components/DepartmentList.vue")},
+        {path:'/divisions', name:'divisions', component:()=>import("../components/DivisionList.vue")},
+        {path:'/groupes', name:'groupes', component:()=>import("../components/GroupeList.vue")},
+        {path:'/funcgroupes', name:'funcgroupes', component:()=>import("../components/FunctionGroupList.vue")}
 
     ]
 });

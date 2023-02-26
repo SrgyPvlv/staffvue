@@ -24,19 +24,22 @@
         <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Редактировать</a>
         <ul class="dropdown-menu">
           <li>
-            <RouterLink to="/users" class="dropdown-item">Пользователи</RouterLink>
+            <RouterLink to="/users" class="dropdown-item">Администраторы</RouterLink>
           </li>
           <li>
             <RouterLink to="/positions" class="dropdown-item">Должности</RouterLink>
           </li>
           <li>
+            <RouterLink to="/departments" class="dropdown-item">Подразделения</RouterLink>
+          </li>
+          <li>
             <RouterLink to="/divisions" class="dropdown-item">Отделы</RouterLink>
           </li>
           <li>
-            <RouterLink to="/groups" class="dropdown-item">Группы</RouterLink>
+            <RouterLink to="/groupes" class="dropdown-item">Группы</RouterLink>
           </li>
           <li>
-            <RouterLink to="/funcgroups" class="dropdown-item">Функциональные группы</RouterLink>
+            <RouterLink to="/funcgroupes" class="dropdown-item">Функциональные группы</RouterLink>
           </li>
           <li>
             <RouterLink to="/automodels" class="dropdown-item">Модели авто</RouterLink>
