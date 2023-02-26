@@ -117,9 +117,9 @@ export default {
       EmployeesDataService.get(id)
       .then(response => {
         var currentEmployeeResponse = response.data;
+        var currentEmployeeCar=null;
         if(currentEmployeeResponse.car!=null){
-        var currentEmployeeCar = {id: currentEmployeeResponse.car.id, carNumber : currentEmployeeResponse.car.carNumber, carComment : currentEmployeeResponse.car.carComment, carModel: currentEmployeeResponse.car.carModel};}
-        else {currentEmployeeCar==null};
+        currentEmployeeCar = {id: currentEmployeeResponse.car.id, carNumber : currentEmployeeResponse.car.carNumber, carComment : currentEmployeeResponse.car.carComment, carModel: currentEmployeeResponse.car.carModel};};
         this.currentEmployee = {
           id: currentEmployeeResponse.id,
           name: currentEmployeeResponse.name,

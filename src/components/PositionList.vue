@@ -2,9 +2,12 @@
     <div class="list row">
         <div class="col-md-8">
         <h3> Список должностей </h3>
-        <div class="col-md-12 outdiv shadow">
+        <label for="newposition" class="me-3">Новая должность</label>
+        <input id="newposition" name="newposition" v-model="newposition"/>
+        <button @click="createPosition()" class="badge rounded-pill bg-info ms-3 border-0 delete">Создать</button>
+        <div class="col-md-8 outdiv shadow mt-3">
             <div class="col-md-12 indiv">
-            <ul class="list-group list-group-flush list-group-numbered">
+            <ul class="list-group list-group-flush">
                 <li class="list-group-item car" v-for="(position, index) in positions" :key="index">
                 <input id="position" name="position" v-model="position.position"/>
                 <button @click="editPosition(position.id,position.position)" class="badge rounded-pill bg-success ms-3 border-0 delete">Сохранить</button>
@@ -24,7 +27,8 @@ export default{
     name: "positions-list",
     data(){
         return{
-            positions:[]
+            positions:[],
+            newposition:""
         };
     },
     computed: {
@@ -59,11 +63,24 @@ export default{
         editPosition(id,position) {
             var data = {
                 position: position
-            }
+            };
             PositionsDataService.update(id, data).
             then(response => {
                 console.log(response.data);
                 this.refreshList();
+            })
+            .catch(e => {
+            console.log(e);});
+        },
+        createPosition() {
+            var data= {
+                position: this.newposition
+            };
+            PositionsDataService.create(data).
+            then(response => {
+                console.log(response.data);
+                this.refreshList();
+                this.newposition=""
             })
             .catch(e => {
             console.log(e);});
