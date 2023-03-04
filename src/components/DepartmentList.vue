@@ -5,8 +5,8 @@
         
         <div class="list-group list-group-horizontal list-group-flush"> 
         <div class="list-group-item noborder">
-        <label for="newdivision" class="fw-bold">Отдел</label>
            <select class="form-select optwidth" id="newdivision" name="newdivision" v-model="newdivision" required>
+             <option selected disabled value="" class="fst-italic">Отдел</option>
              <option v-for="(division, index) in divisions" :key="index" :value="division" class="noborder">
               {{ division.division }}
              </option>
@@ -14,8 +14,8 @@
             <p>{{this.newdivision}}</p>
         </div>
         <div class="list-group-item noborder">
-        <label for="newgroupe" class="fw-bold">Группа</label>
            <select class="form-select optwidth" id="newgroupe" name="newgroupe" v-model="newgroupe" required>
+             <option selected disabled value="" class="fst-italic">Группа</option>
              <option :value="null">Нет</option>
              <option v-for="(groupe, index) in groupes" :key="index" :value="groupe">
               {{ groupe.groupe }}
@@ -24,8 +24,8 @@
            <p>{{this.newgroupe}}</p>
         </div>
         <div class="list-group-item noborder">
-        <label for="newfunctiongroup" class="fw-bold">ФГ</label>
            <select class="form-select optwidth" id="newfunctiongroup" name="newfunctiongroup" v-model="newfunctiongroup" required>
+             <option selected disabled value="" class="fst-italic">Функциональная группа</option>
              <option :value="null">Нет</option>
              <option v-for="(funcgroupe, index) in funcgroupes" :key="index" :value="funcgroupe">
                {{ funcgroupe.functionGroup }}
@@ -44,14 +44,14 @@
             <li class="list-group-item" v-for="(department,index) in departments" :key="index">
             <ul class="list-group list-group-horizontal list-group-flush">
             <li class="list-group-item noborder">
-                <select class="form-select noborder" id="division" name="division" v-model="department.division" required>
+                <select class="form-select noborder optwidth" id="division" name="division" v-model="department.division" required>
                  <option v-for="(division, index) in divisions" :key="index" :value="division">
                    {{ division.division }}
                  </option>
                 </select>
             </li>
             <li class="list-group-item noborder">
-                <select class="form-select noborder" id="groupe" name="groupe" v-model="department.groupe" required>
+                <select class="form-select noborder optwidth" id="groupe" name="groupe" v-model="department.groupe" required>
                   <option :value="null">Нет</option>
                   <option v-for="(groupe, index) in groupes" :key="index" :value="groupe">
                    {{ groupe.groupe }}
@@ -59,15 +59,17 @@
                 </select>
             </li>
             <li class="list-group-item noborder">
-                <select class="form-select noborder" id="functionGroup" name="functionGroup" v-model="department.functionGroup" required>
+                <select class="form-select noborder optwidth" id="functionGroup" name="functionGroup" v-model="department.functionGroup" required>
                   <option :value="null">Нет</option>
                   <option v-for="(funcgroupe, index) in funcgroupes" :key="index" :value="funcgroupe">
                    {{ funcgroupe.functionGroup }}
                  </option>
                 </select>
             </li>
+            <li class="list-group-item noborder">
                 <button @click="editDepartment(department.id,department.division,department.groupe,department.functionGroup)" class="badge rounded-pill bg-success ms-3 border-0 delete">Сохранить</button>
                 <button @click="deleteDepartment(department.id)" class="badge rounded-pill bg-danger ms-3 border-0 delete">Удалить</button>
+            </li>
             </ul>
             </li>
           </ul>
@@ -214,7 +216,7 @@ export default{
     position: absolute   
 }
 .optwidth{
-    width:320px
+    width:300px
 }
 .noborder{
     border:0px

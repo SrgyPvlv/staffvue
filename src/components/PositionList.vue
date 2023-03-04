@@ -3,7 +3,7 @@
         <div class="col-md-8">
         <h3> Список должностей </h3>
         <label for="newposition" class="fw-bold fst-italic me-3">Новая должность</label>
-        <input id="newposition" name="newposition" class="inputwidth" v-model="newposition"/>
+        <input id="newposition" name="newposition" class="newinputwidth" v-model="newposition"/>
         <button @click="createPosition()" class="badge rounded-pill bg-info ms-3 border-0 delete">Создать</button>
         <div class="col-md-8 outdiv shadow mt-3">
             <div class="col-md-12 indiv">
@@ -117,6 +117,9 @@ export default{
 }
 .inputwidth{
     width:350px
+}
+.newinputwidth{
+    width:300px
 }
 /* width */
 ::-webkit-scrollbar {
