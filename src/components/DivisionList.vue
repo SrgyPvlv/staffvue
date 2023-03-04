@@ -1,11 +1,11 @@
 <template>
     <div class="list row">
-        <div class="col-md-9">
+        <div class="col-md-8">
         <h3> Список отделов </h3>
-        <label for="newdivision" class="me-3">Новый отдел</label>
+        <label for="newdivision" class="fw-bold fst-italic me-3">Новый отдел</label>
         <input id="newdivision" name="newdivision" class="inputwidth" v-model="newdivision"/>
         <button @click="createDivision()" class="badge rounded-pill bg-info ms-3 border-0 delete">Создать</button>
-        <div class="col-md-9 outdiv shadow mt-3">
+        <div class="col-md-8 outdiv shadow mt-3">
             <div class="col-md-12 indiv">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item car" v-for="(division, index) in divisions" :key="index">

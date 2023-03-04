@@ -1,37 +1,96 @@
 <template>
     <div class="list row">
-        <div class="col-md-12">
         <h3> Список подразделений </h3>
-        <label for="newdivision" class="me-3">Новое подразделение</label>
-        <input id="newdivision" name="newdivision" v-model="newdivision"/>
-        <input id="newgroupe" name="newgroupe" v-model="newgroupe"/>
-        <input id="newfunctiongroup" name="newfunctiongroup" v-model="newfunctiongroup"/>
+        <p class="fw-bold fst-italic mb-3">Новое подразделение</p>        
+        
+        <div class="list-group list-group-horizontal list-group-flush"> 
+        <div class="list-group-item noborder">
+        <label for="newdivision" class="fw-bold">Отдел</label>
+           <select class="form-select optwidth" id="newdivision" name="newdivision" v-model="newdivision" required>
+             <option v-for="(division, index) in divisions" :key="index" :value="division" class="noborder">
+              {{ division.division }}
+             </option>
+            </select>
+            <p>{{this.newdivision}}</p>
+        </div>
+        <div class="list-group-item noborder">
+        <label for="newgroupe" class="fw-bold">Группа</label>
+           <select class="form-select optwidth" id="newgroupe" name="newgroupe" v-model="newgroupe" required>
+             <option :value="null">Нет</option>
+             <option v-for="(groupe, index) in groupes" :key="index" :value="groupe">
+              {{ groupe.groupe }}
+             </option>
+           </select>
+           <p>{{this.newgroupe}}</p>
+        </div>
+        <div class="list-group-item noborder">
+        <label for="newfunctiongroup" class="fw-bold">ФГ</label>
+           <select class="form-select optwidth" id="newfunctiongroup" name="newfunctiongroup" v-model="newfunctiongroup" required>
+             <option :value="null">Нет</option>
+             <option v-for="(funcgroupe, index) in funcgroupes" :key="index" :value="funcgroupe">
+               {{ funcgroupe.functionGroup }}
+             </option>
+           </select>
+           <p>{{this.newfunctiongroup}}</p>
+        </div>
+        <div class="list-group-item noborder">
         <button @click="createDepartment()" class="badge rounded-pill bg-info ms-3 border-0 delete">Создать</button>
-        <div class="col-md-8 outdiv shadow mt-3">
-            <div class="col-md-12 indiv">
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item car" v-for="(department, index) in departments" :key="index">
-                <input id="division" name="division" v-model="department.division.division"/>
-                <input id="groupe" name="groupe" v-model="department.groupe.groupe"/>
-                <input id="functionGroup" name="functionGroup" v-model="department.functionGroup.functionGroup"/>
-                <button @click="editDepartment(department.division.division,department.groupe.groupe,department.functionGroup.functionGroup)" class="badge rounded-pill bg-success ms-3 border-0 delete">Сохранить</button>
+        </div>
+        </div>
+
+        <div class="col-md-12 outdiv shadow mt-3">
+          <div class="col-md-12 indiv">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" v-for="(department,index) in departments" :key="index">
+            <ul class="list-group list-group-horizontal list-group-flush">
+            <li class="list-group-item noborder">
+                <select class="form-select noborder" id="division" name="division" v-model="department.division" required>
+                 <option v-for="(division, index) in divisions" :key="index" :value="division">
+                   {{ division.division }}
+                 </option>
+                </select>
+            </li>
+            <li class="list-group-item noborder">
+                <select class="form-select noborder" id="groupe" name="groupe" v-model="department.groupe" required>
+                  <option :value="null">Нет</option>
+                  <option v-for="(groupe, index) in groupes" :key="index" :value="groupe">
+                   {{ groupe.groupe }}
+                  </option>
+                </select>
+            </li>
+            <li class="list-group-item noborder">
+                <select class="form-select noborder" id="functionGroup" name="functionGroup" v-model="department.functionGroup" required>
+                  <option :value="null">Нет</option>
+                  <option v-for="(funcgroupe, index) in funcgroupes" :key="index" :value="funcgroupe">
+                   {{ funcgroupe.functionGroup }}
+                 </option>
+                </select>
+            </li>
+                <button @click="editDepartment(department.id,department.division,department.groupe,department.functionGroup)" class="badge rounded-pill bg-success ms-3 border-0 delete">Сохранить</button>
                 <button @click="deleteDepartment(department.id)" class="badge rounded-pill bg-danger ms-3 border-0 delete">Удалить</button>
-                </li>
             </ul>
-            </div>
+            </li>
+          </ul>
+          </div>
         </div>
-        </div>
+        
     </div>
 </template>
 
 <script>
 import DepartmentsDataService from '../services/DepartmentsDataService'
+import DivisionsDataService from '../services/DivisionsDataService'
+import GroupesDataService from '../services/GroupesDataService'
+import FunctionGroupsDataService from '../services/FunctionGroupsDataService'
 
 export default{
     name: "departments-list",
     data(){
         return{
             departments:[],
+            divisions:[],
+            groupes:[],
+            funcgroupes:[],
             newdivision:"",
             newgroupe:"",
             newfunctiongroup:""
@@ -82,7 +141,9 @@ export default{
         },
         createDepartment() {
             var data= {
-                position: this.newposition
+                division: this.newdivision,
+                groupe: this.newgroupe,
+                functionGroup: this.newfunctiongroup
             };
             DepartmentsDataService.create(data).
             then(response => {
@@ -97,10 +158,37 @@ export default{
         },
         refreshList(){
             this.retrieveDepartments()
+        },
+        retrieveDivisions(){
+            DivisionsDataService.getAll().
+            then(response=>{
+                this.divisions=response.data;
+                console.log(response.data);
+            })
+            .catch(e=>{console.log(e)});
+        },
+        retrieveGroupes(){
+            GroupesDataService.getAll().
+            then(response=>{
+                this.groupes=response.data;
+                console.log(response.data);
+            })
+            .catch(e=>{console.log(e)});
+        },
+        retrieveFunctionGroups(){
+            FunctionGroupsDataService.getAll().
+            then(response=>{
+                this.funcgroupes=response.data;
+                console.log(response.data);
+            })
+            .catch(e=>{console.log(e)});
         }
     },
     mounted(){
             this.retrieveDepartments();
+            this.retrieveDivisions();
+            this.retrieveGroupes();
+            this.retrieveFunctionGroups()
         }
 };
 </script>
@@ -124,6 +212,12 @@ export default{
 }
 .indiv{
     position: absolute   
+}
+.optwidth{
+    width:320px
+}
+.noborder{
+    border:0px
 }
 /* width */
 ::-webkit-scrollbar {

@@ -1,17 +1,17 @@
 <template>
     <div class="list row">
-        <div class="col-md-9">
-        <h3> Список функциональных групп </h3>
-        <label for="newfuncgroupe" class="me-3">Новая функциональная группа</label>
+        <div class="col-md-8">
+        <h3> Список функциональных групп (ФГ) </h3>
+        <label for="newfuncgroupe" class="fw-bold fst-italic me-3">Новая ФГ</label>
         <input id="newfuncgroupe" name="newfuncgroupe" class="inputwidth" v-model="newfuncgroupe"/>
-        <button @click="createGroupe()" class="badge rounded-pill bg-info ms-3 border-0 delete">Создать</button>
-        <div class="col-md-9 outdiv shadow mt-3">
+        <button @click="createFunctionGroup()" class="badge rounded-pill bg-info ms-3 border-0 delete">Создать</button>
+        <div class="col-md-8 outdiv shadow mt-3">
             <div class="col-md-12 indiv">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item car" v-for="(funcgroupe, index) in funcgroupes" :key="index">
                 <input id="funcgroupe" name="funcgroupe" class="inputwidth" v-model="funcgroupe.functionGroup"/>
-                <button @click="editGroupe(funcgroupe.id,funcgroupe.functionGroup)" class="badge rounded-pill bg-success ms-3 border-0 delete">Сохранить</button>
-                <button @click="deleteGroupe(funcgroupe.id)" class="badge rounded-pill bg-danger ms-3 border-0 delete">Удалить</button>
+                <button @click="editFunctionGroup(funcgroupe.id,funcgroupe.functionGroup)" class="badge rounded-pill bg-success ms-3 border-0 delete">Сохранить</button>
+                <button @click="deleteFunctionGroup(funcgroupe.id)" class="badge rounded-pill bg-danger ms-3 border-0 delete">Удалить</button>
                 </li>
             </ul>
             </div>
@@ -116,7 +116,7 @@ export default{
     position: absolute   
 }
 .inputwidth{
-    width:400px
+    width:350px
 }
 /* width */
 ::-webkit-scrollbar {

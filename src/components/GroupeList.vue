@@ -2,7 +2,7 @@
     <div class="list row">
         <div class="col-md-9">
         <h3> Список групп </h3>
-        <label for="newgroupe" class="me-3">Новая группа</label>
+        <label for="newgroupe" class="fw-bold fst-italic me-3">Новая группа</label>
         <input id="newgroupe" name="newgroupe" class="inputwidth" v-model="newgroupe"/>
         <button @click="createGroupe()" class="badge rounded-pill bg-info ms-3 border-0 delete">Создать</button>
         <div class="col-md-9 outdiv shadow mt-3">

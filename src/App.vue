@@ -24,7 +24,7 @@
         <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Редактировать</a>
         <ul class="dropdown-menu">
           <li>
-            <RouterLink to="/users" class="dropdown-item">Администраторы</RouterLink>
+            <RouterLink to="/users" class="dropdown-item">Пользователи (role_admin)</RouterLink>
           </li>
           <li>
             <RouterLink to="/positions" class="dropdown-item">Должности</RouterLink>

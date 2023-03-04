@@ -2,14 +2,14 @@
     <div class="list row">
         <div class="col-md-8">
         <h3> Список должностей </h3>
-        <label for="newposition" class="me-3">Новая должность</label>
-        <input id="newposition" name="newposition" v-model="newposition"/>
+        <label for="newposition" class="fw-bold fst-italic me-3">Новая должность</label>
+        <input id="newposition" name="newposition" class="inputwidth" v-model="newposition"/>
         <button @click="createPosition()" class="badge rounded-pill bg-info ms-3 border-0 delete">Создать</button>
         <div class="col-md-8 outdiv shadow mt-3">
             <div class="col-md-12 indiv">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item car" v-for="(position, index) in positions" :key="index">
-                <input id="position" name="position" v-model="position.position"/>
+                <input id="position" name="position" class="inputwidth" v-model="position.position"/>
                 <button @click="editPosition(position.id,position.position)" class="badge rounded-pill bg-success ms-3 border-0 delete">Сохранить</button>
                 <button @click="deletePosition(position.id)" class="badge rounded-pill bg-danger ms-3 border-0 delete">Удалить</button>
                 </li>
@@ -114,6 +114,9 @@ export default{
 }
 .indiv{
     position: absolute   
+}
+.inputwidth{
+    width:350px
 }
 /* width */
 ::-webkit-scrollbar {
