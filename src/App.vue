@@ -42,7 +42,7 @@
             <RouterLink to="/funcgroupes" class="dropdown-item">Функциональные группы</RouterLink>
           </li>
           <li>
-            <RouterLink to="/automodels" class="dropdown-item">Модели авто</RouterLink>
+            <RouterLink to="/carmodels" class="dropdown-item">Модели авто</RouterLink>
           </li>    
         </ul>
       </li>
