@@ -9,7 +9,7 @@
       <li class="nav-item">
         <RouterLink to="/cars" class="nav-link">Автомобили</RouterLink>
       </li>
-      <li v-if="showAdminBoard" class="nav-item dropdown">
+      <li v-if="showAdminBoard || showSuperAdminBoard" class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Добавить</a>
         <ul class="dropdown-menu">
           <li>
@@ -20,10 +20,10 @@
           </li>
         </ul>
       </li>    
-      <li v-if="showAdminBoard" class="nav-item dropdown">
+      <li v-if="showAdminBoard || showSuperAdminBoard" class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Редактировать</a>
         <ul class="dropdown-menu">
-          <li>
+          <li v-if="showSuperAdminBoard">
             <RouterLink to="/users" class="dropdown-item">Пользователи (role_admin)</RouterLink>
           </li>
           <li>
@@ -49,7 +49,7 @@
     </ul>
 
     <div v-if="currentUser" class="navbar-nav ms-auto">
-        <li v-if="currentUser" class="nav-item">
+        <li v-if="showSuperAdminBoard" class="nav-item">
           <RouterLink to="/register" class="nav-link"><font-awesome-icon icon="user-plus" /> Новый пользователь</RouterLink>
         </li>
         <li class="nav-item">
@@ -88,7 +88,13 @@ export default{
         return this.currentUser['roles'].includes('ROLE_ADMIN');
       }
       return false;
-    }
+    },
+    showSuperAdminBoard() {
+      if (this.currentUser && this.currentUser['roles']) {
+        return this.currentUser['roles'].includes('ROLE_SUPERADMIN');
+      }
+      return false;
+    },
   },
 
     methods: {
