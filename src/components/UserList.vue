@@ -2,14 +2,17 @@
     <div class="list row">
         <div class="col-md-8">
         <h3> Список пользователей (admin) </h3>
+        <p v-if="submitted" class="text-success">Данные успешно обновлены!</p>
         <div class="col-md-8 outdiv shadow mt-3">
             <div class="col-md-12 indiv">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item car" v-for="(user, index) in users" :key="index">
-                <input id="name" name="name" class="inputwidth" v-model="user.username"/>
-                <input id="password" name="password" class="inputwidth" v-model="user.password"/>
-                <input id="role" name="role" class="inputwidth" v-model="user.role.name"/>
-                <button @click="editUser(user.id,user.username,user.password)" class="badge rounded-pill bg-success ms-3 border-0 delete">Сохранить</button>
+                <input class="inputwidth mt-1" v-model="user.username" required/>
+                <input type="password" class="inputwidth mt-1" v-model="user.password" required/>
+                <select class="form-select inputwidth mt-1" v-model="user.role" required>
+                  <option v-for="(role,index) in roles" :key="index" :value="role">{{role.name}}</option>
+                </select>
+                <button @click="editUser(user.id,user.username,user.password,user.role)" class="badge rounded-pill bg-success mt-2 border-0 delete">Сохранить</button>
                 <button @click="deleteUser(user.id)" class="badge rounded-pill bg-danger ms-3 border-0 delete">Удалить</button>
                 </li>
             </ul>
@@ -21,12 +24,15 @@
 
 <script>
 import UsersDataService from '../services/UsersDataService'
+import RolesDataService from '../services/RolesDataService'
 
 export default{
     name: "users-list",
     data(){
         return{
-            users:[]
+            users:[],
+            roles:[],
+            submitted:false
         };
     },
     computed: {
@@ -58,25 +64,37 @@ export default{
             .catch(e => {
             console.log(e);});
         },
-        editUser(id,name,password) {
+        editUser(id,name,password,role) {
             var data = {
                 username: name,
-                password: password
+                password: password,
+                role: role
             };
             UsersDataService.update(id, data).
             then(response => {
                 console.log(response.data);
                 this.refreshList();
+                this.submitted = true
             })
             .catch(e => {
             console.log(e);});
         },
         refreshList(){
-            this.retrieveUsers()
-        }
+            this.retrieveUsers();
+            this.submitted = false
+        },
+        retrieveRoles(){
+            RolesDataService.getAll().
+            then(response=>{
+                this.roles=response.data;
+                console.log(response.data);
+            })
+            .catch(e=>{console.log(e)});
+          }
     },
     mounted(){
             this.retrieveUsers();
+            this.retrieveRoles();
         }
 };
 </script>

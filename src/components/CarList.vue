@@ -47,7 +47,7 @@
                     <label><strong>Комментарий:</strong></label> {{ currentCar.carComment }}
                 </div>
 
-                <div v-if="showAdminBoard">             
+                <div v-if="showAdminBoard || showSuperAdminBoard">             
                 <RouterLink :to="'/cars/'+currentCar.id" class="badge rounded-pill bg-info edit" style="margin-top:15px">Редактировать</RouterLink>
                 <button @click="deleteCar" class="badge rounded-pill bg-danger ms-3 border-0 delete">Удалить</button>
                 </div>
@@ -85,7 +85,13 @@ export default{
         return this.currentUser['roles'].includes('ROLE_ADMIN');
       }
       return false;
-    }
+    },
+    showSuperAdminBoard() {
+            if (this.currentUser && this.currentUser['roles']) {
+            return this.currentUser['roles'].includes('ROLE_SUPERADMIN');
+        }
+            return false;
+        }
   },
     methods:{
         retrieveCars(){

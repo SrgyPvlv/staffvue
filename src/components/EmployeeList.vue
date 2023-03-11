@@ -15,34 +15,20 @@
                 <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown">Подразделение</button>
                    <ul class="dropdown-menu customselect">
                       <li>
-                      <select class="form-select" @change="findByFactDepartment" v-model="factSelected">
-                      <option disabled style="font-weight: bold">Подразделение (факт)</option>
-                      <option value="Отдел эксплуатации радиоподсистемы">Отдел эксплуатации радиоподсистемы</option>
-                      <option value="Аварийно-профилактическая группа">Аварийно-профилактическая группа</option>
-                      <option value="ФГ Север">Функциональная группа Север</option>
-                      <option value="ФГ Юг">Функциональная группа Юг</option>
-                      <option value="ФГ Запад">Функциональная группа Запад</option>
-                      <option value="ФГ Восток">Функциональная группа Восток</option>
-                      <option value="Группа модернизации и расширения">Группа модернизации и расширения</option>
-                      <option value="ФГ эксплуатации локальных радиоподсистем">Функциональная группа эксплуатации локальных радиоподсистем</option>
-                      <option value="Группа эксплуатации РРЛ">Группа эксплуатации РРЛ</option>
-                      <option value="Группа эксплуатации инфраструктуры объектов радиоподсистемы">Группа эксплуатации инфраструктуры объектов радиоподсистемы</option>
-                      </select>
+                        <select class="form-select" @change="findByFactDepartment" v-model="factSelected">
+                          <option disabled style="font-weight: bold">Подразделение (факт)</option>  
+                          <option v-for="(department, index) in departments" :key="index">
+                            {{department.functionGroup!=null? department.functionGroup.functionGroup: department.groupe!=null?department.groupe.groupe: department.division.division}}
+                          </option>
+                        </select>
                       </li>
                       <li>
-                      <select class="form-select" @change="findByStaffDepartment" v-model="staffSelected">
-                      <option disabled style="font-weight: bold">Подразделение (штат)</option>
-                      <option value="Отдел эксплуатации радиоподсистемы">Отдел эксплуатации радиоподсистемы</option>
-                      <option value="Аварийно-профилактическая группа">Аварийно-профилактическая группа</option>
-                      <option value="ФГ Север">Функциональная группа Север</option>
-                      <option value="ФГ Юг">Функциональная группа Юг</option>
-                      <option value="ФГ Запад">Функциональная группа Запад</option>
-                      <option value="ФГ Восток">Функциональная группа Восток</option>
-                      <option value="Группа модернизации и расширения">Группа модернизации и расширения</option>
-                      <option value="ФГ эксплуатации локальных радиоподсистем">Функциональная группа эксплуатации локальных радиоподсистем</option>
-                      <option value="Группа эксплуатации РРЛ">Группа эксплуатации РРЛ</option>
-                      <option value="Группа эксплуатации инфраструктуры объектов радиоподсистемы">Группа эксплуатации инфраструктуры объектов радиоподсистемы</option>
-                      </select>
+                        <select class="form-select" @change="findByStaffDepartment" v-model="staffSelected">
+                          <option disabled style="font-weight: bold">Подразделение (штат)</option>  
+                          <option v-for="(department, index) in departments" :key="index">
+                            {{department.functionGroup!=null? department.functionGroup.functionGroup: department.groupe!=null?department.groupe.groupe: department.division.division}}
+                          </option>
+                        </select>
                       </li>
                     </ul>
                 </div>
@@ -120,7 +106,7 @@
                     <label><strong>Комментарий:</strong></label> {{ currentEmployee.employeeComment }}
                 </div>
 
-                <div v-if="showAdminBoard">
+                <div v-if="showAdminBoard || showSuperAdminBoard">
                 <RouterLink :to="'/employees/'+currentEmployee.id" class="badge rounded-pill bg-info edit">Редактировать</RouterLink>
                 <button @click="deleteEmployee" class="badge rounded-pill bg-danger ms-3 border-0 delete">Удалить</button>
                 </div>
@@ -155,6 +141,7 @@
 
 <script>
 import EmployeesDataService from '../services/EmployeesDataService';
+import DepartmentsDataService from '../services/DepartmentsDataService';
 
 export default{
     name: "employees-list",
@@ -165,7 +152,8 @@ export default{
             currentIndex:-1,
             filter:"",
             factSelected:"Подразделение (факт)",
-            staffSelected:"Подразделение (штат)"
+            staffSelected:"Подразделение (штат)",
+            departments:[]
         };
     },
     computed:{
@@ -182,7 +170,13 @@ export default{
             if (this.currentUser && this.currentUser['roles']) {
               return this.currentUser['roles'].includes('ROLE_ADMIN');
         }
-      return false;
+            return false;
+        },
+        showSuperAdminBoard() {
+            if (this.currentUser && this.currentUser['roles']) {
+            return this.currentUser['roles'].includes('ROLE_SUPERADMIN');
+        }
+            return false;
         }
     },
 
@@ -248,11 +242,20 @@ export default{
                 console.log(response.data);
                 })
                 .catch(e=>{console.log(e)});
-        }
+        },
+        retrieveDepartments(){
+            DepartmentsDataService.getAll().
+            then(response=>{
+                this.departments=response.data;
+                console.log(response.data);
+            })
+            .catch(e=>{console.log(e)});
+        },
         },       
 
     mounted(){
             this.retrieveEmployees();
+            this.retrieveDepartments();
         }
 };
 </script>
