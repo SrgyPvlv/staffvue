@@ -1,5 +1,4 @@
 import http from '../http-common';
-import authHeader from './auth-header';
 
 class GroupesDataService{
 
@@ -12,15 +11,15 @@ class GroupesDataService{
     }
 
     create(data){
-        return http.post('/groupes', data, { headers: authHeader() });
+        return http.post('/groupes', data);
     }
 
     update(id, data){
-        return http.put(`/groupes/${id}`, data, { headers: authHeader() });
+        return http.put(`/groupes/${id}`, data);
     }
 
     delete(id){
-        return http.delete(`/groupes/${id}`, { headers: authHeader() });
+        return http.delete(`/groupes/${id}`);
     }
 };
 

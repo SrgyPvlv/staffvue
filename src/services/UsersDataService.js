@@ -1,26 +1,25 @@
 import http from '../http-common';
-import authHeader from './auth-header';
 
 class UsersDataService{
 
     get(id){
-        return http.get(`/users/${id}`, { headers: authHeader() });
+        return http.get(`/users/${id}`);
     }
 
     getAll(){
-        return http.get("/users", { headers: authHeader() });
+        return http.get("/users");
     }
 
     create(data){
-        return http.post('/users', data, { headers: authHeader() });
+        return http.post('/users', data);
     }
 
     update(id, data){
-        return http.put(`/users/${id}`, data, { headers: authHeader() });
+        return http.put(`/users/${id}`, data);
     }
 
     delete(id){
-        return http.delete(`/users/${id}`, { headers: authHeader() });
+        return http.delete(`/users/${id}`);
     }
 };
 

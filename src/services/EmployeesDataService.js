@@ -1,5 +1,4 @@
 import http from '../http-common';
-import authHeader from './auth-header';
 
 class EmployeesDataService{
 
@@ -12,15 +11,15 @@ class EmployeesDataService{
     }
 
     create(data){
-        return http.post('/employees', data, { headers: authHeader() });
+        return http.post('/employees', data);
     }
 
     update(id, data){
-        return http.put(`/employees/${id}`, data, { headers: authHeader() });
+        return http.put(`/employees/${id}`, data);
     }
 
     delete(id){
-        return http.delete(`/employees/${id}`, { headers: authHeader() });
+        return http.delete(`/employees/${id}`);
     }
 
     findByNameMobilePosition(filter){

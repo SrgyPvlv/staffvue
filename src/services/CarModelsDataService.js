@@ -1,5 +1,4 @@
 import http from '../http-common';
-import authHeader from './auth-header';
 
 class CarModelsDataService{
 
@@ -12,15 +11,15 @@ class CarModelsDataService{
     }
 
     create(data){
-        return http.post('/carmodels', data, { headers: authHeader() });
+        return http.post('/carmodels', data);
     }
 
     update(id, data){
-        return http.put(`/carmodels/${id}`, data, { headers: authHeader() });
+        return http.put(`/carmodels/${id}`, data);
     }
 
     delete(id){
-        return http.delete(`/carmodels/${id}`, { headers: authHeader() });
+        return http.delete(`/carmodels/${id}`);
     }
 };
 

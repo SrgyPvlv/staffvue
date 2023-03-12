@@ -1,8 +1,8 @@
 import http from '../http-common';
-import authHeader from './auth-header';
+import TokenService from "./token.service";
 
 class AuthService {
-  login(user) {
+  login({ username, password }) {
     return http
       .post('/auth/signin', {
         username: user.username,
@@ -10,7 +10,7 @@ class AuthService {
       })
       .then(response => {
         if (response.data.accessToken) {
-          localStorage.setItem('user', JSON.stringify(response.data));
+          TokenService.setUser(response.data);
         }
 
         return response.data;
@@ -18,15 +18,14 @@ class AuthService {
   }
 
   logout() {
-    return http.post("/auth/signout"),
-    localStorage.removeItem('user');
+    TokenService.removeUser();
   }
 
-  register(user) {
+  register({ username, password }) {
     return http.post('/auth/signup', {
-      username: user.username,
-      password: user.password
-    }, { headers: authHeader() });
+      username,
+      password
+    });
   }
 }
 

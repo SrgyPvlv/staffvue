@@ -77,6 +77,8 @@
 </template>
 
 <script>
+import EventBus from "./common/EventBus";
+
 export default{
   name:"app",
   computed: {
@@ -100,8 +102,17 @@ export default{
     methods: {
     logOut() {
       this.$store.dispatch('auth/logout');
-      this.$router.push('/');
+      this.$router.push('/login');
     }
+  },
+
+  mounted() {
+    EventBus.on("logout", () => {
+      this.logOut();
+    });
+  },
+  beforeDestroy() {
+    EventBus.remove("logout");
   }
 };
 </script>

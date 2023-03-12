@@ -1,5 +1,4 @@
 import http from '../http-common';
-import authHeader from './auth-header';
 
 class FunctionGroupsDataService{
 
@@ -12,15 +11,15 @@ class FunctionGroupsDataService{
     }
 
     create(data){
-        return http.post('/function-groups', data, { headers: authHeader() });
+        return http.post('/function-groups', data);
     }
 
     update(id, data){
-        return http.put(`/function-groups/${id}`, data, { headers: authHeader() });
+        return http.put(`/function-groups/${id}`, data);
     }
 
     delete(id){
-        return http.delete(`/function-groups/${id}`, { headers: authHeader() });
+        return http.delete(`/function-groups/${id}`);
     }
 };
 
