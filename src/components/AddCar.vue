@@ -44,6 +44,7 @@
   <script>
   import CarsDataService from '../services/CarsDataService'
   import CarModelsDataService from '../services/CarModelsDataService'
+  import EventBus from "../common/EventBus"
   
   export default {
     name: "add-car",
