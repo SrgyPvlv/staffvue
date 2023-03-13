@@ -1,9 +1,9 @@
-import http from '../http-common';
+import api from "./api";
 import TokenService from "./token.service";
 
 class AuthService {
-  login({ username, password }) {
-    return http
+  login(user) {
+    return api
       .post('/auth/signin', {
         username: user.username,
         password: user.password
@@ -22,7 +22,7 @@ class AuthService {
   }
 
   register({ username, password }) {
-    return http.post('/auth/signup', {
+    return api.post('/auth/signup', {
       username,
       password
     });

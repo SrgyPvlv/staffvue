@@ -1,25 +1,25 @@
-import http from '../http-common';
+import api from './api';
 
 class GroupesDataService{
 
     get(id){
-        return http.get(`/groupes/${id}`);
+        return api.get(`/groupes/${id}`);
     }
 
     getAll(){
-        return http.get("/groupes");
+        return api.get("/groupes");
     }
 
     create(data){
-        return http.post('/groupes', data);
+        return api.post('/groupes', data);
     }
 
     update(id, data){
-        return http.put(`/groupes/${id}`, data);
+        return api.put(`/groupes/${id}`, data);
     }
 
     delete(id){
-        return http.delete(`/groupes/${id}`);
+        return api.delete(`/groupes/${id}`);
     }
 };
 

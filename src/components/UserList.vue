@@ -25,6 +25,7 @@
 <script>
 import UsersDataService from '../services/UsersDataService'
 import RolesDataService from '../services/RolesDataService'
+import EventBus from "../common/EventBus"
 
 export default{
     name: "users-list",
@@ -52,6 +53,10 @@ export default{
             then(response=>{
                 this.users=response.data;
                 console.log(response.data);
+            },
+            error => {
+             if (error.response && error.response.status === 403) {
+             EventBus.dispatch("logout");}
             })
             .catch(e=>{console.log(e)});
         },
@@ -60,6 +65,10 @@ export default{
             then(response => {
                 console.log(response.data);
                 this.refreshList();
+            },
+            error => {
+             if (error.response && error.response.status === 403) {
+             EventBus.dispatch("logout");}
             })
             .catch(e => {
             console.log(e);});
@@ -75,6 +84,10 @@ export default{
                 console.log(response.data);
                 this.refreshList();
                 this.submitted = true
+            },
+            error => {
+             if (error.response && error.response.status === 403) {
+             EventBus.dispatch("logout");}
             })
             .catch(e => {
             console.log(e);});

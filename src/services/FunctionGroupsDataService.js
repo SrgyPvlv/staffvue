@@ -1,25 +1,25 @@
-import http from '../http-common';
+import api from './api';
 
 class FunctionGroupsDataService{
 
     get(id){
-        return http.get(`/function-groups/${id}`);
+        return api.get(`/function-groups/${id}`);
     }
 
     getAll(){
-        return http.get("/function-groups");
+        return api.get("/function-groups");
     }
 
     create(data){
-        return http.post('/function-groups', data);
+        return api.post('/function-groups', data);
     }
 
     update(id, data){
-        return http.put(`/function-groups/${id}`, data);
+        return api.put(`/function-groups/${id}`, data);
     }
 
     delete(id){
-        return http.delete(`/function-groups/${id}`);
+        return api.delete(`/function-groups/${id}`);
     }
 };
 

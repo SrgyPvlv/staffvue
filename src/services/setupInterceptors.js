@@ -1,9 +1,8 @@
-//import axiosInstance from "./api";
-import http from '../http-common';
+import axiosInstance from "./api";
 import TokenService from "./token.service";
 
 const setup = (store) => {
-  http.interceptors.request.use(
+  axiosInstance.interceptors.request.use(
     (config) => {
       const token = TokenService.getLocalAccessToken();
       if (token) {
@@ -17,7 +16,7 @@ const setup = (store) => {
     }
   );
 
-  http.interceptors.response.use(
+  axiosInstance.interceptors.response.use(
     (res) => {
       return res;
     },
@@ -30,7 +29,7 @@ const setup = (store) => {
           originalConfig._retry = true;
 
           try {
-            const rs = await http.post("/auth/refreshtoken", {
+            const rs = await axiosInstance.post("/auth/refreshtoken", {
               refreshToken: TokenService.getLocalRefreshToken(),
             });
 
@@ -39,7 +38,7 @@ const setup = (store) => {
             store.dispatch('auth/refreshToken', accessToken);
             TokenService.updateLocalAccessToken(accessToken);
 
-            return http(originalConfig);
+            return axiosInstance(originalConfig);
           } catch (_error) {
             return Promise.reject(_error);
           }

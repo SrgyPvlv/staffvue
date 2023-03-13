@@ -22,6 +22,7 @@
 
 <script>
 import PositionsDataService from '../services/PositionsDataService'
+import EventBus from "../common/EventBus"
 
 export default{
     name: "positions-list",
@@ -56,6 +57,10 @@ export default{
             then(response => {
                 console.log(response.data);
                 this.refreshList();
+            },
+            error => {
+             if (error.response && error.response.status === 403) {
+             EventBus.dispatch("logout");}
             })
             .catch(e => {
             console.log(e);});
@@ -68,6 +73,10 @@ export default{
             then(response => {
                 console.log(response.data);
                 this.refreshList();
+            },
+            error => {
+             if (error.response && error.response.status === 403) {
+             EventBus.dispatch("logout");}
             })
             .catch(e => {
             console.log(e);});
@@ -81,6 +90,10 @@ export default{
                 console.log(response.data);
                 this.refreshList();
                 this.newposition=""
+            },
+            error => {
+             if (error.response && error.response.status === 403) {
+             EventBus.dispatch("logout");}
             })
             .catch(e => {
             console.log(e);});

@@ -142,6 +142,7 @@
 <script>
 import EmployeesDataService from '../services/EmployeesDataService';
 import DepartmentsDataService from '../services/DepartmentsDataService';
+import EventBus from "../common/EventBus"
 
 export default{
     name: "employees-list",
@@ -202,6 +203,10 @@ export default{
             then(response => {
                 console.log(response.data);
                 this.refreshList();
+            },
+            error => {
+             if (error.response && error.response.status === 403) {
+             EventBus.dispatch("logout");}
             })
             .catch(e => {console.log(e);});
         },

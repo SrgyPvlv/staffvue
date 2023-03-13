@@ -1,9 +1,9 @@
-import http from '../http-common'
+import api from './api';
 
 class RolesDataService{
 
     getAll(){
-        return http.get("/roles");
+        return api.get("/roles");
     }
 
 };

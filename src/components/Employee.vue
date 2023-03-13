@@ -99,6 +99,7 @@ import EmployeesDataService from '../services/EmployeesDataService'
 import CarsDataService from '../services/CarsDataService'
 import PositionsDataService from '../services/PositionsDataService'
 import DepartmentsDataService from '../services/DepartmentsDataService'
+import EventBus from "../common/EventBus"
 
 export default {
   name: "employee",
@@ -147,6 +148,10 @@ export default {
       .then(response => {
         console.log(response.data);
         this.message = 'Данные по сотруднику успешно обновлены!';
+      },
+      error => {
+           if (error.response && error.response.status === 403) {
+          EventBus.dispatch("logout");}
       })
       .catch(e => {
         console.log(e);

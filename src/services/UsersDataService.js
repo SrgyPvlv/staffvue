@@ -1,25 +1,25 @@
-import http from '../http-common';
+import api from './api';
 
 class UsersDataService{
 
     get(id){
-        return http.get(`/users/${id}`);
+        return api.get(`/users/${id}`);
     }
 
     getAll(){
-        return http.get("/users");
+        return api.get("/users");
     }
 
     create(data){
-        return http.post('/users', data);
+        return api.post('/users', data);
     }
 
     update(id, data){
-        return http.put(`/users/${id}`, data);
+        return api.put(`/users/${id}`, data);
     }
 
     delete(id){
-        return http.delete(`/users/${id}`);
+        return api.delete(`/users/${id}`);
     }
 };
 

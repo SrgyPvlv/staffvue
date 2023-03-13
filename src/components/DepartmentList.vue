@@ -84,6 +84,7 @@ import DepartmentsDataService from '../services/DepartmentsDataService'
 import DivisionsDataService from '../services/DivisionsDataService'
 import GroupesDataService from '../services/GroupesDataService'
 import FunctionGroupsDataService from '../services/FunctionGroupsDataService'
+import EventBus from "../common/EventBus"
 
 export default{
     name: "departments-list",
@@ -123,6 +124,10 @@ export default{
             then(response => {
                 console.log(response.data);
                 this.refreshList();
+            },
+            error => {
+             if (error.response && error.response.status === 403) {
+             EventBus.dispatch("logout");}
             })
             .catch(e => {
             console.log(e);});
@@ -137,6 +142,10 @@ export default{
             then(response => {
                 console.log(response.data);
                 this.refreshList();
+            },
+            error => {
+             if (error.response && error.response.status === 403) {
+             EventBus.dispatch("logout");}
             })
             .catch(e => {
             console.log(e);});
@@ -154,6 +163,10 @@ export default{
                 this.newdivision="",
                 this.newgroupe="",
                 this.newfunctiongroup=""
+            },
+            error => {
+             if (error.response && error.response.status === 403) {
+             EventBus.dispatch("logout");}
             })
             .catch(e => {
             console.log(e);});

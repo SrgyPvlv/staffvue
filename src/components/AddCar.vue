@@ -73,7 +73,12 @@
             this.car.id = response.data.id;
             console.log(response.data);
             this.submitted = true;
-          })
+          },
+          error => {
+           if (error.response && error.response.status === 403) {
+          EventBus.dispatch("logout");}
+          }
+          )
           .catch(e => {
             console.log(e);
           });

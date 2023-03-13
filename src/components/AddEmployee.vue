@@ -92,6 +92,7 @@
   import CarsDataService from '../services/CarsDataService'
   import PositionsDataService from '../services/PositionsDataService'
   import DepartmentsDataService from '../services/DepartmentsDataService'
+  import EventBus from "../common/EventBus"
   
   export default {
     name: "add-employee",
@@ -140,6 +141,10 @@
             this.employee.id = response.data.id;
             console.log(response.data);
             this.submitted = true;
+          },
+          error => {
+           if (error.response && error.response.status === 403) {
+          EventBus.dispatch("logout");}
           })
           .catch(e => {
             console.log(e);

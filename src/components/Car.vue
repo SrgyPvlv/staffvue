@@ -36,6 +36,7 @@
   <script>
   import CarsDataService from '../services/CarsDataService'
   import CarModelsDataService from '../services/CarModelsDataService'
+  import EventBus from "../common/EventBus"
   
   export default {
     name: "car",
@@ -68,6 +69,10 @@
         .then(response => {
           console.log(response.data);
           this.message = 'Данные по автомобилю успешно обновлены!';
+        },
+        error => {
+           if (error.response && error.response.status === 403) {
+          EventBus.dispatch("logout");}
         })
         .catch(e => {
           console.log(e);

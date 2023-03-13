@@ -1,25 +1,25 @@
-import http from '../http-common';
+import api from './api';
 
 class DepartmentsDataService{
 
     get(id){
-        return http.get(`/departments/${id}`);
+        return api.get(`/departments/${id}`);
     }
 
     getAll(){
-        return http.get("/departments");
+        return api.get("/departments");
     }
 
     create(data){
-        return http.post('/departments', data);
+        return api.post('/departments', data);
     }
 
     update(id, data){
-        return http.put(`/departments/${id}`, data);
+        return api.put(`/departments/${id}`, data);
     }
 
     delete(id){
-        return http.delete(`/departments/${id}`);
+        return api.delete(`/departments/${id}`);
     }
 };
 

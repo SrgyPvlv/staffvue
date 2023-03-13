@@ -65,6 +65,7 @@
 
 <script>
 import CarsDataService from '../services/CarsDataService'
+import EventBus from "../common/EventBus"
 
 export default{
     name: "cars-list",
@@ -107,6 +108,10 @@ export default{
             then(response => {
                 console.log(response.data);
                 this.refreshList();
+            },
+            error => {
+             if (error.response && error.response.status === 403) {
+             EventBus.dispatch("logout");}
             })
             .catch(e => {
             console.log(e);});

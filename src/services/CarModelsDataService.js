@@ -1,25 +1,25 @@
-import http from '../http-common';
+import api from './api';
 
 class CarModelsDataService{
 
     get(id){
-        return http.get(`/carmodels/${id}`);
+        return api.get(`/carmodels/${id}`);
     }
 
     getAll(){
-        return http.get("/carmodels");
+        return api.get("/carmodels");
     }
 
     create(data){
-        return http.post('/carmodels', data);
+        return api.post('/carmodels', data);
     }
 
     update(id, data){
-        return http.put(`/carmodels/${id}`, data);
+        return api.put(`/carmodels/${id}`, data);
     }
 
     delete(id){
-        return http.delete(`/carmodels/${id}`);
+        return api.delete(`/carmodels/${id}`);
     }
 };
 

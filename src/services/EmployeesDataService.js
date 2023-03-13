@@ -1,37 +1,37 @@
-import http from '../http-common';
+import api from './api';
 
 class EmployeesDataService{
 
     get(id){
-        return http.get(`/employees/${id}`);
+        return api.get(`/employees/${id}`);
     }
 
     getAll(){
-        return http.get("/employees");
+        return api.get("/employees");
     }
 
     create(data){
-        return http.post('/employees', data);
+        return api.post('/employees', data);
     }
 
     update(id, data){
-        return http.put(`/employees/${id}`, data);
+        return api.put(`/employees/${id}`, data);
     }
 
     delete(id){
-        return http.delete(`/employees/${id}`);
+        return api.delete(`/employees/${id}`);
     }
 
     findByNameMobilePosition(filter){
-        return http.get(`/employees?filter=${filter}`);
+        return api.get(`/employees?filter=${filter}`);
     }
 
     findByFactDivisionOrGroupeOrFunctionGroupOrderByNameAsc(selected){
-        return http.get(`/employees/factdepartment?filter=${selected}`);
+        return api.get(`/employees/factdepartment?filter=${selected}`);
     }
 
     findByStaffDivisionOrGroupeOrFunctionGroupOrderByNameAsc(selected){
-        return http.get(`/employees/staffdepartment?filter=${selected}`);
+        return api.get(`/employees/staffdepartment?filter=${selected}`);
     }
 };
 
