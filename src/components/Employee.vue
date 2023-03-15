@@ -109,7 +109,8 @@ export default {
       message:"",
       cars:[],
       positions:[],
-      departments:[]
+      departments:[],
+      newEmployeeCar:null
     };
   },
 
