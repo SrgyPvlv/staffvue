@@ -7,6 +7,7 @@
           class="card-img-top"
         />
         <div class="card-body">
+          <p class="text-danger">Вход только для администратора!</p>
         <Form @submit="handleLogin" :validation-schema="schema">
           <div class="form-group">
             <label for="username" class="fw-bold">Логин</label>
