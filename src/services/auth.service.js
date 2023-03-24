@@ -21,8 +21,8 @@ class AuthService {
     return api.post("/auth/signout")
     .then(response => {
     TokenService.removeUser(response.data);
-
-    return response.data;
+    },
+    error => {TokenService.removeUser(error);
     });
   }
 

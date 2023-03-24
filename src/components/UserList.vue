@@ -55,7 +55,7 @@ export default{
                 console.log(response.data);
             },
             error => {
-             if (error.response && error.response.status === 403) {
+             if (error.response && error.response.status === 404) {
              EventBus.dispatch("logout");}
             })
             .catch(e=>{console.log(e)});
@@ -67,7 +67,7 @@ export default{
                 this.refreshList();
             },
             error => {
-             if (error.response && error.response.status === 403) {
+             if (error.response && error.response.status === 404) {
              EventBus.dispatch("logout");}
             })
             .catch(e => {
@@ -86,7 +86,7 @@ export default{
                 this.submitted = true
             },
             error => {
-             if (error.response && error.response.status === 403) {
+             if (error.response && error.response.status === 404) {
              EventBus.dispatch("logout");}
             })
             .catch(e => {

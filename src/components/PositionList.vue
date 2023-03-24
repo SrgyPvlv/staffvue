@@ -59,7 +59,7 @@ export default{
                 this.refreshList();
             },
             error => {
-             if (error.response && error.response.status === 403) {
+             if (error.response && error.response.status === 404) {
              EventBus.dispatch("logout");}
             })
             .catch(e => {
@@ -75,7 +75,7 @@ export default{
                 this.refreshList();
             },
             error => {
-             if (error.response && error.response.status === 403) {
+             if (error.response && error.response.status === 404) {
              EventBus.dispatch("logout");}
             })
             .catch(e => {
@@ -92,7 +92,7 @@ export default{
                 this.newposition=""
             },
             error => {
-             if (error.response && error.response.status === 403) {
+             if (error.response && error.response.status === 404) {
              EventBus.dispatch("logout");}
             })
             .catch(e => {

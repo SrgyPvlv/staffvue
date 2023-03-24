@@ -151,8 +151,10 @@ export default {
         this.message = 'Данные по сотруднику успешно обновлены!';
       },
       error => {
-           if (error.response && error.response.status === 403) {
-          EventBus.dispatch("logout");}
+           if (error.response && error.response.status === 404) {
+          alert("Что-то пошло не так!");};
+          if (error.response && error.response.status === 401) {
+            EventBus.dispatch("logout");}
       })
       .catch(e => {
         console.log(e);

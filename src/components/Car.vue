@@ -71,8 +71,8 @@
           this.message = 'Данные по автомобилю успешно обновлены!';
         },
         error => {
-           if (error.response && error.response.status === 403) {
-          EventBus.dispatch("logout");}
+           if (error.response && error.response.status === 404) {
+            alert("Что-то пошло не так!");}
         })
         .catch(e => {
           console.log(e);

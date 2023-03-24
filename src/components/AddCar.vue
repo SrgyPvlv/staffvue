@@ -75,7 +75,7 @@
             this.submitted = true;
           },
           error => {
-           if (error.response && error.response.status === 403) {
+           if (error.response && (error.response.status === 404)) {
           EventBus.dispatch("logout");}
           }
           )
