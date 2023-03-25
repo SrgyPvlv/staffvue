@@ -126,8 +126,10 @@ export default{
                 this.refreshList();
             },
             error => {
-             if (error.response && error.response.status === 404) {
-             EventBus.dispatch("logout");}
+                if (error.response && error.response.status === 410) {
+                    EventBus.dispatch("logout");};
+                if (error.response && error.response.status === 404) {
+                    alert("Ошибка!\nЧто-то пошло не так!\nВозможно Вы пытаетесь удалить подразделение, в котором есть сотрудники!?");}
             })
             .catch(e => {
             console.log(e);});
@@ -144,8 +146,10 @@ export default{
                 this.refreshList();
             },
             error => {
-             if (error.response && error.response.status === 404) {
-             EventBus.dispatch("logout");}
+                if (error.response && error.response.status === 410) {
+                    EventBus.dispatch("logout");};
+                if (error.response && error.response.status === 501) {
+                    alert("Ошибка! Что-то пошло не так!");}
             })
             .catch(e => {
             console.log(e);});
@@ -165,8 +169,10 @@ export default{
                 this.newfunctiongroup=""
             },
             error => {
-             if (error.response && error.response.status === 404) {
-             EventBus.dispatch("logout");}
+                if (error.response && error.response.status === 410) {
+                    EventBus.dispatch("logout");};
+                if (error.response && error.response.status === 501) {
+                    alert("Ошибка! Что-то пошло не так!");}
             })
             .catch(e => {
             console.log(e);});

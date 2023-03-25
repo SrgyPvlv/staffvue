@@ -112,8 +112,8 @@ export default{
             error => {
                 if (error.response && error.response.status === 410) {
                     EventBus.dispatch("logout");};
-          if (error.response && error.response.status === 404) {
-            alert("Что-то пошло не так!");}
+                if (error.response && error.response.status === 404) {
+                    alert("Ошибка!\nЧто-то пошло не так!\nВозможно Вы пытаетесь удалить автомобиль закрепленный за сотрудником!?");}
             })
             .catch(e => {
             console.log(e);});

@@ -143,8 +143,10 @@
             this.submitted = true;
           },
           error => {
-           if (error.response && error.response.status === 404) {
-          EventBus.dispatch("logout");}
+            if (error.response && error.response.status === 410) {
+                    EventBus.dispatch("logout");};
+            if (error.response && error.response.status === 501) {
+                    alert("Ошибка! Что-то пошло не так!");}
           })
           .catch(e => {
             console.log(e);
