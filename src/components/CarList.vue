@@ -1,7 +1,7 @@
 <template>
     <div class="list row">
         <div class="col-md-6">
-            <form @submit="findByNumberModel">
+            <form @submit.prevent="findByNumberModel">
             <div class="input-group mb-3"> 
                 <input type="text" class="form-control" placeholder="Поиск по номеру, модели" v-model="filter" />
                 <div class="input-group-append ms-3">

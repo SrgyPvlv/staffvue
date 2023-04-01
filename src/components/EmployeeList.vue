@@ -3,7 +3,7 @@
         <div class="col-md-8">
             
             <div class="input-group mb-3">
-                <form @submit="findByNameMobilePosition">
+                <form @submit.prevent="findByNameMobilePosition">
                 <input type="text" class="form-control inputform" placeholder="Поиск по ФИО, мобильному, должности" v-model="filter" />
                 </form>
                 <div class="input-group-append ms-2">
@@ -221,11 +221,11 @@ export default{
         findByNameMobilePosition(){
             EmployeesDataService.findByNameMobilePosition(this.filter).
             then(response=>{
+                this.employees=response.data;
                 this.currentEmployee = null;
                 this.currentIndex = -1;
                 this.factSelected="Подразделение (факт)";
                 this.staffSelected="Подразделение (штат)";
-                this.employees=response.data;
                 console.log(response.data);
             })
             .catch(e=>{console.log(e)});
