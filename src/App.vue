@@ -9,6 +9,9 @@
       <li class="nav-item">
         <RouterLink to="/cars" class="nav-link">Автомобили</RouterLink>
       </li>
+      <li>
+        <RouterLink to="/mail" class="nav-link">Почта</RouterLink>
+      </li>
       <li v-if="showAdminBoard || showSuperAdminBoard" class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Добавить</a>
         <ul class="dropdown-menu">

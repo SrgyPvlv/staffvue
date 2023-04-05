@@ -18,7 +18,8 @@ const router=createRouter({
         {path:'/groupes', name:'groupes', component:()=>import("../components/GroupeList.vue")},
         {path:'/funcgroupes', name:'funcgroupes', component:()=>import("../components/FunctionGroupList.vue")},
         {path:'/carmodels', name:'carmodels', component:()=>import("../components/CarModelList.vue")},
-        {path:'/users', name:'users', component:()=>import("../components/UserList.vue")}
+        {path:'/users', name:'users', component:()=>import("../components/UserList.vue")},
+        {path:'/mail', name:'mail', component:()=>import("../components/SendMail.vue")}
     ]
 });
 
