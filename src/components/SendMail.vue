@@ -7,8 +7,12 @@
             <div class="col-md-12 indiv">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item" v-for="(department, index) in departments" :key="index">
-                    {{department.functionGroup!=null? department.functionGroup.functionGroup: department.groupe!=null?department.groupe.groupe: department.division.division}}
-                    <input type="checkbox" :value="department" v-model="checkedDepartments" />
+                    <input type="checkbox" class="me-3" :value="department" v-model="checkedDepartments" />
+                    {{department.functionGroup!=null? department.functionGroup.functionGroup: department.groupe!=null?department.groupe.groupe: department.division.division}}  
+                </li>
+                <li class="list-group-item" v-for="(position, index) in positions" :key="index">
+                    <input type="checkbox" class="me-3" :value="position" v-model="checkedPositions" />
+                    {{position.position}}
                 </li>
             </ul>
             </div>
@@ -16,18 +20,21 @@
         </div>
     
         <div class="col-md-4">
-            <div v-if="checkedDepartments.length!=0">
+            <div v-if="checkedDepartments.length!=0 || checkedPositions.length!=0">
                 <h3> Адресаты </h3>
                 <div>
                     <ul>
                       <li  v-for="(checkedDepartment, index) in checkedDepartments" :key="index">
                        {{checkedDepartment.functionGroup!=null? checkedDepartment.functionGroup.functionGroup: checkedDepartment.groupe!=null?checkedDepartment.groupe.groupe: checkedDepartment.division.division}} 
                       </li>
+                      <li  v-for="(checkedPosition, index) in checkedPositions" :key="index">
+                       {{checkedPosition.position}} 
+                      </li>
                     </ul>   
                 </div>
 
                 <div>
-                <button @click="sendMail" class="btn btn-outline-success mt-3">Отправить</button>
+                <button @click="sendMail" class="btn btn-outline-success mt-2">Отправить</button>
                 </div>
             </div>
 
@@ -42,6 +49,7 @@
 
 <script>
 import DepartmentsDataService from '../services/DepartmentsDataService';
+import PositionsDataService from '../services/PositionsDataService';
 import EventBus from "../common/EventBus"
 
 export default{
@@ -49,7 +57,9 @@ export default{
     data(){
         return{
             departments:[],
-            checkedDepartments:[]
+            checkedDepartments:[],
+            positions:[],
+            checkedPositions:[]
         };
     },
 
@@ -67,11 +77,20 @@ export default{
             })
             .catch(e=>{console.log(e)});
         },
+        retrievePositions(){
+            PositionsDataService.getAll().
+            then(response=>{
+                this.positions=response.data.filter(e =>e.position=='руководитель группы' || e.position=='эксперт');
+                console.log(response.data);
+            })
+            .catch(e=>{console.log(e)});
+        },
         sendMail(){}
         },       
 
     mounted(){
             this.retrieveDepartments();
+            this.retrievePositions()
         }
 };
 </script>
@@ -85,6 +104,11 @@ export default{
 }
 .indiv{
     position: absolute   
+}
+input[type=checkbox] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
 }
 
 /* width */
