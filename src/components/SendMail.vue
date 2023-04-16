@@ -11,7 +11,7 @@
                     {{department.functionGroup!=null? department.functionGroup.functionGroup: department.groupe!=null?department.groupe.groupe: department.division.division}}  
                 </li>
                 <li class="list-group-item" v-for="(position, index) in positions" :key="index">
-                    <input type="checkbox" class="me-3" :value="position" v-model="checkedPositions" />
+                    <input type="checkbox" class="me-3" :value="position.position" v-model="checkedPositions" />
                     {{position.position}}
                 </li>
             </ul>
@@ -28,7 +28,7 @@
                        {{checkedDepartment.functionGroup!=null? checkedDepartment.functionGroup.functionGroup: checkedDepartment.groupe!=null?checkedDepartment.groupe.groupe: checkedDepartment.division.division}} 
                       </li>
                       <li  v-for="(checkedPosition, index) in checkedPositions" :key="index">
-                       {{checkedPosition.position}} 
+                       {{checkedPosition}} 
                       </li>
                     </ul>   
                 </div>
@@ -36,6 +36,13 @@
                 <div>
                 <button @click="sendMail" class="btn btn-outline-success mt-2">Отправить</button>
                 </div>
+                
+                <div v-if="loadMails" class="mt-5">
+                <button class="btn btn-outline-primary btn-lg">
+                  <span class="spinner-border spinner-border-sm"></span>
+                  Загружается...
+                </button>
+                </div>   
             </div>
 
             <div v-else>
@@ -50,6 +57,7 @@
 <script>
 import DepartmentsDataService from '../services/DepartmentsDataService';
 import PositionsDataService from '../services/PositionsDataService';
+import EmployeesDataService from '../services/EmployeesDataService';
 import EventBus from "../common/EventBus"
 
 export default{
@@ -59,15 +67,20 @@ export default{
             departments:[],
             checkedDepartments:[],
             positions:[],
-            checkedPositions:[]
+            checkedPositions:[],
+            employees:[],
+            loadMails: false    
         };
     },
 
     methods:{
         refreshList(){
-            this.retrieveDepartments();
             this.departments="";
-            this.checkedDepartments=""
+            this.checkedDepartments="";
+            this.positions="";
+            this.checkedPositions="";
+            this.retrieveDepartments();
+            this.retrievePositions();
         },
         retrieveDepartments(){
             DepartmentsDataService.getAll().
@@ -85,7 +98,26 @@ export default{
             })
             .catch(e=>{console.log(e)});
         },
-        sendMail(){}
+        selectedEmployees(){
+            var newCheckedDepartments=this.checkedDepartments.map(e => e.functionGroup!=null? e.functionGroup.functionGroup: e.groupe!=null? e.groupe.groupe: e.division.division );
+
+            EmployeesDataService.findByFactDepartmentOrPositionIn(newCheckedDepartments,this.checkedPositions).
+            then(response =>{
+                this.employees=response.data;
+                console.log(response.data);
+            })
+            .catch(e=>{console.log(e)})
+        },
+        redirectTo(){
+            var mails=this.employees.map(e => e.email).join(';');
+            window.location.href="mailto:" + mails;
+        },
+        sendMail(){
+            this.loadMails=true;
+            this.selectedEmployees();
+            setTimeout(() => this.redirectTo(), 3000);
+            setTimeout(() => (this.loadMails=false), 4000);
+        }
         },       
 
     mounted(){

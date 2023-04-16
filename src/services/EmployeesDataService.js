@@ -33,6 +33,10 @@ class EmployeesDataService{
     findByStaffDivisionOrGroupeOrFunctionGroupOrderByNameAsc(selected){
         return api.get(`/employees/staffdepartment?filter=${selected}`);
     }
+
+    findByFactDepartmentOrPositionIn(checkedDepartments,checkedPositions){
+        return api.get(`/employees/factDepartmentOrPosition?filterDepartment=${checkedDepartments}&filterPosition=${checkedPositions}`);
+    }    
 };
 
 export default new EmployeesDataService();
