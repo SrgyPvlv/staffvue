@@ -93,7 +93,7 @@ export default{
         retrievePositions(){
             PositionsDataService.getAll().
             then(response=>{
-                this.positions=response.data.filter(e =>e.position=='руководитель группы' || e.position=='эксперт');
+                this.positions=response.data.filter(e =>e.position=='руководитель группы' || e.position=='эксперт' || e.position=='начальник отдела');
                 console.log(response.data);
             })
             .catch(e=>{console.log(e)});
