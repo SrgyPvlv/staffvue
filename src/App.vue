@@ -12,6 +12,9 @@
       <li>
         <RouterLink to="/mail" class="nav-link">Почта</RouterLink>
       </li>
+      <li>
+        <Link @click="exelDownload" class="nav-link exelpointer"><font-awesome-icon icon="fa-solid fa-download" /> Exel</Link>
+      </li>
       <li v-if="showAdminBoard || showSuperAdminBoard" class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Добавить</a>
         <ul class="dropdown-menu">
@@ -80,7 +83,7 @@
 </template>
 
 <script>
-import EventBus from "./common/EventBus";
+import EventBus from "./common/EventBus"
 
 export default{
   name:"app",
@@ -106,6 +109,9 @@ export default{
     logOut() {
       this.$store.dispatch('auth/logout');
       this.$router.push('/login');
+    },
+    exelDownload(){
+      window.location.href="http://localhost:8080/api/v1/exel/download";
     }
   },
 
@@ -128,7 +134,7 @@ export default{
 .footer{
   background: #778899;
 }
-.exitpointer{
+.exitpointer,.exelpointer{
   cursor:pointer;
 }
 /* width */
