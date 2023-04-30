@@ -49,6 +49,12 @@
           </li>
           <li>
             <RouterLink to="/carmodels" class="dropdown-item">Модели авто</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/sertificatenames" class="dropdown-item">Типы удостоверений</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/approvalgruppas" class="dropdown-item">Группы безопасности</RouterLink>
           </li>    
         </ul>
       </li>
