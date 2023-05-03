@@ -1,154 +1,128 @@
 <template>
-    <div v-if="currentEmployee" class="edit-form">
-      <h4>Сотрудник</h4>
-      <form class="was-validated">
-        <div class="form-group">
-          <label for="name" class="fw-bold">ФИО сотрудника</label>
-          <input type="text" class="form-control mt-1" id="name" required v-model="currentEmployee.name" name="name" placeholder="Фамилия Имя Отчество"/>
+    <div class="list row">
+        <h3> Список подразделений </h3>
+        <p class="fw-bold fst-italic mb-3">Новое подразделение</p>        
+        
+        <div class="list-group list-group-horizontal list-group-flush"> 
+        <div class="list-group-item noborder">
+           <select class="form-select optwidth" id="newdivision" name="newdivision" v-model="newdivision" required>
+             <option selected disabled value="" class="fst-italic">Отдел</option>
+             <option v-for="(division, index) in divisions" :key="index" :value="division" class="noborder">
+              {{ division.division }}
+             </option>
+            </select>
+            <p>{{this.newdivision}}</p>
+        </div>
+        <div class="list-group-item noborder">
+           <select class="form-select optwidth" id="newgroupe" name="newgroupe" v-model="newgroupe" required>
+             <option selected disabled value="" class="fst-italic">Группа</option>
+             <option :value="null">Нет</option>
+             <option v-for="(groupe, index) in groupes" :key="index" :value="groupe">
+              {{ groupe.groupe }}
+             </option>
+           </select>
+           <p>{{this.newgroupe}}</p>
+        </div>
+        <div class="list-group-item noborder">
+           <select class="form-select optwidth" id="newfunctiongroup" name="newfunctiongroup" v-model="newfunctiongroup" required>
+             <option selected disabled value="" class="fst-italic">Функциональная группа</option>
+             <option :value="null">Нет</option>
+             <option v-for="(funcgroupe, index) in funcgroupes" :key="index" :value="funcgroupe">
+               {{ funcgroupe.functionGroup }}
+             </option>
+           </select>
+           <p>{{this.newfunctiongroup}}</p>
+        </div>
+        <div class="list-group-item noborder">
+        <button @click="createDepartment()" class="badge rounded-pill bg-info ms-3 border-0 delete">Создать</button>
+        </div>
         </div>
 
-        <div class="form-group mt-3">
-          <label for="mobilePhone" class="fw-bold">Мобильный телефон</label>
-          <input type="text" class="form-control mt-1" id="mobilePhone" required v-model="currentEmployee.mobilePhone" name="mobilePhone" placeholder="Введите номер в формате: +79112223344"/>
+        <div class="col-md-12 outdiv shadow mt-3">
+          <div class="col-md-12 indiv">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" v-for="(department,index) in departments" :key="index">
+            <ul class="list-group list-group-horizontal list-group-flush">
+            <li class="list-group-item noborder">
+                <select class="form-select noborder optwidth" id="division" name="division" v-model="department.division" required>
+                 <option v-for="(division, index) in divisions" :key="index" :value="division">
+                   {{ division.division }}
+                 </option>
+                </select>
+            </li>
+            <li class="list-group-item noborder">
+                <select class="form-select noborder optwidth" id="groupe" name="groupe" v-model="department.groupe" required>
+                  <option :value="null">Нет</option>
+                  <option v-for="(groupe, index) in groupes" :key="index" :value="groupe">
+                   {{ groupe.groupe }}
+                  </option>
+                </select>
+            </li>
+            <li class="list-group-item noborder">
+                <select class="form-select noborder optwidth" id="functionGroup" name="functionGroup" v-model="department.functionGroup" required>
+                  <option :value="null">Нет</option>
+                  <option v-for="(funcgroupe, index) in funcgroupes" :key="index" :value="funcgroupe">
+                   {{ funcgroupe.functionGroup }}
+                 </option>
+                </select>
+            </li>
+            <li class="list-group-item noborder">
+                <button @click="editDepartment(department.id,department.division,department.groupe,department.functionGroup)" class="badge rounded-pill bg-success ms-3 border-0 delete">Сохранить</button>
+                <button @click="deleteDepartment(department.id)" class="badge rounded-pill bg-danger ms-3 border-0 delete">Удалить</button>
+            </li>
+            </ul>
+            </li>
+          </ul>
+          </div>
         </div>
-
-        <div class="form-group mt-3">
-          <label for="birthday" class="fw-bold">Дата рождения</label>
-          <input type="date" class="form-control mt-1" id="birthday" required v-model="currentEmployee.birthday" name="birthday"/>
-        </div>
-
-        <div class="form-group mt-3">
-          <label for="localPhone" class="fw-bold">Местный телефон</label>
-          <input type="number" class="form-control mt-1" id="localPhone" min="1" v-model="currentEmployee.localPhone" name="localPhone"/>
-        </div>
-
-        <div class="form-group mt-3">
-          <label for="employeeId" class="fw-bold">Табельный номер</label>
-          <input type="number" class="form-control mt-1" id="employeeId" min="1" required v-model="currentEmployee.employeeId" name="employeeId"/>
-        </div>
-
-        <div class="form-group mt-3">
-          <label for="login" class="fw-bold">Логин</label>
-          <input type="text" class="form-control mt-1" id="login" required v-model="currentEmployee.login" name="login"/>
-        </div>
-
-        <div class="form-group mt-3">
-          <label for="email" class="fw-bold">E-mail</label>
-          <input type="email" class="form-control mt-1" id="email" required v-model="currentEmployee.email" name="email"/>
-        </div>
-
-        <div class="form-group mt-3">
-          <label for="employeeComment" class="fw-bold">Комментарий</label>
-          <input type="text" class="form-control mt-1" id="employeeComment" v-model="currentEmployee.employeeComment" name="employeeComment"/>
-        </div>
-
-        <div class="form-group mt-3">
-          <label for="factDepartment" class="fw-bold">Подразделение (факт):</label>
-          <select class="form-select mt-1" id="factDepartment" name="factDepartment" v-model="currentEmployee.factDepartment" required>
-           <option v-for="(department,index) in departments" :key="index" :value="department">
-            {{ department.division!=null? department.division.division:'' }}
-            {{ department.groupe!=null? '/'+department.groupe.groupe:'' }}
-            {{ department.functionGroup!=null? '/'+department.functionGroup.functionGroup:'' }}
-           </option>
-          </select>
-        </div>
-
-        <div class="form-group mt-3">
-          <label for="staffDepartment" class="fw-bold">Подразделение (по штату):</label>
-          <select class="form-select mt-1" id="staffDepartment" name="staffDepartment" v-model="currentEmployee.staffDepartment" required>
-           <option v-for="(department,index) in departments" :key="index" :value="department">
-            {{ department.division!=null? department.division.division:'' }}
-            {{ department.groupe!=null? '/'+department.groupe.groupe:'' }}
-            {{ department.functionGroup!=null? '/'+department.functionGroup.functionGroup:'' }}
-           </option>
-          </select>
-        </div>
-  
-        <div class="form-group mt-3">
-          <label for="position" class="fw-bold">Должность</label>
-          <select class="form-select mt-1" id="position" name="position" v-model="currentEmployee.position" required>
-           <option v-for="(position,index) in positions" :key="index" :value="position">{{position.position}}</option>
-          </select>
-        </div>
-
-        <div class="form-group mt-3">
-          <label for="car" class="fw-bold">Автомобиль</label>
-          <select class="form-select mt-1" id="car" name="car" v-model="currentEmployee.car">
-           <option :value="null">Нет</option>
-           <option v-if="currentEmployee.car!=null" :value="currentEmployee.car">{{currentEmployee.car.carNumber}}</option>
-           <option v-for="(car,index) in cars" :key="index" :value="car">{{car.carNumber}}</option>
-          </select>
-        </div>
-      </form>
-
-      <div class="mt-3">
-      <button @click="updateEmployee" class="btn btn-outline-success me-3">Обновить</button>
-      </div>
-
-      <h5 class="mt-3 text-success">{{ message }}</h5>
-    </div>
-
-    <div v-else>
-      <br>
-      <p>Выберите сотрудника...</p>
+        
     </div>
 </template>
 
 <script>
-import EmployeesDataService from '../services/EmployeesDataService'
-import CarsDataService from '../services/CarsDataService'
-import PositionsDataService from '../services/PositionsDataService'
-import DepartmentsDataService from '../services/DepartmentsDataService'
+import SertificatesDataService from '../services/SertificatesDataService'
+import SertificateNamesDataService from '../services/SertificateNamesDataService'
+import ApprovalGruppasDataService from '../services/ApprovalGruppasDataService'
 import EventBus from "../common/EventBus"
 
 export default {
-  name: "employee",
+  name: "sertificates",
   data() {
     return {
-      currentEmployee:null,
       message:"",
-      cars:[],
-      positions:[],
-      departments:[],
-      newEmployeeCar:null
+      sertificates:[];
+      sertificateNames:[];
+      approvalGruppas:[]
     };
   },
 
-  methods: {
-      getEmployee(id) {
-      EmployeesDataService.get(id)
-      .then(response => {
-        var currentEmployeeResponse = response.data;
-        var currentEmployeeCar=null;
-        if(currentEmployeeResponse.car!=null){
-        currentEmployeeCar = {id: currentEmployeeResponse.car.id, carNumber : currentEmployeeResponse.car.carNumber, carComment : currentEmployeeResponse.car.carComment, carModel: currentEmployeeResponse.car.carModel};};
-        this.currentEmployee = {
-          id: currentEmployeeResponse.id,
-          name: currentEmployeeResponse.name,
-          mobilePhone: currentEmployeeResponse.mobilePhone,
-          birthday: currentEmployeeResponse.birthday,
-          localPhone: currentEmployeeResponse.localPhone,
-          employeeId: currentEmployeeResponse.employeeId,
-          login: currentEmployeeResponse.login,
-          email: currentEmployeeResponse.email,
-          employeeComment: currentEmployeeResponse.employeeComment,
-          factDepartment: currentEmployeeResponse.factDepartment,
-          staffDepartment: currentEmployeeResponse.staffDepartment,
-          car: currentEmployeeCar,
-          position: currentEmployeeResponse.position
-        };
-        console.log(response.data)
-      })
-      .catch(e => {
-        console.log(e);
-      });
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+    showAdminBoard() {
+      if (this.currentUser && this.currentUser['roles']) {
+        return this.currentUser['roles'].includes('ROLE_ADMIN');
+      }
+      return false;
+    }
   },
 
-  updateEmployee() {
-    EmployeesDataService.update(this.currentEmployee.id, this.currentEmployee)
+  methods: {
+      getSertificatesByEmployeesId(id) {
+        SertificatesDataService.getByEmployeesId(id)
+      .then(response => {
+        this.sertificates = response.data;
+        console.log(response.data)
+      })
+      .catch(e => {console.log(e);});
+  },
+
+  updateSertificate() {
+    SertificatesDataService.update(this.currentSertificate.id, this.currentSertificate)
       .then(response => {
         console.log(response.data);
-        this.message = 'Данные по сотруднику успешно обновлены!';
+        this.message = 'Данные по сертификату успешно обновлены!';
       },
       error => {
         if (error.response && error.response.status === 410) {
@@ -160,44 +134,70 @@ export default {
         console.log(e);
       });
   },
-
-  retrievePositions(){
-            PositionsDataService.getAll().
+  deleteDepartment(id) {
+            DepartmentsDataService.delete(id).
+            then(response => {
+                console.log(response.data);
+                this.refreshList();
+            },
+            error => {
+                if (error.response && error.response.status === 410) {
+                    EventBus.dispatch("logout");};
+                if (error.response && error.response.status === 404) {
+                    alert("Ошибка!\nЧто-то пошло не так!\nВозможно Вы пытаетесь удалить подразделение, в котором есть сотрудники!?");}
+            })
+            .catch(e => {
+            console.log(e);});
+        },
+  createDepartment() {
+            var data= {
+                division: this.newdivision,
+                groupe: this.newgroupe,
+                functionGroup: this.newfunctiongroup
+            };
+            DepartmentsDataService.create(data).
+            then(response => {
+                console.log(response.data);
+                this.refreshList();
+                this.newdivision="",
+                this.newgroupe="",
+                this.newfunctiongroup=""
+            },
+            error => {
+                if (error.response && error.response.status === 410) {
+                    EventBus.dispatch("logout");};
+                if (error.response && error.response.status === 501) {
+                    alert("Ошибка! Что-то пошло не так!");}
+            })
+            .catch(e => {
+            console.log(e);});
+        },      
+  retrieveSertificateNames(){
+    SertificateNamesDataService.getAll().
             then(response=>{
-                this.positions=response.data;
+                this.sertificateNames=response.data;
                 console.log(response.data);
             })
             .catch(e=>{console.log(e)});
-          },
-
-          retrieveCars(){
-            CarsDataService.getAll().
+  },
+  retrieveApprovalGruppas(){
+    ApprovalGruppasDataService.getAll().
             then(response=>{
-                var carz=response.data;
-                this.cars = carz.filter(e=>e.employee==null).map(c => {
-                var newcar = {id: c.id, carNumber : c.carNumber, carComment : c.carComment, carModel: c.carModel};
-                return newcar;});
-                console.log(response.data);
-                })
-            .catch(e=>{console.log(e)});
-          },
-          
-          retrieveDepartments(){
-            DepartmentsDataService.getAll().
-            then(response=>{
-                this.departments=response.data;
+                this.approvalGruppas=response.data;
                 console.log(response.data);
             })
             .catch(e=>{console.log(e)});
-          }
-          },
+  },
+  refreshList(){
+    this.retrieveDepartments()
+  }
+  },
 
   mounted(){
     this.message = '';
-    this.getEmployee(this.$route.params.id);
-    this.retrievePositions();
-    this.retrieveCars();
-    this.retrieveDepartments()
+    this.getSertificatesByEmployeesId(this.$route.params.id);
+    this.retrieveSertificateNames();
+    this.retrieveApprovalGruppas()
   }
 }
 </script>
