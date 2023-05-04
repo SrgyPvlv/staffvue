@@ -10,7 +10,7 @@ class SertificatesDataService{
         return api.get("/sertificates");
     }
 
-    getByEmployeeId(){
+    getByEmployeeId(id){
         return api.get(`/sertificates/employeesid/${id}`);
     }
 

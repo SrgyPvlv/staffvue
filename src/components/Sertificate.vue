@@ -1,74 +1,75 @@
 <template>
     <div class="list row">
-        <h3> Список подразделений </h3>
-        <p class="fw-bold fst-italic mb-3">Новое подразделение</p>        
-        
+        <h3> Список сертификатов </h3>
+        <p class="fw-bold fst-italic mb-3">Новый сертификат</p>        
+
         <div class="list-group list-group-horizontal list-group-flush"> 
         <div class="list-group-item noborder">
-           <select class="form-select optwidth" id="newdivision" name="newdivision" v-model="newdivision" required>
-             <option selected disabled value="" class="fst-italic">Отдел</option>
-             <option v-for="(division, index) in divisions" :key="index" :value="division" class="noborder">
-              {{ division.division }}
+           <select class="form-select optwidth" id="newSertificateName" name="newSertificateName" v-model="newSertificateName" required>
+             <option selected disabled value="" class="fst-italic">Тип удостоверения</option>
+             <option :value="null">Нет</option>
+             <option v-for="(sertificateName, index) in sertificateNames" :key="index" :value="sertificateName" class="noborder">
+              {{ sertificateName.sertificateName }}
              </option>
             </select>
-            <p>{{this.newdivision}}</p>
         </div>
         <div class="list-group-item noborder">
-           <select class="form-select optwidth" id="newgroupe" name="newgroupe" v-model="newgroupe" required>
-             <option selected disabled value="" class="fst-italic">Группа</option>
+          <input type="text" id="newSertificateNumber" name="newSertificateNumber" class="newSertificateNumber" placeholder="Номер удостоверения" v-model="newSertificateNumber"/>
+        </div>
+        <div class="list-group-item noborder">
+           <select class="form-select optwidth" id="newApprovalGruppa" name="newApprovalGruppa" v-model="newApprovalGruppa" required>
+             <option selected disabled value="" class="fst-italic">Группа безопасности</option>
              <option :value="null">Нет</option>
-             <option v-for="(groupe, index) in groupes" :key="index" :value="groupe">
-              {{ groupe.groupe }}
+             <option v-for="(approvalGruppa, index) in approvalGruppas" :key="index" :value="approvalGruppa">
+               {{ approvalGruppa.approvalGruppa }}
              </option>
            </select>
-           <p>{{this.newgroupe}}</p>
         </div>
         <div class="list-group-item noborder">
-           <select class="form-select optwidth" id="newfunctiongroup" name="newfunctiongroup" v-model="newfunctiongroup" required>
-             <option selected disabled value="" class="fst-italic">Функциональная группа</option>
-             <option :value="null">Нет</option>
-             <option v-for="(funcgroupe, index) in funcgroupes" :key="index" :value="funcgroupe">
-               {{ funcgroupe.functionGroup }}
-             </option>
-           </select>
-           <p>{{this.newfunctiongroup}}</p>
+          <label for="newIssueDate" class="fw-bold fst-italic me-3">Дата выдачи</label>
+          <input type="date" id="newIssueDate" name="newIssueDate" class="newIssueDate" v-model="newIssueDate"/>
         </div>
         <div class="list-group-item noborder">
-        <button @click="createDepartment()" class="badge rounded-pill bg-info ms-3 border-0 delete">Создать</button>
+          <label for="newExpirationDate" class="fw-bold fst-italic me-3">Дата окончания</label>
+          <input type="date" id="newExpirationDate" name="newExpirationDate" class="newExpirationDate" v-model="newExpirationDate"/>
+        </div>
+        <div class="list-group-item noborder">
+        <button @click="createSertificate()" class="badge rounded-pill bg-info ms-3 border-0 delete">Создать</button>
         </div>
         </div>
 
         <div class="col-md-12 outdiv shadow mt-3">
           <div class="col-md-12 indiv">
           <ul class="list-group list-group-flush">
-            <li class="list-group-item" v-for="(department,index) in departments" :key="index">
+            <li class="list-group-item" v-for="(sertificate,index) in sertificates" :key="index">
             <ul class="list-group list-group-horizontal list-group-flush">
             <li class="list-group-item noborder">
-                <select class="form-select noborder optwidth" id="division" name="division" v-model="department.division" required>
-                 <option v-for="(division, index) in divisions" :key="index" :value="division">
-                   {{ division.division }}
+                <select class="form-select noborder optwidth" id="sertificateName" name="sertificateName" v-model="sertificate.sertificateName" required>
+                 <option v-for="(sertificateName, index) in sertificateNames" :key="index" :value="sertificateName">
+                   {{ sertificateName.sertificateName }}
                  </option>
                 </select>
             </li>
             <li class="list-group-item noborder">
-                <select class="form-select noborder optwidth" id="groupe" name="groupe" v-model="department.groupe" required>
-                  <option :value="null">Нет</option>
-                  <option v-for="(groupe, index) in groupes" :key="index" :value="groupe">
-                   {{ groupe.groupe }}
-                  </option>
-                </select>
+              <input type="text" id="sertificateNumber" name="sertificateNumber" class="sertificateNumber" v-model="sertificate.sertificateNumber"/>
             </li>
             <li class="list-group-item noborder">
-                <select class="form-select noborder optwidth" id="functionGroup" name="functionGroup" v-model="department.functionGroup" required>
+                <select class="form-select noborder optwidth" id="approvalGruppa" name="approvalGruppa" v-model="sertificate.approvalGruppa" required>
                   <option :value="null">Нет</option>
-                  <option v-for="(funcgroupe, index) in funcgroupes" :key="index" :value="funcgroupe">
-                   {{ funcgroupe.functionGroup }}
+                  <option v-for="(approvalGruppa, index) in approvalGruppas" :key="index" :value="approvalGruppa">
+                   {{ approvalGruppa.approvalGruppa }}
                  </option>
                 </select>
             </li>
             <li class="list-group-item noborder">
-                <button @click="editDepartment(department.id,department.division,department.groupe,department.functionGroup)" class="badge rounded-pill bg-success ms-3 border-0 delete">Сохранить</button>
-                <button @click="deleteDepartment(department.id)" class="badge rounded-pill bg-danger ms-3 border-0 delete">Удалить</button>
+              <input type="date" id="issueDate" name="issueDate" class="issueDate" v-model="sertificate.issueDate"/>
+            </li>
+            <li class="list-group-item noborder">
+              <input type="date" id="expirationDate" name="expirationDate" class="expirationDate" v-model="sertificate.expirationDate"/>
+            </li>
+            <li class="list-group-item noborder">
+                <button @click="updateSertificate(sertificate.id,sertificate.sertificateName,sertificate.sertificateNumber,sertificate.approvalGruppa,sertificate.issueDate,sertificate.expirationDate)" class="badge rounded-pill bg-success ms-3 border-0 delete">Сохранить</button>
+                <button @click="deleteSertificate(sertificate.id)" class="badge rounded-pill bg-danger ms-3 border-0 delete">Удалить</button>
             </li>
             </ul>
             </li>
@@ -90,9 +91,14 @@ export default {
   data() {
     return {
       message:"",
-      sertificates:[];
-      sertificateNames:[];
-      approvalGruppas:[]
+      sertificates:[],
+      sertificateNames:[],
+      approvalGruppas:[],
+      newSertificateName:"",
+      newSertificateNumber:"",
+      newApprovalGruppa:"",
+      newIssueDate:"",
+      newExpirationDate:""
     };
   },
 
@@ -110,7 +116,7 @@ export default {
 
   methods: {
       getSertificatesByEmployeesId(id) {
-        SertificatesDataService.getByEmployeesId(id)
+        SertificatesDataService.getByEmployeeId(id)
       .then(response => {
         this.sertificates = response.data;
         console.log(response.data)
@@ -134,8 +140,8 @@ export default {
         console.log(e);
       });
   },
-  deleteDepartment(id) {
-            DepartmentsDataService.delete(id).
+  deleteSertificate(id) {
+    SertificatesDataService.delete(id).
             then(response => {
                 console.log(response.data);
                 this.refreshList();
@@ -144,24 +150,28 @@ export default {
                 if (error.response && error.response.status === 410) {
                     EventBus.dispatch("logout");};
                 if (error.response && error.response.status === 404) {
-                    alert("Ошибка!\nЧто-то пошло не так!\nВозможно Вы пытаетесь удалить подразделение, в котором есть сотрудники!?");}
+                    alert("Ошибка!\nЧто-то пошло не так!\nВозможно Вы пытаетесь удалить сертификат действующего сотрудника!?");}
             })
             .catch(e => {
             console.log(e);});
         },
-  createDepartment() {
+  createSertificate() {
             var data= {
-                division: this.newdivision,
-                groupe: this.newgroupe,
-                functionGroup: this.newfunctiongroup
+              sertificateName: this.newSertificateName,
+              sertificateNumber: this.newSertificateNumber,
+              approvalGruppa: this.newApprovalGruppa,
+              issueDate: this.newIssueDate,
+              expirationDate: this.newExpirationDate
             };
-            DepartmentsDataService.create(data).
+            SertificatesDataService.create(data).
             then(response => {
                 console.log(response.data);
                 this.refreshList();
-                this.newdivision="",
-                this.newgroupe="",
-                this.newfunctiongroup=""
+                this.newSertificateName="",
+                this.newSertificateNumber="",
+                this.newApprovalGruppa="",
+                this.newIssueDate="",
+                this.newExpirationDate=""
             },
             error => {
                 if (error.response && error.response.status === 410) {
@@ -189,7 +199,7 @@ export default {
             .catch(e=>{console.log(e)});
   },
   refreshList(){
-    this.retrieveDepartments()
+    this.getSertificatesByEmployeesId(this.$route.params.id)
   }
   },
 
@@ -205,6 +215,52 @@ export default {
 <style>
 .edit-form {
 max-width: 450px;
+}
+.edit{
+    margin-top: 10px;
+    text-decoration: none
+}
+.delete{
+    text-decoration: none
+}
+.car{
+    cursor: pointer
+}
+.outdiv{
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 700px;
+    position: relative;
+}
+.indiv{
+    position: absolute   
+}
+.optwidth{
+    width:300px
+}
+.noborder{
+    border:0px
+}
+/* width */
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 2px grey; 
+  border-radius: 7px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #C0C0C0; 
+  border-radius: 7px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #b30000; 
 }
 </style>
 
