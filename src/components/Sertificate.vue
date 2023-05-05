@@ -1,7 +1,7 @@
 <template>
     <div class="list row">
         <h3> Список сертификатов </h3>
-        <p class="fw-bold fst-italic mb-3">Новый сертификат</p>        
+        <p class="fw-bold fst-italic mb-3">Новое удостоверение</p>        
 
         <div class="list-group list-group-horizontal list-group-flush"> 
         <div class="list-group-item noborder">
@@ -25,12 +25,12 @@
              </option>
            </select>
         </div>
-        <div class="list-group-item noborder">
-          <label for="newIssueDate" class="fw-bold fst-italic me-3">Дата выдачи</label>
+        <div class="list-group-item noborder ms-3">
+          <label for="newIssueDate" class="fw-bold fst-italic mb-1">Дата выдачи</label><br>
           <input type="date" id="newIssueDate" name="newIssueDate" class="newIssueDate" v-model="newIssueDate"/>
         </div>
         <div class="list-group-item noborder">
-          <label for="newExpirationDate" class="fw-bold fst-italic me-3">Дата окончания</label>
+          <label for="newExpirationDate" class="fw-bold fst-italic mb-1">Дата окончания</label><br>
           <input type="date" id="newExpirationDate" name="newExpirationDate" class="newExpirationDate" v-model="newExpirationDate"/>
         </div>
         <div class="list-group-item noborder">
@@ -68,7 +68,7 @@
               <input type="date" id="expirationDate" name="expirationDate" class="expirationDate" v-model="sertificate.expirationDate"/>
             </li>
             <li class="list-group-item noborder">
-                <button @click="updateSertificate(sertificate.id,sertificate.sertificateName,sertificate.sertificateNumber,sertificate.approvalGruppa,sertificate.issueDate,sertificate.expirationDate)" class="badge rounded-pill bg-success ms-3 border-0 delete">Сохранить</button>
+                <button @click="updateSertificate(sertificate.id,sertificate.sertificateName,sertificate.sertificateNumber,sertificate.approvalGruppa,sertificate.issueDate,sertificate.expirationDate,sertificate.employee)" class="badge rounded-pill bg-success ms-3 border-0 delete">Сохранить</button>
                 <button @click="deleteSertificate(sertificate.id)" class="badge rounded-pill bg-danger ms-3 border-0 delete">Удалить</button>
             </li>
             </ul>
@@ -84,13 +84,13 @@
 import SertificatesDataService from '../services/SertificatesDataService'
 import SertificateNamesDataService from '../services/SertificateNamesDataService'
 import ApprovalGruppasDataService from '../services/ApprovalGruppasDataService'
+import EmployeesDataService from '../services/EmployeesDataService'
 import EventBus from "../common/EventBus"
 
 export default {
   name: "sertificates",
   data() {
     return {
-      message:"",
       sertificates:[],
       sertificateNames:[],
       approvalGruppas:[],
@@ -98,7 +98,8 @@ export default {
       newSertificateNumber:"",
       newApprovalGruppa:"",
       newIssueDate:"",
-      newExpirationDate:""
+      newExpirationDate:"",
+      currentEmployee:null,
     };
   },
 
@@ -123,12 +124,19 @@ export default {
       })
       .catch(e => {console.log(e);});
   },
-
-  updateSertificate() {
-    SertificatesDataService.update(this.currentSertificate.id, this.currentSertificate)
+  updateSertificate(id,sertificateName,sertificateNumber,approvalGruppa,issueDate,expirationDate,employee) {
+    var data= {
+              sertificateName: sertificateName,
+              sertificateNumber: sertificateNumber,
+              approvalGruppa: approvalGruppa,
+              issueDate: issueDate,
+              expirationDate: expirationDate,
+              employee: employee
+            };
+    SertificatesDataService.update(id, data)
       .then(response => {
         console.log(response.data);
-        this.message = 'Данные по сертификату успешно обновлены!';
+        this.refreshList();
       },
       error => {
         if (error.response && error.response.status === 410) {
@@ -150,7 +158,7 @@ export default {
                 if (error.response && error.response.status === 410) {
                     EventBus.dispatch("logout");};
                 if (error.response && error.response.status === 404) {
-                    alert("Ошибка!\nЧто-то пошло не так!\nВозможно Вы пытаетесь удалить сертификат действующего сотрудника!?");}
+                    alert("Ошибка!\nЧто-то пошло не так!");}
             })
             .catch(e => {
             console.log(e);});
@@ -161,7 +169,8 @@ export default {
               sertificateNumber: this.newSertificateNumber,
               approvalGruppa: this.newApprovalGruppa,
               issueDate: this.newIssueDate,
-              expirationDate: this.newExpirationDate
+              expirationDate: this.newExpirationDate,
+              employee: this.currentEmployee
             };
             SertificatesDataService.create(data).
             then(response => {
@@ -198,16 +207,24 @@ export default {
             })
             .catch(e=>{console.log(e)});
   },
+  retrieveCurrentEmployee(id){
+    EmployeesDataService.get(id).
+        then(response=>{
+          this.currentEmployee=response.data;
+          console.log(response.data);
+        })
+        .catch(e=>{console.log(e)});
+  },
   refreshList(){
     this.getSertificatesByEmployeesId(this.$route.params.id)
   }
   },
 
   mounted(){
-    this.message = '';
     this.getSertificatesByEmployeesId(this.$route.params.id);
     this.retrieveSertificateNames();
-    this.retrieveApprovalGruppas()
+    this.retrieveApprovalGruppas();
+    this.retrieveCurrentEmployee(this.$route.params.id)
   }
 }
 </script>
@@ -236,10 +253,13 @@ max-width: 450px;
     position: absolute   
 }
 .optwidth{
-    width:300px
+    width:225px
 }
 .noborder{
     border:0px
+}
+.newSertificateNumber,.sertificateNumber{
+  width:180px
 }
 /* width */
 ::-webkit-scrollbar {

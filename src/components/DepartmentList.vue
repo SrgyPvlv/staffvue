@@ -11,7 +11,6 @@
               {{ division.division }}
              </option>
             </select>
-            <p>{{this.newdivision}}</p>
         </div>
         <div class="list-group-item noborder">
            <select class="form-select optwidth" id="newgroupe" name="newgroupe" v-model="newgroupe" required>
@@ -21,7 +20,6 @@
               {{ groupe.groupe }}
              </option>
            </select>
-           <p>{{this.newgroupe}}</p>
         </div>
         <div class="list-group-item noborder">
            <select class="form-select optwidth" id="newfunctiongroup" name="newfunctiongroup" v-model="newfunctiongroup" required>
@@ -31,7 +29,6 @@
                {{ funcgroupe.functionGroup }}
              </option>
            </select>
-           <p>{{this.newfunctiongroup}}</p>
         </div>
         <div class="list-group-item noborder">
         <button @click="createDepartment()" class="badge rounded-pill bg-info ms-3 border-0 delete">Создать</button>
