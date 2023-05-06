@@ -105,6 +105,18 @@
                     {{ currentEmployee.car!=null? ', ***Комментарий: '+currentEmployee.car.carComment:'' }}
                 </div>
                 <div>
+                    <label><strong>Удостоверения:</strong></label>
+                    <ul>
+                        <li v-for="(sertificate,index) in sertificates" key="index">
+                        {{sertificate.sertificateName!=null? sertificate.sertificateName.sertificateName+'. ' : ''}}
+                        {{sertificate.sertificateNumber!=null? '№: '+sertificate.sertificateNumber: '' }}<br v-if="sertificate.sertificateNumber!=null">
+                        {{sertificate.approvalGruppa!=null? 'Группа допуска: '+sertificate.approvalGruppa.approvalGruppa : '' }}<br v-if="sertificate.approvalGruppa!=null">
+                        {{sertificate.issueDate!=null? 'c '+sertificate.issueDate.split('-').reverse().join('.') : '' }}
+                        {{sertificate.expirationDate!=null? 'по '+sertificate.expirationDate.split('-').reverse().join('.') : '' }}
+                        </li>
+                    </ul>
+                </div>
+                <div>
                     <label><strong>Комментарий:</strong></label> {{ currentEmployee.employeeComment }}
                 </div>
 
@@ -145,6 +157,7 @@
 <script>
 import EmployeesDataService from '../services/EmployeesDataService';
 import DepartmentsDataService from '../services/DepartmentsDataService';
+import SertificatesDataService from '../services/SertificatesDataService'
 import EventBus from "../common/EventBus"
 
 export default{
@@ -157,7 +170,8 @@ export default{
             filter:"",
             factSelected:"Подразделение (факт)",
             staffSelected:"Подразделение (штат)",
-            departments:[]
+            departments:[],
+            sertificates:[]
         };
     },
     computed:{
@@ -218,6 +232,11 @@ export default{
         setActiveEmployee(employee,index){
             this.currentEmployee = employee;
             this.currentIndex = employee ? index : -1;
+            SertificatesDataService.getByEmployeeId(this.currentEmployee.id)
+            .then(response => {
+                this.sertificates = response.data;
+                console.log(response.data)})
+                .catch(e => {console.log(e);});
         },
         findByNameMobilePosition(){
             EmployeesDataService.findByNameMobilePosition(this.filter).
