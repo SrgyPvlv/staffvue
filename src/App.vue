@@ -12,8 +12,19 @@
       <li>
         <RouterLink to="/mail" class="nav-link">Почта</RouterLink>
       </li>
-      <li>
-        <Link @click="exelDownload" class="nav-link exelpointer"><font-awesome-icon icon="fa-solid fa-download" /> Exel</Link>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"><font-awesome-icon icon="fa-solid fa-download" /> Exel</a>
+        <ul class="dropdown-menu">
+          <li>
+            <Link @click="exelDownloadEmployees" class="dropdown-item exelpointer">Сотрудники</Link>
+          </li>
+          <li>
+            <Link @click="exelDownloadCars" class="dropdown-item exelpointer">Автомобили</Link>
+          </li>
+          <li>
+            <Link @click="exelDownloadSertificates" class="dropdown-item exelpointer">Удостоверения</Link>
+          </li>
+        </ul>
       </li>
       <li v-if="showAdminBoard || showSuperAdminBoard" class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Добавить</a>
@@ -116,8 +127,14 @@ export default{
       this.$store.dispatch('auth/logout');
       this.$router.push('/login');
     },
-    exelDownload(){
-      window.location.href="http://localhost:8080/api/v1/exel/download";
+    exelDownloadEmployees(){
+      window.location.href="http://localhost:8080/api/v1/exel/download/employees";
+    },
+    exelDownloadCars(){
+      window.location.href="http://localhost:8080/api/v1/exel/download/cars";
+    },
+    exelDownloadSertificates(){
+      window.location.href="http://localhost:8080/api/v1/exel/download/sertificates";
     }
   },
 
