@@ -115,8 +115,8 @@ export default{
         sendMail(){
             this.loadMails=true;
             this.selectedEmployees();
-            setTimeout(() => this.redirectTo(), 3000);
-            setTimeout(() => (this.loadMails=false), 4000);
+            setTimeout(() => this.redirectTo(), 1500);
+            setTimeout(() => (this.loadMails=false), 2500);
         }
         },       
 
