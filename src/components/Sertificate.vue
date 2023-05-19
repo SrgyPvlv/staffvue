@@ -68,7 +68,7 @@
               <input type="date" id="expirationDate" name="expirationDate" class="expirationDate" v-model="sertificate.expirationDate"/>
             </li>
             <li class="list-group-item noborder">
-                <button @click="updateSertificate(sertificate.id,sertificate.sertificateName,sertificate.sertificateNumber,sertificate.approvalGruppa,sertificate.issueDate,sertificate.expirationDate,sertificate.employee)" class="badge rounded-pill bg-success ms-3 border-0 delete">Сохранить</button>
+                <button @click="updateSertificate(sertificate.id,sertificate.sertificateName,sertificate.sertificateNumber,sertificate.approvalGruppa,sertificate.issueDate,sertificate.expirationDate)" class="badge rounded-pill bg-success ms-3 border-0 delete">Сохранить</button>
                 <button @click="deleteSertificate(sertificate.id)" class="badge rounded-pill bg-danger ms-3 border-0 delete">Удалить</button>
             </li>
             </ul>
@@ -124,14 +124,14 @@ export default {
       })
       .catch(e => {console.log(e);});
   },
-  updateSertificate(id,sertificateName,sertificateNumber,approvalGruppa,issueDate,expirationDate,employee) {
+  updateSertificate(id,sertificateName,sertificateNumber,approvalGruppa,issueDate,expirationDate) {
     var data= {
               sertificateName: sertificateName,
               sertificateNumber: sertificateNumber,
               approvalGruppa: approvalGruppa,
               issueDate: issueDate,
               expirationDate: expirationDate,
-              employee: employee
+              employee: this.currentEmployee
             };
     SertificatesDataService.update(id, data)
       .then(response => {
@@ -208,12 +208,30 @@ export default {
             .catch(e=>{console.log(e)});
   },
   retrieveCurrentEmployee(id){
-    EmployeesDataService.get(id).
-        then(response=>{
-          this.currentEmployee=response.data;
-          console.log(response.data);
-        })
-        .catch(e=>{console.log(e)});
+    EmployeesDataService.get(id)
+    .then(response => {
+        var currentEmployeeResponse = response.data;
+        var currentEmployeeCar=null;
+        if(currentEmployeeResponse.car!=null){
+        currentEmployeeCar = {id: currentEmployeeResponse.car.id, carNumber : currentEmployeeResponse.car.carNumber, carComment : currentEmployeeResponse.car.carComment, carModel: currentEmployeeResponse.car.carModel};};
+        this.currentEmployee = {
+          id: currentEmployeeResponse.id,
+          name: currentEmployeeResponse.name,
+          mobilePhone: currentEmployeeResponse.mobilePhone,
+          birthday: currentEmployeeResponse.birthday,
+          localPhone: currentEmployeeResponse.localPhone,
+          employeeId: currentEmployeeResponse.employeeId,
+          login: currentEmployeeResponse.login,
+          email: currentEmployeeResponse.email,
+          employeeComment: currentEmployeeResponse.employeeComment,
+          factDepartment: currentEmployeeResponse.factDepartment,
+          staffDepartment: currentEmployeeResponse.staffDepartment,
+          car: currentEmployeeCar,
+          position: currentEmployeeResponse.position
+        };
+        console.log(response.data)
+      })
+      .catch(e=>{console.log(e)});
   },
   refreshList(){
     this.getSertificatesByEmployeesId(this.$route.params.id)
