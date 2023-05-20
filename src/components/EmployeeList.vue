@@ -105,14 +105,14 @@
                     {{ currentEmployee.car!=null? ', ***Комментарий: '+currentEmployee.car.carComment:'' }}
                 </div>
                 <div>
-                    <label><strong>Удостоверения:</strong></label>
-                    <ul>
+                    <label><strong>Удостоверения:</strong></label> <button v-if="currentEmployee.sertificates.length!=0" @click="toggle" class="badge rounded-pill bg-info border-0">{{sertshow?'скрыть':'показать'}}</button>
+                    <ul v-if="sertshow">
                         <li v-for="(sertificate,index) in sertificates" key="index">
-                        {{sertificate.sertificateName!=null? sertificate.sertificateName.sertificateName+'. ' : ''}}
-                        {{sertificate.sertificateNumber!=null? '№: '+sertificate.sertificateNumber: '' }}<br v-if="sertificate.sertificateNumber!=null">
+                        <mark>{{sertificate.sertificateName!=null? sertificate.sertificateName.sertificateName+'. ' : ''}}</mark>
+                        {{sertificate.sertificateNumber!=null? '№: '+sertificate.sertificateNumber: '' }}
+                        {{sertificate.issueDate!=null? 'от '+sertificate.issueDate.split('-').reverse().join('.') : '' }}<br v-if="sertificate.sertificateNumber!=null">
                         {{sertificate.approvalGruppa!=null? 'Группа допуска: '+sertificate.approvalGruppa.approvalGruppa : '' }}<br v-if="sertificate.approvalGruppa!=null">
-                        {{sertificate.issueDate!=null? 'c '+sertificate.issueDate.split('-').reverse().join('.') : '' }}
-                        {{sertificate.expirationDate!=null? 'по '+sertificate.expirationDate.split('-').reverse().join('.') : '' }}
+                        {{sertificate.expirationDate!=null? 'Действительно до: '+sertificate.expirationDate.split('-').reverse().join('.') : '' }}
                         </li>
                     </ul>
                 </div>
@@ -171,7 +171,8 @@ export default{
             factSelected:"Подразделение (факт)",
             staffSelected:"Подразделение (штат)",
             departments:[],
-            sertificates:[]
+            sertificates:[],
+            sertshow:false
         };
     },
     computed:{
@@ -280,6 +281,9 @@ export default{
             })
             .catch(e=>{console.log(e)});
         },
+        toggle(){
+            this.sertshow =! this.sertshow;
+        }
         },       
 
     mounted(){
