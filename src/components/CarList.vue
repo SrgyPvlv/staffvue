@@ -1,7 +1,8 @@
 <template>
     <div class="list row">
         <div class="col-md-6">
-            <div class="input-group mb-3">
+            <form @submit.prevent="findByNumberModel">
+            <div class="input-group mb-3"> 
                 <input type="text" class="form-control" placeholder="Поиск по номеру, модели" v-model="filter" />
                 <div class="input-group-append ms-3">
                 <button type="button" class="btn btn-outline-secondary" @click="findByNumberModel">Поиск</button>
@@ -10,6 +11,7 @@
                 <button type="button" class="btn btn-outline-danger" @click="refreshList">Сбросить</button>
                 </div>
             </div>
+            </form>
         </div>
     </div>
     <div class="list row">
@@ -44,9 +46,11 @@
                 <div>
                     <label><strong>Комментарий:</strong></label> {{ currentCar.carComment }}
                 </div>
-                
 
+                <div v-if="showAdminBoard || showSuperAdminBoard">             
                 <RouterLink :to="'/cars/'+currentCar.id" class="badge rounded-pill bg-info edit" style="margin-top:15px">Редактировать</RouterLink>
+                <button @click="deleteCar" class="badge rounded-pill bg-danger ms-3 border-0 delete">Удалить</button>
+                </div>
 
             </div>
             <div v-else>
@@ -61,6 +65,7 @@
 
 <script>
 import CarsDataService from '../services/CarsDataService'
+import EventBus from "../common/EventBus"
 
 export default{
     name: "cars-list",
@@ -72,6 +77,23 @@ export default{
             filter:""
         };
     },
+    computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+    showAdminBoard() {
+      if (this.currentUser && this.currentUser['roles']) {
+        return this.currentUser['roles'].includes('ROLE_ADMIN');
+      }
+      return false;
+    },
+    showSuperAdminBoard() {
+            if (this.currentUser && this.currentUser['roles']) {
+            return this.currentUser['roles'].includes('ROLE_SUPERADMIN');
+        }
+            return false;
+        }
+  },
     methods:{
         retrieveCars(){
             CarsDataService.getAll().
@@ -80,6 +102,21 @@ export default{
                 console.log(response.data);
             })
             .catch(e=>{console.log(e)});
+        },
+        deleteCar() {
+            CarsDataService.delete(this.currentCar.id).
+            then(response => {
+                console.log(response.data);
+                this.refreshList();
+            },
+            error => {
+                if (error.response && error.response.status === 410) {
+                    EventBus.dispatch("logout");};
+                if (error.response && error.response.status === 404) {
+                    alert("Ошибка!\nЧто-то пошло не так!\nВозможно Вы пытаетесь удалить автомобиль закрепленный за сотрудником!?");}
+            })
+            .catch(e => {
+            console.log(e);});
         },
         refreshList(){
             this.retrieveCars();
@@ -113,13 +150,16 @@ export default{
     margin-top: 10px;
     text-decoration: none
 }
+.delete{
+    text-decoration: none
+}
 .car{
     cursor: pointer
 }
 .outdiv{
     overflow-y: auto;
     overflow-x: hidden;
-    height: 500px;
+    height: 700px;
     position: relative;
 }
 .indiv{

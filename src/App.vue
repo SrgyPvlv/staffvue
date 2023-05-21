@@ -9,7 +9,24 @@
       <li class="nav-item">
         <RouterLink to="/cars" class="nav-link">Автомобили</RouterLink>
       </li>
+      <li>
+        <RouterLink to="/mail" class="nav-link">Почта</RouterLink>
+      </li>
       <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"><font-awesome-icon icon="fa-solid fa-download" /> Exel</a>
+        <ul class="dropdown-menu">
+          <li>
+            <Link @click="exelDownloadEmployees" class="dropdown-item exelpointer">Сотрудники</Link>
+          </li>
+          <li>
+            <Link @click="exelDownloadCars" class="dropdown-item exelpointer">Автомобили</Link>
+          </li>
+          <li>
+            <Link @click="exelDownloadSertificates" class="dropdown-item exelpointer">Удостоверения</Link>
+          </li>
+        </ul>
+      </li>
+      <li v-if="showAdminBoard || showSuperAdminBoard" class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Добавить</a>
         <ul class="dropdown-menu">
           <li>
@@ -19,12 +36,60 @@
             <RouterLink to="/addCar" class="dropdown-item">Автомобиль</RouterLink>
           </li>
         </ul>
+      </li>    
+      <li v-if="showAdminBoard || showSuperAdminBoard" class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Редактировать</a>
+        <ul class="dropdown-menu">
+          <li v-if="showSuperAdminBoard">
+            <RouterLink to="/users" class="dropdown-item">Пользователи (role_admin)</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/positions" class="dropdown-item">Должности</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/departments" class="dropdown-item">Подразделения</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/divisions" class="dropdown-item">Отделы</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/groupes" class="dropdown-item">Группы</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/funcgroupes" class="dropdown-item">Функциональные группы</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/carmodels" class="dropdown-item">Модели авто</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/sertificatenames" class="dropdown-item">Типы удостоверений</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/approvalgruppas" class="dropdown-item">Группы безопасности</RouterLink>
+          </li>    
+        </ul>
       </li>
-
     </ul>
+
+    <div v-if="currentUser" class="navbar-nav ms-auto">
+        <li v-if="showSuperAdminBoard" class="nav-item">
+          <RouterLink to="/register" class="nav-link"><font-awesome-icon icon="user-plus" /> Новый пользователь</RouterLink>
+        </li>
+        <li class="nav-item">
+          <RouterLink to="/profile" class="nav-link"><font-awesome-icon icon="user" /> {{ currentUser.username }}</RouterLink>
+        </li>
+        <li v-if="currentUser" class="nav-item">
+          <a class="nav-link exitpointer" @click.prevent="logOut"><font-awesome-icon icon="sign-out-alt" /> Выйти</a>
+        </li>
+    </div>
+    <div v-if="!currentUser" class="navbar-nav ms-auto">
+      <li  class="nav-item">
+          <RouterLink to="/login" class="nav-link"><font-awesome-icon icon="sign-in-alt" /> Войти</RouterLink>
+      </li>
+    </div>
   </nav>
 
-  <div class="container mt-3 mb-5">
+  <div class="container ms-5 mt-3 mb-5">
     <RouterView />
   </div>
   
@@ -35,9 +100,53 @@
 </template>
 
 <script>
+import EventBus from "./common/EventBus"
+
 export default{
-  name:"app"
-}
+  name:"app",
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+    showAdminBoard() {
+      if (this.currentUser && this.currentUser['roles']) {
+        return this.currentUser['roles'].includes('ROLE_ADMIN');
+      }
+      return false;
+    },
+    showSuperAdminBoard() {
+      if (this.currentUser && this.currentUser['roles']) {
+        return this.currentUser['roles'].includes('ROLE_SUPERADMIN');
+      }
+      return false;
+    },
+  },
+
+    methods: {
+    logOut() {
+      this.$store.dispatch('auth/logout');
+      this.$router.push('/login');
+    },
+    exelDownloadEmployees(){
+      window.location.href="http://localhost:8080/api/v1/exel/download/employees";
+    },
+    exelDownloadCars(){
+      window.location.href="http://localhost:8080/api/v1/exel/download/cars";
+    },
+    exelDownloadSertificates(){
+      window.location.href="http://localhost:8080/api/v1/exel/download/sertificates";
+    }
+  },
+
+  mounted() {
+    EventBus.on("logout", () => {
+      this.logOut();
+    });
+  },
+  beforeDestroy() {
+    EventBus.remove("logout");
+  }
+};
 </script>
 
 <style>
@@ -47,6 +156,9 @@ export default{
 }
 .footer{
   background: #778899;
+}
+.exitpointer,.exelpointer{
+  cursor:pointer;
 }
 /* width */
 ::-webkit-scrollbar {
