@@ -307,10 +307,7 @@ export default{
 .outdiv{
     overflow-y: auto;
     overflow-x: hidden;
-<<<<<<< HEAD
-=======
     height: 700px;
->>>>>>> staffVueTest
     position: relative;
 }
 .indiv{
