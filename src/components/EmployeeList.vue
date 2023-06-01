@@ -113,7 +113,9 @@
                         {{sertificate.issueDate!=null? 'от '+sertificate.issueDate.split('-').reverse().join('.') : '' }}<br v-if="sertificate.sertificateNumber!=null">
                         {{sertificate.approvalGruppa!=null? 'Группа допуска: '+sertificate.approvalGruppa.approvalGruppa : '' }}<br v-if="sertificate.approvalGruppa!=null">
                         {{sertificate.expirationDate!=null? 'Действительно до: ':''}} 
-                        <span :class="{'text-bg-warning':isWarning,'text-bg-danger':isOut}">{{sertificate.expirationDate!=null? sertificate.expirationDate.split('-').reverse().join('.') : '' }}</span>
+                        <span :class="{'text-bg-warning':(new Date(sertificate.expirationDate)-new Date())<3888000000,
+                        'text-bg-danger':new Date(sertificate.expirationDate)<new Date(),
+                        'text-bg-success':new Date(sertificate.expirationDate)>new Date()}">{{sertificate.expirationDate!=null? sertificate.expirationDate.split('-').reverse().join('.') : '' }}</span>
                         </li>
                     </ul>
                 </div>
@@ -173,9 +175,7 @@ export default{
             staffSelected:"Подразделение (штат)",
             departments:[],
             sertificates:[],
-            sertshow:false,
-            isWarning:true,
-            isOut:false
+            sertshow:false
         };
     },
     computed:{
