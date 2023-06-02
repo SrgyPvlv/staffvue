@@ -141,7 +141,7 @@
             <h5 class="text-danger">Дни Рождения</h5>
                 <h6>В этом месяце</h6>
                 <ul>
-                <li v-for="(birthdayBoy, index) in birthdayBoys" :key="index" class="listyle">
+                <li v-for="(birthdayBoy, index) in birthdayBoys" :key="index" class="listyle" :class="{'text-danger':new Date(birthdayBoy.birthday).getMonth()==new Date().getMonth() && new Date(birthdayBoy.birthday).getDate()==new Date().getDate()}">
                 {{ birthdayBoy.name.split(' ')[0]}} {{ birthdayBoy.name.split(' ')[1]}} {{ birthdayBoy.birthday.split('-').reverse().join('.').slice(0,5)}}
                 </li>
                 </ul>
