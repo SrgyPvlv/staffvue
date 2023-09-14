@@ -24,6 +24,9 @@
           <li>
             <Link @click="exelDownloadSertificates" class="dropdown-item exelpointer">Удостоверения</Link>
           </li>
+          <li>
+            <Link @click="exelDownloadDevices" class="dropdown-item exelpointer">Приборы</Link>
+          </li>
         </ul>
       </li>
       <li v-if="showAdminBoard || showSuperAdminBoard" class="nav-item dropdown">
@@ -66,6 +69,12 @@
           </li>
           <li>
             <RouterLink to="/approvalgruppas" class="dropdown-item">Группы безопасности</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/devicetypes" class="dropdown-item">Типы приборов</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/devicenames" class="dropdown-item">Наименования приборов</RouterLink>
           </li>    
         </ul>
       </li>
@@ -135,6 +144,9 @@ export default{
     },
     exelDownloadSertificates(){
       window.location.href="http://localhost:8080/api/v1/exel/download/sertificates";
+    },
+    exelDownloadSertificates(){
+      window.location.href="http://localhost:8080/api/v1/exel/download/devices";
     }
   },
 

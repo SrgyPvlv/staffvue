@@ -220,6 +220,8 @@ export default{
             this.staffSelected="Подразделение (штат)";
         },
         deleteEmployee() {
+            let isDeleteEmployee=confirm("Вы точно хотите удалить сотрудника?\nОтменить действие будет нельзя!");
+            if(isDeleteEmployee===true){
             EmployeesDataService.delete(this.currentEmployee.id).
             then(response => {
                 console.log(response.data);
@@ -231,7 +233,7 @@ export default{
                 if (error.response && error.response.status === 404) {
                     alert("Ошибка! Что-то пошло не так!");}
             })
-            .catch(e => {console.log(e);});
+            .catch(e => {console.log(e);});}
         },
         setActiveEmployee(employee,index){
             this.currentEmployee = employee;

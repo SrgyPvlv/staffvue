@@ -23,6 +23,9 @@ const router=createRouter({
         {path:'/sertificatenames', name:'sertificatenames', component:()=>import("../components/SertificateNameList.vue")},
         {path:'/approvalgruppas', name:'approvalgruppas', component:()=>import("../components/ApprovalGruppaList.vue")},
         {path:'/sertificates/:id', name:'sertificate-details', component:()=>import("../components/Sertificate.vue")},
+        {path:'/devicetypes', name:'devicetypes', component:()=>import("../components/DeviceTypeList.vue")},
+        {path:'/devicenames', name:'devicenames', component:()=>import("../components/DeviceNameList.vue")},
+        
     ]
 });
 
