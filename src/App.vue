@@ -9,6 +9,9 @@
       <li class="nav-item">
         <RouterLink to="/cars" class="nav-link">Автомобили</RouterLink>
       </li>
+      <li class="nav-item">
+        <RouterLink to="/devices" class="nav-link">Приборы</RouterLink>
+      </li>
       <li>
         <RouterLink to="/mail" class="nav-link">Почта</RouterLink>
       </li>
@@ -37,6 +40,9 @@
           </li>
           <li>
             <RouterLink to="/addCar" class="dropdown-item">Автомобиль</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/addDevice" class="dropdown-item">Прибор</RouterLink>
           </li>
         </ul>
       </li>    
@@ -145,7 +151,7 @@ export default{
     exelDownloadSertificates(){
       window.location.href="http://localhost:8080/api/v1/exel/download/sertificates";
     },
-    exelDownloadSertificates(){
+    exelDownloadDevices(){
       window.location.href="http://localhost:8080/api/v1/exel/download/devices";
     }
   },
