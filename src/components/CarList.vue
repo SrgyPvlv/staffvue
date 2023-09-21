@@ -104,6 +104,8 @@ export default{
             .catch(e=>{console.log(e)});
         },
         deleteCar() {
+            let isDeleteCar=confirm("Вы точно хотите удалить автомобиль?\nОтменить действие будет нельзя!");
+            if(isDeleteCar===true){
             CarsDataService.delete(this.currentCar.id).
             then(response => {
                 console.log(response.data);
@@ -116,7 +118,7 @@ export default{
                     alert("Ошибка!\nЧто-то пошло не так!\nВозможно Вы пытаетесь удалить автомобиль закрепленный за сотрудником!?");}
             })
             .catch(e => {
-            console.log(e);});
+            console.log(e);});}
         },
         refreshList(){
             this.retrieveCars();
