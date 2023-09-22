@@ -40,23 +40,23 @@
 
         <div class="form-group mt-3">
           <label for="devicestoreplace" class="fw-bold">Место хранения</label>
-          <input type="text" class="form-control mt-1" id="devicestoreplace" name="devicestoreplace" v-model="device.storePlace"/>
+          <input type="text" class="form-control mt-1" id="devicestoreplace" name="devicestoreplace" v-model="device.storePlace" required/>
         </div>
 
         <div class="form-group mt-3">
           <p class="fw-bold">Подлежит поверке</p>
-          <input type="radio" class="form-control mt-1" id="verificationneed1" name="verificationneed1" value="true" v-model="device.verificationNeed"/>
-          <label for="verificationneed1" class="fw-bold">Да</label>
-          <input type="radio" class="form-control mt-1" id="verificationneed2" name="verificationneed2" value="false" v-model="device.verificationNeed"/>
-          <label for="verificationneed2" class="fw-bold">Нет</label>
+          <input type="radio" class="mt-1" id="verificationneed1" name="verificationneed1" value="true" v-model="device.verificationNeed"/>
+          <label for="verificationneed1" class="ms-1 fw-bold">Да</label>
+          <input type="radio" class="ms-3" id="verificationneed2" name="verificationneed2" value="false" v-model="device.verificationNeed"/>
+          <label for="verificationneed2" class="ms-1 fw-bold">Нет</label>
         </div>
 
         <div class="form-group mt-3">
           <p class="fw-bold">Находится в поверке</p>
-          <input type="radio" class="form-control mt-1" id="isinverification1" name="isinverification1" value="true" v-model="device.isInVerification"/>
-          <label for="isinverification1" class="fw-bold">Да</label>
-          <input type="radio" class="form-control mt-1" id="isinverification2" name="isinverification1" value="false" v-model="device.isInVerification"/>
-          <label for="isinverification2" class="fw-bold">Нет</label>
+          <input type="radio" class="mt-1" id="inverification1" name="inverification1" value="true" v-model="device.inVerification"/>
+          <label for="inverification1" class="ms-1 fw-bold">Да</label>
+          <input type="radio" class="ms-3" id="inverification2" name="inverification2" value="false" v-model="device.inVerification"/>
+          <label for="inverification2" class="ms-1 fw-bold">Нет</label>
         </div>
   
         <button @click="saveDevice" class="btn btn-success mt-3">Сохранить</button>
@@ -90,7 +90,7 @@
           deviceAccounting:"",
           storePlace:"",
           verificationNeed:false,
-          isInVerification:false
+          inVerification:false
         },
         submitted: false,
         devicetypes:[],
@@ -109,7 +109,7 @@
           deviceAccounting: this.device.deviceAccounting,
           storePlace: this.device.storePlace,
           verificationNeed: this.device.verificationNeed,
-          isInVerification: this.device.isInVerification
+          inVerification: this.device.inVerification
         };
   
         DeviceDataService.create(data)

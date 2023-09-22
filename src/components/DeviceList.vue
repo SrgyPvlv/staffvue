@@ -25,7 +25,7 @@
                 v-for="(device, index) in devices"
                 :key="index"
                 @click="setActiveDevice(device,index)">
-                {{ device.deviceTypeSelected.deviceTypeName }} {{ device.deviceNameSelected.deviceName }} {{ device.deviceNumber }}
+                {{ device.deviceType.deviceTypeName }} {{ device.deviceName.deviceName }} {{ device.deviceNumber }}
                 </li>
             </ul>
             </div>
@@ -59,7 +59,7 @@
                     <label><strong>Подлежит поверке:</strong></label> {{ currentDevice.verificationNeed? 'да' : 'нет' }}
                 </div>
                 <div>
-                    <label><strong>Находится в поверке:</strong></label> {{ currentDevice.isInVerification? 'да' : 'нет' }}
+                    <label><strong>Находится в поверке:</strong></label> {{ currentDevice.inVerification? 'да' : 'нет' }}
                 </div>
 
                 <div v-if="showAdminBoard || showSuperAdminBoard">             

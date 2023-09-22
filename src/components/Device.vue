@@ -11,7 +11,7 @@
 
         <div class="form-group mt-3">
           <label for="devicetype" class="fw-bold">Наименование прибора</label>
-          <select class="form-select mt-1" id="devicetype" name="devicetype" v-model="currentDevice.deviceNameSelected" required>
+          <select class="form-select mt-1" id="devicetype" name="devicetype" v-model="currentDevice.deviceName" required>
            <option v-for="(devicename,index) in devicenames" :key="index" :value="devicename">{{devicename.deviceName}}</option>
           </select>
         </div>
@@ -23,7 +23,7 @@
 
         <div class="form-group mt-3">
           <label for="employee" class="fw-bold">Владелец прибора</label>
-          <select class="form-select mt-1" id="employee" name="employee" v-model="currentDevice.employeeSelected" required>
+          <select class="form-select mt-1" id="employee" name="employee" v-model="currentDevice.employee" required>
            <option v-for="(employee,index) in employees" :key="index" :value="employee">{{employee.name}}</option>
           </select>
         </div>
@@ -45,18 +45,18 @@
 
         <div class="form-group mt-3">
           <p class="fw-bold">Подлежит поверке</p>
-          <input type="radio" class="form-control mt-1" id="verificationneed1" name="verificationneed1" value="true" v-model="currentDevice.verificationNeed"/>
-          <label for="verificationneed1" class="fw-bold">Да</label>
-          <input type="radio" class="form-control mt-1" id="verificationneed2" name="verificationneed2" value="false" v-model="currentDevice.verificationNeed"/>
-          <label for="verificationneed2" class="fw-bold">Нет</label>
+          <input type="radio" class="mt-1" id="verificationneed1" name="verificationneed1" value="true" v-model="currentDevice.verificationNeed"/>
+          <label for="verificationneed1" class="ms-1 fw-bold">Да</label>
+          <input type="radio" class="ms-3" id="verificationneed2" name="verificationneed2" value="false" v-model="currentDevice.verificationNeed"/>
+          <label for="verificationneed2" class="ms-1 fw-bold">Нет</label>
         </div>
 
         <div class="form-group mt-3">
           <p class="fw-bold">Находится в поверке</p>
-          <input type="radio" class="form-control mt-1" id="isinverification1" name="isinverification1" value="true" v-model="currentDevice.isInVerification"/>
-          <label for="isinverification1" class="fw-bold">Да</label>
-          <input type="radio" class="form-control mt-1" id="isinverification2" name="isinverification1" value="false" v-model="currentDevice.isInVerification"/>
-          <label for="isinverification2" class="fw-bold">Нет</label>
+          <input type="radio" class="mt-1" id="inverification1" name="inverification1" value="true" v-model="currentDevice.inVerification"/>
+          <label for="inverification1" class="ms-1 fw-bold">Да</label>
+          <input type="radio" class="ms-3" id="inverification2" name="inverification2" value="false" v-model="currentDevice.inVerification"/>
+          <label for="inverification2" class="ms-1 fw-bold">Нет</label>
         </div>
       </form>
 
@@ -114,7 +114,7 @@ export default {
       deviceAccounting: this.currentDevice.deviceAccounting,
       storePlace: this.currentDevice.storePlace,
       verificationNeed: this.currentDevice.verificationNeed,
-      isInVerification: this.currentDevice.isInVerification
+      inVerification: this.currentDevice.inVerification
     };
     DeviceDataService.update(this.currentDevice.id, data)
       .then(response => {
