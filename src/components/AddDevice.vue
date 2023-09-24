@@ -154,7 +154,7 @@
        retrieveEmployees(){
         EmployeesDataService.getAll().
             then(response=>{
-                this.employees=response.data;
+                this.employees=response.data.map(e=>{var newemployee={id:e.id, name:e.name};return newemployee});
                 console.log(response.data);
             })
             .catch(e=>{console.log(e)});

@@ -24,6 +24,7 @@
         <div class="form-group mt-3">
           <label for="employee" class="fw-bold">Владелец прибора</label>
           <select class="form-select mt-1" id="employee" name="employee" v-model="currentDevice.employee" required>
+           <option :value="currentDevice.employee">{{currentDevice.employee.name}}</option> 
            <option v-for="(employee,index) in employees" :key="index" :value="employee">{{employee.name}}</option>
           </select>
         </div>
@@ -91,6 +92,12 @@ export default {
       employees:[]
     };
   },
+  computed: {
+    currentDeviceSomeFieldsEmployee(){
+      var newemployee=null;
+      return newemployee={id:this.currentDevice.employee.id, name:this.currentDevice.employee.name};
+    }
+  },
   methods: {
       getDevice(id) {
       DeviceDataService.get(id)
@@ -105,11 +112,10 @@ export default {
 
   updateDevice() {
     var data = {
-      carNumber: this.currentDevice.carNumber,
       deviceType: this.currentDevice.deviceType,
       deviceName: this.currentDevice.deviceName,
       deviceNumber: this.currentDevice.deviceNumber,
-      employee: this.currentDevice.employee,
+      employee: this.currentDeviceSomeFieldsEmployee,
       deviceComment: this.currentDevice.deviceComment,
       deviceAccounting: this.currentDevice.deviceAccounting,
       storePlace: this.currentDevice.storePlace,
@@ -150,7 +156,7 @@ export default {
        retrieveEmployees(){
         EmployeesDataService.getAll().
             then(response=>{
-                this.employees=response.data;
+              this.employees=response.data.map(e=>{var newemployee={id:e.id, name:e.name};return newemployee});
                 console.log(response.data);
             })
             .catch(e=>{console.log(e)});
