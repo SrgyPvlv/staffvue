@@ -10,6 +10,10 @@ class DeviceDataService{
         return api.get("/devices");
     }
 
+    getByEmployeeId(id){
+        return api.get(`/devices/employeesid/${id}`);
+    }
+
     create(data){
         return api.post('/devices', data);
     }

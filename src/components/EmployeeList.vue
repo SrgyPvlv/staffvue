@@ -120,6 +120,16 @@
                     </ul>
                 </div>
                 <div>
+                    <label><strong>Приборы:</strong></label> <button v-if="devices.length!=0" @click="toggle2" class="badge rounded-pill bg-info border-0">{{deviceshow?'скрыть':'показать'}}</button>
+                    <ul v-if="deviceshow">
+                        <li v-for="(device,index) in devices" key="index">
+                        <mark>{{device.deviceType!=null? device.deviceType.deviceTypeName+'. ' : ''}}</mark><br>
+                        {{device.deviceName!=null? 'Наименование: '+device.deviceName.deviceName: '' }}<br>
+                        {{device.deviceNumber!=null? '№: '+device.deviceNumber: '' }}
+                        </li>
+                    </ul>
+                </div>
+                <div v-if="currentEmployee.employeeComment!=null">
                     <label><strong>Комментарий:</strong></label> {{ currentEmployee.employeeComment }}
                 </div>
 
@@ -160,7 +170,8 @@
 <script>
 import EmployeesDataService from '../services/EmployeesDataService';
 import DepartmentsDataService from '../services/DepartmentsDataService';
-import SertificatesDataService from '../services/SertificatesDataService'
+import SertificatesDataService from '../services/SertificatesDataService';
+import DeviceDataService from '../services/DeviceDataService';
 import EventBus from "../common/EventBus"
 
 export default{
@@ -175,7 +186,9 @@ export default{
             staffSelected:"Подразделение (штат)",
             departments:[],
             sertificates:[],
-            sertshow:false
+            devices:[],
+            sertshow:false,
+            deviceshow:false
         };
     },
     computed:{
@@ -243,6 +256,11 @@ export default{
                 this.sertificates = response.data;
                 console.log(response.data)})
                 .catch(e => {console.log(e);});
+            DeviceDataService.getByEmployeeId(this.currentEmployee.id)
+            .then(response => {
+                this.devices = response.data;
+                console.log(response.data)})
+                .catch(e => {console.log(e);});    
         },
         findByNameMobilePosition(){
             EmployeesDataService.findByNameMobilePosition(this.filter).
@@ -288,6 +306,9 @@ export default{
         },
         toggle(){
             this.sertshow =! this.sertshow;
+        },
+        toggle2(){
+            this.deviceshow =! this.deviceshow;
         }
         },       
 
