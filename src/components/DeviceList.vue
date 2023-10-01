@@ -25,7 +25,7 @@
                 v-for="(device, index) in devices"
                 :key="index"
                 @click="setActiveDevice(device,index)">
-                {{ device.deviceType.deviceTypeName }} {{ device.deviceName.deviceName }} {{ device.deviceNumber }}
+                {{ device.deviceType.deviceTypeName }} {{ device.deviceName.deviceName }} s/n: {{ device.deviceNumber }}
                 </li>
             </ul>
             </div>

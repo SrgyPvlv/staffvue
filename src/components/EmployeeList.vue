@@ -125,7 +125,14 @@
                         <li v-for="(device,index) in devices" key="index">
                         <mark>{{device.deviceType!=null? device.deviceType.deviceTypeName+'. ' : ''}}</mark><br>
                         {{device.deviceName!=null? 'Наименование: '+device.deviceName.deviceName: '' }}<br>
-                        {{device.deviceNumber!=null? '№: '+device.deviceNumber: '' }}
+                        {{device.deviceNumber!=null? '№: '+device.deviceNumber: '' }}<br>
+                        {{device.deviceComment!=null? 'Комментарий: '+device.deviceComment: '' }}<br v-if="device.deviceComment!=null">
+                        {{device.deviceAccounting!=null? 'Номер бухучета: '+device.deviceAccounting: '' }}<br v-if="device.deviceAccounting!=null">
+                        {{device.storePlace!=null? 'Место хранения: '+device.storePlace: '' }}<br>
+                        Подлежит поверке:
+                        <span :class="{'text-success fw-bold':device.verificationNeed==true}">{{device.verificationNeed==true? ' да': ' нет' }}</span><br>
+                        Находится в поверке:
+                        <span :class="{'text-danger fw-bold':device.inVerification==true}"> {{device.inVerification==true? ' да': ' нет' }} </span>                        
                         </li>
                     </ul>
                 </div>
