@@ -126,8 +126,8 @@
                         <mark>{{device.deviceType!=null? device.deviceType.deviceTypeName+'. ' : ''}}</mark><br>
                         {{device.deviceName!=null? 'Наименование: '+device.deviceName.deviceName: '' }}<br>
                         {{device.deviceNumber!=null? '№: '+device.deviceNumber: '' }}<br>
-                        {{device.deviceComment!=null? 'Комментарий: '+device.deviceComment: '' }}<br v-if="device.deviceComment!=null">
-                        {{device.deviceAccounting!=null? 'Номер бухучета: '+device.deviceAccounting: '' }}<br v-if="device.deviceAccounting!=null">
+                        {{device.deviceComment.length!=0? 'Комментарий: '+device.deviceComment: '' }}<br v-if="device.deviceComment.length!=0">
+                        {{device.deviceAccounting!=null? 'Номер бухучета: '+device.deviceAccounting: '' }}<br>
                         {{device.storePlace!=null? 'Место хранения: '+device.storePlace: '' }}<br>
                         Подлежит поверке:
                         <span :class="{'text-success fw-bold':device.verificationNeed==true}">{{device.verificationNeed==true? ' да': ' нет' }}</span><br>

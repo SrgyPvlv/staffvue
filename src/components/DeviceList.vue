@@ -56,10 +56,12 @@
                     <label><strong>Место хранения:</strong></label> {{ currentDevice.storePlace }}
                 </div>
                 <div>
-                    <label><strong>Подлежит поверке:</strong></label> {{ currentDevice.verificationNeed? 'да' : 'нет' }}
+                    <label><strong>Подлежит поверке:</strong></label>
+                    <span :class="{'text-success fw-bold':currentDevice.verificationNeed==true}">{{currentDevice.verificationNeed==true? ' да': ' нет' }}</span>
                 </div>
                 <div>
-                    <label><strong>Находится в поверке:</strong></label> {{ currentDevice.inVerification? 'да' : 'нет' }}
+                    <label><strong>Находится в поверке:</strong></label>
+                    <span :class="{'text-danger fw-bold':currentDevice.inVerification==true}"> {{currentDevice.inVerification==true? ' да': ' нет' }} </span>
                 </div>
 
                 <div v-if="showAdminBoard || showSuperAdminBoard">             
