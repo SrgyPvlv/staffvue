@@ -23,6 +23,7 @@ const router=createRouter({
         {path:'/carmodels', name:'carmodels', component:()=>import("../components/CarModelList.vue")},
         {path:'/users', name:'users', component:()=>import("../components/UserList.vue")},
         {path:'/mail', name:'mail', component:()=>import("../components/SendMail.vue")},
+        {path:'/references', name:'mail', component:()=>import("../components/References.vue")},
         {path:'/sertificatenames', name:'sertificatenames', component:()=>import("../components/SertificateNameList.vue")},
         {path:'/approvalgruppas', name:'approvalgruppas', component:()=>import("../components/ApprovalGruppaList.vue")},
         {path:'/sertificates/:id', name:'sertificate-details', component:()=>import("../components/Sertificate.vue")},

@@ -32,6 +32,9 @@
           </li>
         </ul>
       </li>
+      <li class="nav-item">
+        <RouterLink to="/references" class="nav-link">Ссылки</RouterLink>
+      </li>
       <li v-if="showAdminBoard || showSuperAdminBoard" class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Добавить</a>
         <ul class="dropdown-menu">
