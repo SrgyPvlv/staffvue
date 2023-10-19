@@ -12,9 +12,13 @@
       <li class="nav-item">
         <RouterLink to="/devices" class="nav-link">Приборы</RouterLink>
       </li>
+      <li class="nav-item">
+        <RouterLink to="/references" class="nav-link">Ссылки</RouterLink>
+      </li>
       <li>
         <RouterLink to="/mail" class="nav-link">Почта</RouterLink>
       </li>
+      
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"><font-awesome-icon icon="fa-solid fa-download" /> Exel</a>
         <ul class="dropdown-menu">
@@ -32,9 +36,7 @@
           </li>
         </ul>
       </li>
-      <li class="nav-item">
-        <RouterLink to="/references" class="nav-link">Ссылки</RouterLink>
-      </li>
+      
       <li v-if="showAdminBoard || showSuperAdminBoard" class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Добавить</a>
         <ul class="dropdown-menu">
@@ -46,6 +48,9 @@
           </li>
           <li>
             <RouterLink to="/addDevice" class="dropdown-item">Прибор</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/addReference" class="dropdown-item">Ссылка</RouterLink>
           </li>
         </ul>
       </li>    

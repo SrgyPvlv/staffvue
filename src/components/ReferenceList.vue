@@ -1,7 +1,6 @@
-<template>
-    
+<template> 
     <div class="list row">
-        <div class="col-md-8">
+        <div class="col-md-5">
         <h3> Приложения для работы (ссылки) </h3>
         <div class="col-md-12 outdiv shadow">
             <div class="col-md-12 indiv">
@@ -10,14 +9,40 @@
                 :class="{ active: index == currentIndex }"
                 v-for="(reference, index) in references"
                 :key="index"
-                @click="setActiveDevice(reference,index)">
-                {{ reference.referenceName }} {{ reference.referenceAddress }} {{ reference.referenceOverview }}
+                @click="setActiveReference(reference,index)">
+                {{ reference.referenceName }}
                 </li>
             </ul>
             </div>
         </div>
         </div>
+
+        <div class="col-md-6">
+            <div v-if="currentReference">
+                <h3> Ссылка </h3>
+                <br>
+                <div>
+                    <label><strong>Адрес:</strong></label> <a :href= "`${ currentReference.referenceAddress }`" target="_blank">{{ currentReference.referenceAddress }}</a>
+                </div>
+                <br>
+                <div>
+                    <label><strong>Описание:</strong></label> {{ currentReference.referenceOverview!=null?currentReference.referenceOverview:'' }}
+                </div>
+
+                <div v-if="showAdminBoard || showSuperAdminBoard">             
+                <RouterLink :to="'/references/'+currentReference.id" class="badge rounded-pill bg-info edit" style="margin-top:15px">Редактировать</RouterLink>
+                <button @click="deleteReferences" class="badge rounded-pill bg-danger ms-3 border-0 delete">Удалить</button>
+                </div>
+
+            </div>
+            <div v-else>
+                <br><br>
+                <p>Выберите ссылку...</p>
+            </div>
+
+        </div>
     </div>
+
 </template>
 
 <script>
@@ -28,7 +53,9 @@ export default{
     name: "devices-list",
     data(){
         return{
-            references:[]
+            references:[],
+            currentReference:null,
+            currentIndex:-1,
         };
     },
     computed: {
@@ -58,9 +85,9 @@ export default{
             .catch(e=>{console.log(e)});
         },
         deleteReferences() {
-            let isDeleteDevice=confirm("Вы точно хотите удалить прибор?\nОтменить действие будет нельзя!");
-            if(isDeleteDevice===true){
-            ReferenceDataService.delete(this.currentDevice.id).
+            let isDeleteReference=confirm("Вы точно хотите удалить ссылку?\nОтменить действие будет нельзя!");
+            if(isDeleteReference===true){
+            ReferenceDataService.delete(this.currentReference.id).
             then(response => {
                 console.log(response.data);
                 this.refreshList();
@@ -76,22 +103,12 @@ export default{
         },
         refreshList(){
             this.retrieveReferences();
-            this.currentDevice = null;
+            this.currentReference = null;
             this.currentIndex = -1
         },
-        setActiveDevice(device,index){
-            this.currentDevice = device;
-            this.currentIndex = device ? index : -1;
-        }, 
-        findByNumberTypeNameEmployeeCommentPlace(){
-            DeviceDataService.findByNumberTypeNameEmployeeCommentPlace(this.filter).
-            then(response=>{
-                this.devices=response.data;
-                this.currentDevice = null;
-                this.currentIndex = -1;
-                console.log(response.data);
-            })
-            .catch(e=>{console.log(e)});
+        setActiveReference(reference,index){
+            this.currentReference = reference;
+            this.currentIndex = reference ? index : -1;
         }      
     },
     mounted(){
