@@ -1,6 +1,6 @@
 <template>
     <div class="list row">
-        <div class="col-md-6">
+        <div class="col-md-7">
             <form @submit.prevent="findByNumberTypeNameEmployeeCommentPlace">
             <div class="input-group mb-3"> 
                 <input type="text" class="form-control" placeholder="Поиск по номеру,типу,наименованию,сотруднику,комментарию" v-model="filter" />
@@ -64,7 +64,7 @@
                     <span :class="{'text-danger fw-bold':currentDevice.inVerification==true}"> {{currentDevice.inVerification==true? ' да': ' нет' }} </span>
                 </div>
 
-                <div v-if="showAdminBoard || showSuperAdminBoard">             
+                <div v-if="showAdminBoard || showSuperAdminBoard || showTesterBoard">             
                 <RouterLink :to="'/devices/'+currentDevice.id" class="badge rounded-pill bg-info edit" style="margin-top:15px">Редактировать</RouterLink>
                 <button @click="deleteDevice" class="badge rounded-pill bg-danger ms-3 border-0 delete">Удалить</button>
                 </div>
@@ -109,7 +109,13 @@ export default{
             return this.currentUser['roles'].includes('ROLE_SUPERADMIN');
         }
             return false;
+        },
+        showTesterBoard() {
+            if (this.currentUser && this.currentUser['roles']) {
+            return this.currentUser['roles'].includes('ROLE_TESTER');
         }
+            return false;
+        }    
   },
     methods:{
         retrieveDevices(){
