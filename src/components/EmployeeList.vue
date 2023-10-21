@@ -104,6 +104,26 @@
                     {{ currentEmployee.car!=null? ', '+currentEmployee.car.carModel.carModel:'' }}
                     {{ currentEmployee.car!=null? ', ***Комментарий: '+currentEmployee.car.carComment:'' }}
                 </div>
+                <div v-if="currentEmployee.employeeComment!=null && currentEmployee.employeeComment.length!=0">
+                    <label><strong>Комментарий:</strong></label> {{ currentEmployee.employeeComment }}
+                </div>
+                <div>
+                    <label><strong>Приборы:</strong></label> <button v-if="devices.length!=0" @click="toggle2" class="badge rounded-pill bg-info border-0">{{deviceshow?'скрыть':'показать'}}</button>
+                    <ul v-if="deviceshow">
+                        <li v-for="(device,index) in devices" key="index">
+                        <mark>{{device.deviceType!=null? device.deviceType.deviceTypeName+'. ' : ''}}</mark><br>
+                        {{device.deviceName!=null? 'Наименование: '+device.deviceName.deviceName: '' }}<br>
+                        {{device.deviceNumber!=null? 'S/n: '+device.deviceNumber: '' }}<br>
+                        {{device.deviceComment!=null? 'Комментарий: '+device.deviceComment: '' }}<br v-if="device.deviceComment!=null">
+                        Номер бухучета: {{device.deviceAccounting!=null? ' '+device.deviceAccounting: '' }}<br>
+                        {{device.storePlace!=null? 'Место хранения: '+device.storePlace: '' }}<br>
+                        Подлежит поверке:
+                        <span :class="{'text-success fw-bold':device.verificationNeed==true}">{{device.verificationNeed==true? ' да': ' нет' }}</span><br>
+                        Находится в поверке:
+                        <span :class="{'text-danger fw-bold':device.inVerification==true}"> {{device.inVerification==true? ' да': ' нет' }} </span>                        
+                        </li>
+                    </ul>
+                </div>
                 <div>
                     <label><strong>Удостоверения:</strong></label> <button v-if="currentEmployee.sertificates.length!=0" @click="toggle" class="badge rounded-pill bg-info border-0">{{sertshow?'скрыть':'показать'}}</button>
                     <ul v-if="sertshow">
@@ -119,27 +139,7 @@
                         </li>
                     </ul>
                 </div>
-                <div>
-                    <label><strong>Приборы:</strong></label> <button v-if="devices.length!=0" @click="toggle2" class="badge rounded-pill bg-info border-0">{{deviceshow?'скрыть':'показать'}}</button>
-                    <ul v-if="deviceshow">
-                        <li v-for="(device,index) in devices" key="index">
-                        <mark>{{device.deviceType!=null? device.deviceType.deviceTypeName+'. ' : ''}}</mark><br>
-                        {{device.deviceName!=null? 'Наименование: '+device.deviceName.deviceName: '' }}<br>
-                        {{device.deviceNumber!=null? '№: '+device.deviceNumber: '' }}<br>
-                        {{device.deviceComment.length!=0? 'Комментарий: '+device.deviceComment: '' }}<br v-if="device.deviceComment.length!=0">
-                        {{device.deviceAccounting!=null? 'Номер бухучета: '+device.deviceAccounting: '' }}<br>
-                        {{device.storePlace!=null? 'Место хранения: '+device.storePlace: '' }}<br>
-                        Подлежит поверке:
-                        <span :class="{'text-success fw-bold':device.verificationNeed==true}">{{device.verificationNeed==true? ' да': ' нет' }}</span><br>
-                        Находится в поверке:
-                        <span :class="{'text-danger fw-bold':device.inVerification==true}"> {{device.inVerification==true? ' да': ' нет' }} </span>                        
-                        </li>
-                    </ul>
-                </div>
-                <div v-if="currentEmployee.employeeComment!=null">
-                    <label><strong>Комментарий:</strong></label> {{ currentEmployee.employeeComment }}
-                </div>
-
+                
                 <div v-if="showAdminBoard || showSuperAdminBoard">
                 <RouterLink :to="'/employees/'+currentEmployee.id" class="badge rounded-pill bg-info edit">Редактировать</RouterLink>
                 <button @click="deleteEmployee" class="badge rounded-pill bg-danger ms-3 border-0 delete">Удалить</button>

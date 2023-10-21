@@ -15,7 +15,7 @@
         </div>
     </div>
     <div class="list row">
-        <div class="col-md-4">
+        <div class="col-md-6">
         <h3> Список приборов </h3>
         <div class="col-md-12 outdiv shadow">
             <div class="col-md-12 indiv">
@@ -31,7 +31,7 @@
             </div>
         </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-6">
             <div v-if="currentDevice">
                 <h3> Прибор </h3>
                 <div>
