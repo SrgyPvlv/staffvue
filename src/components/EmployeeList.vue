@@ -120,7 +120,8 @@
                         Подлежит поверке:
                         <span :class="{'text-success fw-bold':device.verificationNeed==true}">{{device.verificationNeed==true? ' да': ' нет' }}</span><br>
                         Находится в поверке:
-                        <span :class="{'text-danger fw-bold':device.inVerification==true}"> {{device.inVerification==true? ' да': ' нет' }} </span>                        
+                        <span :class="{'text-danger fw-bold':device.inVerification==true}"> {{device.inVerification==true? ' да': ' нет' }} </span>
+                        <span class="ms-2">{{ device.dateMoving!=null? 'с '+device.dateMoving.split('-').reverse().join('.'):''}}</span>                        
                         </li>
                     </ul>
                 </div>

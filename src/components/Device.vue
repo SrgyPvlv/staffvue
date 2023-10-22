@@ -59,6 +59,12 @@
           <input type="radio" class="ms-3" id="inverification2" name="inverification2" value="false" v-model="currentDevice.inVerification"/>
           <label for="inverification2" class="ms-1 fw-bold">Нет</label>
         </div>
+
+        <div class="form-group mt-3">
+          <label for="datemoving" class="fw-bold">Дата сдачи/возврата прибора</label>
+          <input type="date" class="form-control mt-1" id="datemoving" name="datemoving" v-model="currentDevice.dateMoving"/>
+        </div>
+
       </form>
 
       <div class="mt-3">
@@ -120,7 +126,8 @@ export default {
       deviceAccounting: this.currentDevice.deviceAccounting,
       storePlace: this.currentDevice.storePlace,
       verificationNeed: this.currentDevice.verificationNeed,
-      inVerification: this.currentDevice.inVerification
+      inVerification: this.currentDevice.inVerification,
+      dateMoving: this.currentDevice.dateMoving
     };
     DeviceDataService.update(this.currentDevice.id, data)
       .then(response => {

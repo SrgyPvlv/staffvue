@@ -62,6 +62,7 @@
                 <div>
                     <label><strong>Находится в поверке:</strong></label>
                     <span :class="{'text-danger fw-bold':currentDevice.inVerification==true}"> {{currentDevice.inVerification==true? ' да': ' нет' }} </span>
+                    <span class="ms-2">{{ currentDevice.dateMoving!=null? 'с '+currentDevice.dateMoving.split('-').reverse().join('.'):''}}</span>
                 </div>
 
                 <div v-if="showAdminBoard || showSuperAdminBoard || showTesterBoard">             
