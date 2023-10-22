@@ -151,16 +151,16 @@ export default{
       this.$router.push('/login');
     },
     exelDownloadEmployees(){
-      window.location.href="http://localhost:8080/api/v1/exel/download/employees";
+      window.location.href="http://10.232.3.49:8083/api/v1/exel/download/employees";
     },
     exelDownloadCars(){
-      window.location.href="http://localhost:8080/api/v1/exel/download/cars";
+      window.location.href="http://10.232.3.49:8083/api/v1/exel/download/cars";
     },
     exelDownloadSertificates(){
-      window.location.href="http://localhost:8080/api/v1/exel/download/sertificates";
+      window.location.href="http://10.232.3.49:8083/api/v1/exel/download/sertificates";
     },
     exelDownloadDevices(){
-      window.location.href="http://localhost:8080/api/v1/exel/download/devices";
+      window.location.href="http://10.232.3.49:8083/api/v1/exel/download/devices";
     }
   },
 
