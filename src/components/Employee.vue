@@ -9,12 +9,12 @@
 
         <div class="form-group mt-3">
           <label for="mobilePhone" class="fw-bold">Мобильный телефон</label>
-          <input type="text" class="form-control mt-1" id="mobilePhone" required v-model="currentEmployee.mobilePhone" name="mobilePhone" placeholder="Введите номер в формате: +79112223344"/>
+          <input type="text" class="form-control mt-1" id="mobilePhone" v-model="currentEmployee.mobilePhone" name="mobilePhone" placeholder="Введите номер в формате: +79112223344"/>
         </div>
 
         <div class="form-group mt-3">
           <label for="birthday" class="fw-bold">Дата рождения</label>
-          <input type="date" class="form-control mt-1" id="birthday" required v-model="currentEmployee.birthday" name="birthday"/>
+          <input type="date" class="form-control mt-1" id="birthday" v-model="currentEmployee.birthday" name="birthday"/>
         </div>
 
         <div class="form-group mt-3">
@@ -24,17 +24,17 @@
 
         <div class="form-group mt-3">
           <label for="employeeId" class="fw-bold">Табельный номер</label>
-          <input type="number" class="form-control mt-1" id="employeeId" min="1" required v-model="currentEmployee.employeeId" name="employeeId"/>
+          <input type="number" class="form-control mt-1" id="employeeId" min="1" v-model="currentEmployee.employeeId" name="employeeId"/>
         </div>
 
         <div class="form-group mt-3">
           <label for="login" class="fw-bold">Логин</label>
-          <input type="text" class="form-control mt-1" id="login" required v-model="currentEmployee.login" name="login"/>
+          <input type="text" class="form-control mt-1" id="login" v-model="currentEmployee.login" name="login"/>
         </div>
 
         <div class="form-group mt-3">
           <label for="email" class="fw-bold">E-mail</label>
-          <input type="email" class="form-control mt-1" id="email" required v-model="currentEmployee.email" name="email"/>
+          <input type="email" class="form-control mt-1" id="email" v-model="currentEmployee.email" name="email"/>
         </div>
 
         <div class="form-group mt-3">
