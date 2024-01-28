@@ -13,6 +13,9 @@
         <RouterLink to="/devices" class="nav-link">Приборы</RouterLink>
       </li>
       <li class="nav-item">
+        <RouterLink to="/tools" class="nav-link">Инструменты</RouterLink>
+      </li>
+      <li class="nav-item">
         <RouterLink to="/references" class="nav-link">Ссылки</RouterLink>
       </li>
       <li>
@@ -34,6 +37,9 @@
           <li>
             <Link @click="exelDownloadDevices" class="dropdown-item exelpointer">Приборы</Link>
           </li>
+          <li>
+            <Link @click="exelDownloadTools" class="dropdown-item exelpointer">Инструменты</Link>
+          </li>
         </ul>
       </li>
       
@@ -48,6 +54,9 @@
           </li>
           <li>
             <RouterLink to="/addDevice" class="dropdown-item">Прибор</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/addTool" class="dropdown-item">Инструмент</RouterLink>
           </li>
           <li>
             <RouterLink to="/addReference" class="dropdown-item">Ссылка</RouterLink>
@@ -89,6 +98,12 @@
           </li>
           <li>
             <RouterLink to="/devicenames" class="dropdown-item">Наименования приборов</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/tooltypes" class="dropdown-item">Типы инструментов</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/toolnames" class="dropdown-item">Наименования инструментов</RouterLink>
           </li>    
         </ul>
       </li>
@@ -161,6 +176,9 @@ export default{
     },
     exelDownloadDevices(){
       window.location.href="http://localhost:8080/api/v1/exel/download/devices";
+    }
+    exelDownloadTools(){
+      window.location.href="http://localhost:8080/api/v1/exel/download/tools";
     }
   },
 

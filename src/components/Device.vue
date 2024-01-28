@@ -10,14 +10,14 @@
         </div>
 
         <div class="form-group mt-3">
-          <label for="devicetype" class="fw-bold">Наименование прибора</label>
-          <select class="form-select mt-1" id="devicetype" name="devicetype" v-model="currentDevice.deviceName" required>
+          <label for="devicename" class="fw-bold">Наименование прибора</label>
+          <select class="form-select mt-1" id="devicename" name="devicename" v-model="currentDevice.deviceName" required>
            <option v-for="(devicename,index) in devicenames" :key="index" :value="devicename">{{devicename.deviceName}}</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label for="devicetype" class="fw-bold">Номер прибора</label>
+          <label for="devicenumber" class="fw-bold">Номер прибора</label>
           <input type="text" class="form-control mt-1" id="devicenumber" name="devicenumber" required v-model="currentDevice.deviceNumber"/>
         </div>
 

@@ -6,12 +6,15 @@ const router=createRouter({
         {path:'/', alias:'/employees', name:'employees', component:()=>import("../components/EmployeeList.vue")},
         {path:'/cars', name:'cars', component:()=>import("../components/CarList.vue")},
         {path:'/devices', name:'devices', component:()=>import("../components/DeviceList.vue")},
+        {path:'/tools', name:'tools', component:()=>import("../components/ToolList.vue")},
         {path:'/employees/:id', name:'employee-details', component:()=>import("../components/Employee.vue")},
         {path:'/cars/:id', name:'cars-details', component:()=>import("../components/Car.vue")},
         {path:'/devices/:id', name:'devices-details', component:()=>import("../components/Device.vue")},
+        {path:'/tools/:id', name:'tools-details', component:()=>import("../components/Tool.vue")},
         {path:'/addEmployee', name:'addEmployee', component:()=>import("../components/AddEmployee.vue")},
         {path:'/addCar', name:'addCar', component:()=>import("../components/AddCar.vue")},
         {path:'/addDevice', name:'addDevice', component:()=>import("../components/AddDevice.vue")},
+        {path:'/addTool', name:'addTool', component:()=>import("../components/AddTool.vue")},
         {path: "/profile", name: 'profile',component:()=>import("../components/Profile.vue")},
         {path: "/login", name:'login', component:()=>import("../components/Login.vue")},
         {path: "/register", name:'register', component:()=>import("../components/Register.vue")},
@@ -31,7 +34,8 @@ const router=createRouter({
         {path:'/sertificates/:id', name:'sertificate-details', component:()=>import("../components/Sertificate.vue")},
         {path:'/devicetypes', name:'devicetypes', component:()=>import("../components/DeviceTypeList.vue")},
         {path:'/devicenames', name:'devicenames', component:()=>import("../components/DeviceNameList.vue")},
-        
+        {path:'/tooltypes', name:'tooltypes', component:()=>import("../components/ToolTypeList.vue")},
+        {path:'/toolnames', name:'toolnames', component:()=>import("../components/ToolNameList.vue")}      
     ]
 });
 
