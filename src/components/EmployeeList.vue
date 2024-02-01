@@ -126,6 +126,19 @@
                     </ul>
                 </div>
                 <div>
+                    <label><strong>Инструменты:</strong></label> <button v-if="tools.length!=0" @click="toggle3" class="badge rounded-pill bg-info border-0">{{toolshow?'скрыть':'показать'}}</button>
+                    <ul v-if="toolshow">
+                        <li v-for="(tool,index) in tools" key="index">
+                        <mark>{{tool.toolType!=null? tool.toolType.toolTypeName+'. ' : ''}}</mark><br>
+                        {{tool.toolName!=null? 'Наименование: '+tool.toolName.toolName: '' }}<br>
+                        {{tool.toolNumber!=null? 'S/n: '+tool.toolNumber: '' }}<br>
+                        {{tool.toolComment!=null? 'Комментарий: '+tool.toolComment: '' }}<br v-if="tool.toolComment!=null">
+                        Номер бухучета: {{tool.toolAccounting!=null? ' '+tool.toolAccounting: '' }}<br>
+                        {{tool.storePlace!=null? 'Место хранения: '+tool.storePlace: '' }}                        
+                        </li>
+                    </ul>
+                </div>
+                <div>
                     <label><strong>Удостоверения:</strong></label> <button v-if="currentEmployee.sertificates.length!=0" @click="toggle" class="badge rounded-pill bg-info border-0">{{sertshow?'скрыть':'показать'}}</button>
                     <ul v-if="sertshow">
                         <li v-for="(sertificate,index) in sertificates" key="index">
@@ -180,6 +193,7 @@ import EmployeesDataService from '../services/EmployeesDataService';
 import DepartmentsDataService from '../services/DepartmentsDataService';
 import SertificatesDataService from '../services/SertificatesDataService';
 import DeviceDataService from '../services/DeviceDataService';
+import ToolDataService from '../services/ToolDataService';
 import EventBus from "../common/EventBus"
 
 export default{
@@ -195,8 +209,10 @@ export default{
             departments:[],
             sertificates:[],
             devices:[],
+            tools:[],
             sertshow:false,
-            deviceshow:false
+            deviceshow:false,
+            toolshow:false
         };
     },
     computed:{
@@ -268,7 +284,12 @@ export default{
             .then(response => {
                 this.devices = response.data;
                 console.log(response.data)})
-                .catch(e => {console.log(e);});    
+                .catch(e => {console.log(e);});
+            ToolDataService.getByEmployeeId(this.currentEmployee.id)
+            .then(response => {
+                this.tools = response.data;
+                console.log(response.data)})
+                .catch(e => {console.log(e);});        
         },
         findByNameMobilePosition(){
             EmployeesDataService.findByNameMobilePosition(this.filter).
@@ -317,6 +338,9 @@ export default{
         },
         toggle2(){
             this.deviceshow =! this.deviceshow;
+        },
+        toggle3(){
+            this.toolshow =! this.toolshow;
         }
         },       
 

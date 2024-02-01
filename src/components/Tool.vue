@@ -83,7 +83,7 @@ export default {
     }
   },
   methods: {
-      getDevice(id) {
+      getTool(id) {
         ToolDataService.get(id)
       .then(response => {
         this.currentTool = response.data;

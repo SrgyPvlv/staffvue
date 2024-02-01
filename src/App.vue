@@ -176,7 +176,7 @@ export default{
     },
     exelDownloadDevices(){
       window.location.href="http://localhost:8080/api/v1/exel/download/devices";
-    }
+    },
     exelDownloadTools(){
       window.location.href="http://localhost:8080/api/v1/exel/download/tools";
     }

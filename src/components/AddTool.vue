@@ -18,7 +18,7 @@
 
         <div class="form-group">
           <label for="tooltype" class="fw-bold">Номер инструмента</label>
-          <input type="text" class="form-control mt-1" id="toolnumber" name="toolnumber" required v-model="tool.toolNumber"/>
+          <input type="text" class="form-control mt-1" id="toolnumber" name="toolnumber" v-model="tool.toolNumber"/>
         </div>
 
         <div class="form-group mt-3">
@@ -48,7 +48,7 @@
   
       <div v-else>
         <h4>Данные успешно сохранены!</h4>
-        <button class="btn btn-outline-success mt-3" @click="newtool">Добавить еще</button>
+        <button class="btn btn-outline-success mt-3" @click="newTool">Добавить еще</button>
       </div>
     </div>
   </template>
@@ -110,7 +110,7 @@
           });
       },
       
-      newtool() {
+      newTool() {
         this.submitted = false;
         this.tool = {};
       },
