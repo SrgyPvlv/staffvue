@@ -96,12 +96,12 @@ export default {
 
   updateTool() {
     var data = {
-      toolType: this.currentTool.deviceType,
-      toolName: this.currentTool.deviceName,
-      toolNumber: this.currentTool.deviceNumber,
+      toolType: this.currentTool.toolType,
+      toolName: this.currentTool.toolName,
+      toolNumber: this.currentTool.toolNumber,
       employee: this.currentToolSomeFieldsEmployee,
-      toolComment: this.currentTool.deviceComment,
-      toolAccounting: this.currentTool.deviceAccounting,
+      toolComment: this.currentTool.toolComment,
+      toolAccounting: this.currentTool.toolAccounting,
       storePlace: this.currentTool.storePlace
     };
     ToolDataService.update(this.currentTool.id, data)

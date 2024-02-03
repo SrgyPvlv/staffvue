@@ -135,7 +135,7 @@ export default{
             console.log(e);});}
         },
         refreshList(){
-            this.retrievetools();
+            this.retrieveTools();
             this.currentTool = null;
             this.currentIndex = -1;
             this.filter=""
