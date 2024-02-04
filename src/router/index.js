@@ -35,7 +35,8 @@ const router=createRouter({
         {path:'/devicetypes', name:'devicetypes', component:()=>import("../components/DeviceTypeList.vue")},
         {path:'/devicenames', name:'devicenames', component:()=>import("../components/DeviceNameList.vue")},
         {path:'/tooltypes', name:'tooltypes', component:()=>import("../components/ToolTypeList.vue")},
-        {path:'/toolnames', name:'toolnames', component:()=>import("../components/ToolNameList.vue")}      
+        {path:'/toolnames', name:'toolnames', component:()=>import("../components/ToolNameList.vue")},
+        {path:'/avatars/:id', name:'avatar-details', component:()=>import("../components/Avatar.vue")}      
     ]
 });
 

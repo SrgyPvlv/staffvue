@@ -154,10 +154,11 @@
                     </ul>
                 </div>
                 
-                <div v-if="showAdminBoard || showSuperAdminBoard">
+                <div v-if="showAdminBoard || showSuperAdminBoard" class="mt-3">
                 <RouterLink :to="'/employees/'+currentEmployee.id" class="badge rounded-pill bg-info edit">Редактировать</RouterLink>
-                <button @click="deleteEmployee" class="badge rounded-pill bg-danger ms-3 border-0 delete">Удалить</button>
-                <RouterLink :to="'/sertificates/'+currentEmployee.id" class="badge rounded-pill bg-warning ms-3 sertif">Удостоверения</RouterLink>
+                <RouterLink :to="'/avatars/'+currentEmployee.id" class="badge rounded-pill bg-success ms-3 sertif">Аватарка</RouterLink>
+                <button @click="deleteEmployee" class="badge rounded-pill bg-danger ms-3 border-0 delete">Удалить</button><br>
+                <RouterLink :to="'/sertificates/'+currentEmployee.id" class="badge rounded-pill bg-warning mt-3 sertif">Удостоверения</RouterLink>
                 </div>
 
             </div>
