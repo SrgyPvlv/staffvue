@@ -1,19 +1,17 @@
-<template>
-    <!-- <img src="C:/Users/spavlov/Desktop/Staff/pavlov.jpg" alt="Фото"><br> -->
-    
+<template>   
     <div class="container">
       <div v-if="!submitted">
         <div class="large-12 medium-12 small-12 cell">
           <label for="avatar" class="fw-bold">Выберите фото для загрузки</label>
-          <input type="file" class="form-control mt-1" id="avatar" name="avatar" ref="file" accept="image/*" @change="handleFileUpload" />
+          <input type="file" class="form-control mt-2" id="avatar" name="avatar" ref="file" accept="image/*" @change="handleFileUpload" />
         </div>
 
-        <img v-bind:src="imagePreview" v-show="showPreview"/>
+        <img class="mt-3 me-3" v-bind:src="imagePreview" v-show="showPreview"/>
         <button @click="submitFile" class="btn btn-success mt-3">Загрузить фото</button>
       </div>
   
       <div v-else>
-        <h4>Данные успешно сохранены!</h4>
+        <h4 class="mt-3 text-success">Фото успешно загружено!</h4>
       </div>
     </div>
 </template>
@@ -36,13 +34,11 @@ export default{
             let formData = new FormData();
             formData.append('avatar', this.file);
             AvatarsDataService.create(this.$route.params.id, formData)
-            .then(function(){
-              this.submitted=true;
-          console.log('SUCCESS!');
+            .then(response =>{
+          console.log(response.data);
+          this.submitted=true;
         })
-        .catch(function(){
-          console.log('FAILURE!');
-        });
+        .catch(e => {console.log(e);});
       },
       handleFileUpload(){
         this.file = this.$refs.file.files[0];
@@ -67,4 +63,7 @@ div.container img{
     max-width: 300px;
     max-height: 300px;
   }
+div.container input{
+  width: 500px;
+}  
 </style>
