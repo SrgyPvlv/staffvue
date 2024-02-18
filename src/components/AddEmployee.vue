@@ -18,12 +18,12 @@
 
         <div class="form-group mt-3">
           <label for="localPhone" class="fw-bold">Местный телефон</label>
-          <input type="number" class="form-control mt-1" id="localPhone" min="1" v-model="employee.localPhone" name="localPhone"/>
+          <input type="number" class="form-control mt-1" id="localPhone" v-model="employee.localPhone" name="localPhone"/>
         </div>
 
         <div class="form-group mt-3">
           <label for="employeeId" class="fw-bold">Табельный номер</label>
-          <input type="number" class="form-control mt-1" id="employeeId" min="1" v-model="employee.employeeId" name="employeeId"/>
+          <input type="number" class="form-control mt-1" id="employeeId" v-model="employee.employeeId" name="employeeId"/>
         </div>
 
         <div class="form-group mt-3">

@@ -43,6 +43,25 @@
           <label for="toolstoreplace" class="fw-bold">Место хранения</label>
           <input type="text" class="form-control mt-1" id="toolstoreplace" name="toolstoreplace" v-model="currentTool.storePlace"/>
         </div>
+
+        <div class="form-group mt-3">
+          <p class="fw-bold">Временно передан</p>
+          <input type="radio" class="mt-1" id="inmoving1" name="inmoving1" value="true" v-model="currentTool.inMoving"/>
+          <label for="inmoving1" class="ms-1 fw-bold">Да</label>
+          <input type="radio" class="ms-3" id="inmoving2" name="inmoving2" value="false" v-model="currentTool.inMoving"/>
+          <label for="inmoving2" class="ms-1 fw-bold">Нет</label>
+        </div>
+
+        <div class="form-group mt-3">
+          <label for="datemoving" class="fw-bold">Дата передачи/возврата инструмента</label>
+          <input type="date" class="form-control mt-1" id="datemoving" name="datemoving" v-model="currentTool.dateMoving"/>
+        </div>
+
+        <div class="form-group mt-3">
+          <label for="commentmoving" class="fw-bold">Кому передан</label>
+          <input type="text" class="form-control mt-1" id="commentmoving" name="commentmoving" v-model="currentTool.commentMoving"/>
+        </div>
+
       </form>
 
       <div class="mt-3">
@@ -102,7 +121,10 @@ export default {
       employee: this.currentToolSomeFieldsEmployee,
       toolComment: this.currentTool.toolComment,
       toolAccounting: this.currentTool.toolAccounting,
-      storePlace: this.currentTool.storePlace
+      storePlace: this.currentTool.storePlace,
+      inMoving: this.currentTool.inMoving,
+      dateMoving: this.currentTool.dateMoving,
+      commentMoving: this.currentTool.commentMoving
     };
     ToolDataService.update(this.currentTool.id, data)
       .then(response => {

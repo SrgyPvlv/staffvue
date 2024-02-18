@@ -55,6 +55,12 @@
                 <div>
                     <label><strong>Место хранения:</strong></label> {{ currentTool.storePlace }}
                 </div>
+                <div>
+                    <label><strong>Временно передан:</strong></label>
+                    <span :class="{'text-danger fw-bold':currentTool.inMoving==true}"> {{currentTool.inMoving==true? ' да': ' нет' }} </span>
+                    <span class="ms-2">{{ currentTool.dateMoving!=null? 'с '+currentTool.dateMoving.split('-').reverse().join('.'):''}}</span>
+                    <span>{{ ' '+currentTool.commentMoving }}</span>
+                </div>
 
                 <div v-if="showAdminBoard || showSuperAdminBoard || showTesterBoard">             
                 <RouterLink :to="'/tools/'+currentTool.id" class="badge rounded-pill bg-info edit" style="margin-top:15px">Редактировать</RouterLink>

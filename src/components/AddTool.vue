@@ -42,6 +42,24 @@
           <label for="toolstoreplace" class="fw-bold">Место хранения</label>
           <input type="text" class="form-control mt-1" id="toolstoreplace" name="toolstoreplace" v-model="tool.storePlace" required/>
         </div>
+
+        <div class="form-group mt-3">
+          <p class="fw-bold">Временно передан</p>
+          <input type="radio" class="mt-1" id="inmoving1" name="inmoving1" value="true" v-model="tool.inMoving"/>
+          <label for="inmoving1" class="ms-1 fw-bold">Да</label>
+          <input type="radio" class="ms-3" id="inmoving2" name="inmoving2" value="false" v-model="tool.inMoving"/>
+          <label for="inmoving2" class="ms-1 fw-bold">Нет</label>
+        </div>
+
+        <div class="form-group mt-3">
+          <label for="datemoving" class="fw-bold">Дата передачи/возврата инструмента</label>
+          <input type="date" class="form-control mt-1" id="datemoving" name="datemoving" v-model="tool.dateMoving"/>
+        </div>
+
+        <div class="form-group mt-3">
+          <label for="commentmoving" class="fw-bold">Кому передан</label>
+          <input type="text" class="form-control mt-1" id="commentmoving" name="commentmoving" v-model="tool.commentMoving"/>
+        </div>
   
         <button @click="saveTool" class="btn btn-success mt-3">Сохранить</button>
       </div>
@@ -72,7 +90,10 @@
           employeeSelected:"",
           toolComment:"",
           toolAccounting:"",
-          storePlace:""
+          storePlace:"",
+          inMoving:false,
+          dateMoving:"",
+          commentMoving:""
         },
         submitted: false,
         tooltypes:[],
@@ -89,7 +110,10 @@
           employee: this.tool.employeeSelected,
           toolComment: this.tool.toolComment,
           toolAccounting: this.tool.toolAccounting,
-          storePlace: this.tool.storePlace
+          storePlace: this.tool.storePlace,
+          inMoving: this.tool.inMoving,
+          dateMoving: this.tool.dateMoving,
+          commentMoving: this.tool.commentMoving
         };
   
         ToolDataService.create(data)

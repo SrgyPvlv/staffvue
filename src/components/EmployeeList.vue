@@ -58,9 +58,10 @@
             </div>
         </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 currentEmpl">
             <div v-if="currentEmployee">
                 <h3> Сотрудник </h3>
+                <img v-bind:src="avatarImage" alt="Фото" class="avatar mb-3 img-thumbnail">
                 <div>
                     <label><strong>ФИО:</strong></label> {{ currentEmployee.name }}
                 </div>
@@ -134,7 +135,11 @@
                         {{tool.toolNumber!=null? 'S/n: '+tool.toolNumber: 'S/n:' }}<br>
                         {{tool.toolComment!=null? 'Комментарий: '+tool.toolComment: '' }}<br v-if="tool.toolComment!=null">
                         Номер бухучета: {{tool.toolAccounting!=null? ' '+tool.toolAccounting: '' }}<br>
-                        {{tool.storePlace!=null? 'Место хранения: '+tool.storePlace: '' }}                        
+                        {{tool.storePlace!=null? 'Место хранения: '+tool.storePlace: '' }}<br>
+                        Временно передан:
+                        <span :class="{'text-danger fw-bold':tool.inMoving==true}"> {{tool.inMoving==true? ' да': ' нет' }} </span>
+                        <span class="ms-2">{{ tool.dateMoving!=null? 'с '+tool.dateMoving.split('-').reverse().join('.'):''}}</span>
+                        <span>{{ ' '+tool.commentMoving }}</span>                        
                         </li>
                     </ul>
                 </div>
@@ -195,6 +200,7 @@ import DepartmentsDataService from '../services/DepartmentsDataService';
 import SertificatesDataService from '../services/SertificatesDataService';
 import DeviceDataService from '../services/DeviceDataService';
 import ToolDataService from '../services/ToolDataService';
+import AvatarsDataService from '../services/AvatarsDataService';
 import EventBus from "../common/EventBus"
 
 export default{
@@ -213,7 +219,8 @@ export default{
             tools:[],
             sertshow:false,
             deviceshow:false,
-            toolshow:false
+            toolshow:false,
+            avatarImage:''
         };
     },
     computed:{
@@ -290,7 +297,8 @@ export default{
             .then(response => {
                 this.tools = response.data;
                 console.log(response.data)})
-                .catch(e => {console.log(e);});        
+                .catch(e => {console.log(e);});
+            this.getAvatarByEmployeeId(this.currentEmployee.id)            
         },
         findByNameMobilePosition(){
             EmployeesDataService.findByNameMobilePosition(this.filter).
@@ -334,6 +342,9 @@ export default{
             })
             .catch(e=>{console.log(e)});
         },
+        getAvatarByEmployeeId(id){
+        this.avatarImage=`http://localhost:8080/api/v1/avatars/${id}`
+        },
         toggle(){
             this.sertshow =! this.sertshow;
         },
@@ -347,7 +358,7 @@ export default{
 
     mounted(){
             this.retrieveEmployees();
-            this.retrieveDepartments();
+            this.retrieveDepartments()
         }
 };
 </script>
@@ -402,6 +413,18 @@ export default{
 }
 .listyle{
     list-style-type: none;
+}
+.avatar{
+    width: 200px;
+    height: 200px;
+    transition: transform .2s;
+}
+.avatar:hover{
+    transform: scale(2.0);
+    z-index:10
+}
+.currentEmpl{
+    z-index:10
 }
 </style>
 
