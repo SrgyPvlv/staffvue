@@ -44,6 +44,9 @@
                     <label><strong>Водитель:</strong></label> {{ currentCar.employee!=null?currentCar.employee.name+', '+currentCar.employee.mobilePhone:'' }}
                 </div>
                 <div>
+                    <label><strong>Место стоянки:</strong></label> {{ currentCar.carParking!=null?currentCar.carParking.parkingName:'' }}
+                </div>
+                <div>
                     <label><strong>Комментарий:</strong></label> {{ currentCar.carComment }}
                 </div>
 

@@ -103,6 +103,7 @@
                     <label><strong>Автомобиль:</strong></label> 
                     {{ currentEmployee.car!=null? currentEmployee.car.carNumber:'' }}
                     {{ currentEmployee.car!=null? ', '+currentEmployee.car.carModel.carModel:'' }}
+                    {{ currentEmployee.car!=null? ', Место стоянки: '+currentEmployee.car.carParking.parkingName:'' }}
                     {{ currentEmployee.car!=null? ', ***Комментарий: '+currentEmployee.car.carComment:'' }}
                 </div>
                 <div v-if="currentEmployee.employeeComment!=null && currentEmployee.employeeComment.length!=0">
@@ -200,7 +201,7 @@ import DepartmentsDataService from '../services/DepartmentsDataService';
 import SertificatesDataService from '../services/SertificatesDataService';
 import DeviceDataService from '../services/DeviceDataService';
 import ToolDataService from '../services/ToolDataService';
-import AvatarsDataService from '../services/AvatarsDataService';
+//import AvatarsDataService from '../services/AvatarsDataService';
 import EventBus from "../common/EventBus"
 
 export default{
