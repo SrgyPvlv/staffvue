@@ -1,8 +1,8 @@
 <template>
     <div class="list row">
         <div class="col-md-8">
-        <h3> Список парковок автомобилей </h3>
-        <label for="newcarparking" class="fw-bold fst-italic me-3">Новая парковка</label>
+        <h3> Список стоянок автомобилей </h3>
+        <label for="newcarparking" class="fw-bold fst-italic me-3">Новая стоянка</label>
         <input id="newcarparking" name="newcarparking" class="newinputwidth" v-model="newcarparking"/>
         <button @click="createCarParking()" class="badge rounded-pill bg-info ms-3 border-0 delete">Создать</button>
         <div class="col-md-8 outdiv shadow mt-3">

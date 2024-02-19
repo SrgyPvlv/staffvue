@@ -88,7 +88,7 @@
             <RouterLink to="/carmodels" class="dropdown-item">Модели авто</RouterLink>
           </li>
           <li>
-            <RouterLink to="/carparkings" class="dropdown-item">Места паркинга</RouterLink>
+            <RouterLink to="/carparkings" class="dropdown-item">Места стоянки авто</RouterLink>
           </li>
           <li>
             <RouterLink to="/sertificatenames" class="dropdown-item">Типы удостоверений</RouterLink>
