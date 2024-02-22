@@ -52,7 +52,7 @@
                 v-for="(employee, index) in employees"
                 :key="index"
                 @click="setActiveEmployee(employee,index)">
-                {{ employee.name }} <sub>{{employee.position.position}}</sub>
+                {{ employee.name }} <sub>{{employee.position.position.split('.')[0]}}</sub>
                 </li>
             </ul>
             </div>
@@ -66,7 +66,10 @@
                     <label><strong>ФИО:</strong></label> {{ currentEmployee.name }}
                 </div>
                 <div>
-                    <label><strong>Должность:</strong></label> {{ currentEmployee.position!=null?currentEmployee.position.position:'' }}
+                    <label><strong>Должность:</strong></label> {{ currentEmployee.position!=null?currentEmployee.position.position.split('.')[0]:'' }}
+                </div>
+                <div>
+                    <label><strong>ШЕ:</strong></label> {{ currentEmployee.position!=null?currentEmployee.position.position:'' }}
                 </div>
                 <div>
                     <label><strong>Подразделение (факт):</strong></label> 
