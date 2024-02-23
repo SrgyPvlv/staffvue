@@ -62,7 +62,7 @@
                     <span>{{ ' '+currentTool.commentMoving }}</span>
                 </div>
 
-                <div v-if="showAdminBoard || showSuperAdminBoard || showTesterBoard">             
+                <div v-if="showAdminBoard || showSuperAdminBoard || showToolerBoard">             
                 <RouterLink :to="'/tools/'+currentTool.id" class="badge rounded-pill bg-info edit" style="margin-top:15px">Редактировать</RouterLink>
                 <button @click="deleteTool" class="badge rounded-pill bg-danger ms-3 border-0 delete">Удалить</button>
                 </div>
@@ -107,9 +107,9 @@ export default{
         }
             return false;
         },
-        showTesterBoard() {
+        showToolerBoard() {
             if (this.currentUser && this.currentUser['roles']) {
-            return this.currentUser['roles'].includes('ROLE_TESTER');
+            return this.currentUser['roles'].includes('ROLE_TOOLER');
         }
             return false;
         }    
