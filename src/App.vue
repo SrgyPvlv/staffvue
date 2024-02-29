@@ -16,6 +16,9 @@
         <RouterLink to="/tools" class="nav-link">Инструменты</RouterLink>
       </li>
       <li class="nav-item">
+        <RouterLink to="/wardrobes" class="nav-link">Шкафчики</RouterLink>
+      </li>
+      <li class="nav-item">
         <RouterLink to="/references" class="nav-link">Ссылки</RouterLink>
       </li>
       <li>
@@ -39,6 +42,9 @@
           </li>
           <li>
             <Link @click="exelDownloadTools" class="dropdown-item exelpointer">Инструменты</Link>
+          </li>
+          <li>
+            <Link @click="exelDownloadWardrobes" class="dropdown-item exelpointer">Шкафчики</Link>
           </li>
         </ul>
       </li>
@@ -182,6 +188,9 @@ export default{
     },
     exelDownloadTools(){
       window.location.href="http://localhost:8080/api/v1/exel/download/tools";
+    },
+    exelDownloadWardrobes(){
+      window.location.href="http://localhost:8080/api/v1/exel/download/wardrobes";
     }
   },
 
