@@ -65,6 +65,9 @@
             <RouterLink to="/addTool" class="dropdown-item">Инструмент</RouterLink>
           </li>
           <li>
+            <RouterLink to="/addWardrobe" class="dropdown-item">Шкафчик</RouterLink>
+          </li>
+          <li>
             <RouterLink to="/addReference" class="dropdown-item">Ссылка</RouterLink>
           </li>
         </ul>
