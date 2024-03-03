@@ -10,14 +10,14 @@
         </div>
 
         <div class="form-group mt-3">
-          <label for="tooltype" class="fw-bold">Наименование инструмента</label>
-          <select class="form-select mt-1" id="tooltype" name="tooltype" v-model="tool.toolNameSelected" required>
+          <label for="toolname" class="fw-bold">Наименование инструмента</label>
+          <select class="form-select mt-1" id="toolname" name="toolname" v-model="tool.toolNameSelected" required>
            <option v-for="(toolname,index) in toolnames" :key="index" :value="toolname">{{toolname.toolName}}</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label for="tooltype" class="fw-bold">Номер инструмента</label>
+          <label for="toolnumber" class="fw-bold">Номер инструмента</label>
           <input type="text" class="form-control mt-1" id="toolnumber" name="toolnumber" v-model="tool.toolNumber"/>
         </div>
 
