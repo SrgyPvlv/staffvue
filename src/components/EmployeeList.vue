@@ -103,6 +103,9 @@
                     <label><strong>Дата рождения:</strong></label> {{ currentEmployee.birthday!=null?currentEmployee.birthday.split('-').reverse().join('.'):'' }}
                 </div>
                 <div>
+                    <label><strong>Шкафчик: </strong></label> {{ wardrobes!=null? wardrobes.map(wardrobe=>wardrobe.number).join(', '):'' }}
+                </div>
+                <div>
                     <label><strong>Автомобиль:</strong></label> 
                     {{ currentEmployee.car!=null? currentEmployee.car.carNumber:'' }}
                     {{ currentEmployee.car!=null? ', '+currentEmployee.car.carModel.carModel:'' }}
@@ -204,6 +207,7 @@ import DepartmentsDataService from '../services/DepartmentsDataService';
 import SertificatesDataService from '../services/SertificatesDataService';
 import DeviceDataService from '../services/DeviceDataService';
 import ToolDataService from '../services/ToolDataService';
+import WardrobesDataService from '../services/WardrobesDataService'
 //import AvatarsDataService from '../services/AvatarsDataService';
 import EventBus from "../common/EventBus"
 
@@ -221,6 +225,7 @@ export default{
             sertificates:[],
             devices:[],
             tools:[],
+            wardrobes:[],
             sertshow:false,
             deviceshow:false,
             toolshow:false,
@@ -302,6 +307,11 @@ export default{
                 this.tools = response.data;
                 console.log(response.data)})
                 .catch(e => {console.log(e);});
+            WardrobesDataService.getByEmployeeId(this.currentEmployee.id)
+            .then(response => {
+                this.wardrobes = response.data;
+                console.log(response.data)})
+                .catch(e => {console.log(e);});    
             this.getAvatarByEmployeeId(this.currentEmployee.id)            
         },
         findByNameMobilePosition(){

@@ -25,7 +25,8 @@
                 v-for="(wardrobe, index) in wardrobes"
                 :key="index"
                 @click="setActiveWardrobe(wardrobe,index)">
-                № {{ wardrobe.number }} / {{ wardrobe.employee.name.split(' ')[0] }} {{ wardrobe.employee.name.split(' ')[1] }}
+                № {{ wardrobe.number }} / {{ wardrobe.employee!=null? wardrobe.employee.name.split(' ')[0] :""}}
+                 {{ wardrobe.employee!=null? wardrobe.employee.name.split(' ')[1] :""}}
                 </li>
             </ul>
             </div>
@@ -41,7 +42,7 @@
                     <label><strong>Помещение:</strong></label> {{ currentWardrobe.room }}
                 </div>
                 <div>
-                    <label><strong>Владелец:</strong></label> {{ currentWardrobe.employee.name }}
+                    <label><strong>Владелец:</strong></label> {{ currentWardrobe.employee!=null ? currentWardrobe.employee.name : ""}}
                 </div>
                 <div>
                     <label><strong>Комментарий:</strong></label> {{ currentWardrobe.comment }}

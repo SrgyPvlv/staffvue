@@ -18,6 +18,7 @@
         <div class="form-group mt-3">
           <label for="employee" class="fw-bold">Владелец шкафчика</label>
           <select class="form-select mt-1" id="employee" name="employee" v-model="currentWardrobe.employee">
+           <option :value="null"> нет владельца </option> 
            <option :value="currentWardrobe.employee">{{currentWardrobe.employee.name}}</option> 
            <option v-for="(employee,index) in employees" :key="index" :value="employee">{{employee.name}}</option>
           </select>
@@ -66,7 +67,7 @@ export default {
   computed: {
     currentWardrobeSomeFieldsEmployee(){
       var newemployee=null;
-      return newemployee={id:this.currentTool.employee.id, name:this.currentTool.employee.name};
+      return newemployee={id:this.currentWardrobe.employee.id, name:this.currentWardrobe.employee.name};
     }
   },
   methods: {
