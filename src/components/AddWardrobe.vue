@@ -93,7 +93,14 @@
       
       newWardrobe() {
         this.submitted = false;
-        this.wardrobe = {};
+        this.wardrobe = {
+          id: null,
+          numberSelected:"",
+          employeeSelected:"",
+          roomSelected:"",
+          freeSelected:false,
+          commentSelected:""
+        };
       },
 
        retrieveEmployees(){

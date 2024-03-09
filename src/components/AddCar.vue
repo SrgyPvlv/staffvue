@@ -99,7 +99,13 @@
       
       newCar() {
         this.submitted = false;
-        this.car = {};
+        this.car = {
+          id: null,
+          carNumber: "",
+          carComment: "",
+          carModelSelected:"",
+          carParkingSelected:""
+        };
       },
 
       retrieveCarModel(){

@@ -136,7 +136,19 @@
       
       newTool() {
         this.submitted = false;
-        this.tool = {};
+        this.tool = {
+          id: null,
+          toolTypeSelected:"",
+          toolNameSelected:"",
+          toolNumber:"",
+          employeeSelected:"",
+          toolComment:"",
+          toolAccounting:"",
+          storePlace:"",
+          inMoving:false,
+          dateMoving:"",
+          commentMoving:""
+        };
       },
 
       retrieveToolTypes(){
