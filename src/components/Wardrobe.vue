@@ -1,7 +1,8 @@
 <template>
-    <div v-if="currentWardrobe" class="edit-form">
 
-      <h5 class="mt-3 text-success">{{ message }}</h5>
+<h5 class="mt-3 mb-4 text-success">{{ message }}</h5>
+
+    <div v-if="currentWardrobe" class="edit-form">
 
       <h4>Шкафчик</h4>
       <form class="was-validated">

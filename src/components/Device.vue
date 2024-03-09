@@ -1,4 +1,7 @@
 <template>
+
+<h5 class="mt-3 mb-4 text-success">{{ message }}</h5>
+
     <div v-if="currentDevice" class="edit-form">
       <h4>Прибор</h4>
       <form class="was-validated">
@@ -71,7 +74,6 @@
       <button @click="updateDevice" class="btn btn-outline-success me-3">Обновить</button>
       </div>
 
-      <h5 class="mt-3 text-success">{{ message }}</h5>
     </div>
 
     <div v-else>
