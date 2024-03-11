@@ -79,7 +79,13 @@
       
       newReference() {
         this.submitted = false;
-        this.reference = {};
+        this.reference = {
+          id: null,
+          referenceName:"",
+          referenceAddress:"",
+          referenceOverview:"",
+          referenceTheme:""
+        };
       }
     }
   };

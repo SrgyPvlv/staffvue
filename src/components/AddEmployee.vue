@@ -155,7 +155,21 @@
       
       newEmployee() {
         this.submitted = false;
-        this.employee = {};
+        this.employee = {
+          id: null,
+          name: "",
+          mobilePhone:"",
+          birthday:"",
+          localPhone:"",
+          employeeId:"",
+          login:"",
+          email:"",
+          employeeComment:"",
+          factDepartmentSelected:"",
+          staffDepartmentSelected:"",
+          carSelected:null,
+          positionSelected: ""
+        };
       },
 
       retrievePositions(){

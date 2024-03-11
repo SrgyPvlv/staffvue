@@ -139,7 +139,19 @@
       
       newDevice() {
         this.submitted = false;
-        this.device = {};
+        this.device = {
+          id: null,
+          deviceTypeSelected:"",
+          deviceNameSelected:"",
+          deviceNumber:"",
+          employeeSelected:"",
+          deviceComment:"",
+          deviceAccounting:"",
+          storePlace:"",
+          verificationNeed:false,
+          inVerification:false,
+          dateMoving:""
+        };
       },
 
       retrieveDeviceTypes(){
