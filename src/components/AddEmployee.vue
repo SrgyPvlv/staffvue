@@ -111,7 +111,7 @@
           factDepartmentSelected:"",
           staffDepartmentSelected:"",
           carSelected:null,
-          positionSelected: ""
+          positionSelected: null
         },
         submitted: false,
         positions:[],
@@ -168,14 +168,17 @@
           factDepartmentSelected:"",
           staffDepartmentSelected:"",
           carSelected:null,
-          positionSelected: ""
+          positionSelected: null
         };
       },
 
       retrievePositions(){
             PositionsDataService.getAll().
             then(response=>{
-                this.positions=response.data;
+                var positionz=response.data;
+                this.positions=positionz.filter(e=>e.employee==null).map(p => {
+                  var newposition = {id: p.id, position: p.position};
+                  return newposition;});
                 console.log(response.data);
             })
             .catch(e=>{console.log(e)});

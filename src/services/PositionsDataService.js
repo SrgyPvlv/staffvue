@@ -14,8 +14,12 @@ class PositionsDataService{
         return api.post('/positions', data);
     }
 
-    update(id, data){
+    edit(id, data){
         return api.put(`/positions/${id}`, data);
+    }
+
+    update(id, data){
+        return api.patch(`/positions/${id}`, data);
     }
 
     delete(id){
