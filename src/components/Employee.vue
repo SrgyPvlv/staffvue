@@ -70,6 +70,7 @@
         <div class="form-group mt-3">
           <label for="position" class="fw-bold">Должность</label>
           <select class="form-select mt-1" id="position" name="position" v-model="currentEmployee.position" required>
+           <option :value="currentEmployee.position">{{currentEmployee.position.position}}</option>
            <option v-for="(position,index) in positions" :key="index" :value="position">{{position.position}}</option>
           </select>
         </div>
@@ -124,6 +125,7 @@ export default {
         var currentEmployeeCar=null;
         if(currentEmployeeResponse.car!=null){
         currentEmployeeCar = {id: currentEmployeeResponse.car.id, carNumber : currentEmployeeResponse.car.carNumber, carComment : currentEmployeeResponse.car.carComment, carModel: currentEmployeeResponse.car.carModel};};
+        var currentEmployeePosition = {id: currentEmployeeResponse.position.id, position : currentEmployeeResponse.position.position};
         this.currentEmployee = {
           id: currentEmployeeResponse.id,
           name: currentEmployeeResponse.name,
@@ -137,7 +139,7 @@ export default {
           factDepartment: currentEmployeeResponse.factDepartment,
           staffDepartment: currentEmployeeResponse.staffDepartment,
           car: currentEmployeeCar,
-          position: currentEmployeeResponse.position
+          position: currentEmployeePosition
         };
         console.log(response.data)
       })
@@ -166,8 +168,11 @@ export default {
   retrievePositions(){
             PositionsDataService.getAll().
             then(response=>{
-                this.positions=response.data;
-                console.log(response.data);
+                var positionz=response.data;
+                this.positions=positionz.filter(e=>e.employee==null).map(p => {
+                  var newposition = {id: p.id, position: p.position};
+                  return newposition;});
+                console.log(this.positions);
             })
             .catch(e=>{console.log(e)});
           },
