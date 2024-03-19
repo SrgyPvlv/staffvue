@@ -3,12 +3,15 @@
         <div class="col-md-7">
             <form @submit.prevent="findByNumberEmployeeRoom">
             <div class="input-group mb-3"> 
-                <input type="text" class="form-control" placeholder="Поиск по номеру,сотруднику,помещению" v-model="filter" />
+                <input type="text" class="form-control" placeholder="Поиск по номеру, сотруднику, помещению" v-model="filter" />
                 <div class="input-group-append ms-3">
                 <button type="button" class="btn btn-outline-secondary" @click="findByNumberEmployeeRoom">Поиск</button>
                 </div>
                 <div class="input-group-append ms-3">
                 <button type="button" class="btn btn-outline-danger" @click="refreshList">Сбросить</button>
+                </div>
+                <div class="input-group-append ms-3">
+                <button type="button" class="btn btn-outline-success" @click="retrieveFreeWardrobes">Свободные</button>
                 </div>
             </div>
             </form>
@@ -103,6 +106,14 @@ export default{
             WardrobesDataService.getAll().
             then(response=>{
                 this.wardrobes=response.data;
+                console.log(response.data);
+            })
+            .catch(e=>{console.log(e)});
+        },
+        retrieveFreeWardrobes(){
+            WardrobesDataService.getAll().
+            then(response=>{
+                this.wardrobes=response.data.filter(w => w.free==true);
                 console.log(response.data);
             })
             .catch(e=>{console.log(e)});
