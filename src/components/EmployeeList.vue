@@ -109,7 +109,7 @@
                     <label><strong>Автомобиль:</strong></label> 
                     {{ currentEmployee.car!=null? currentEmployee.car.carNumber:'' }}
                     {{ currentEmployee.car!=null? ', '+currentEmployee.car.carModel.carModel:'' }}
-                    {{ currentEmployee.car!=null? ', Место стоянки: '+currentEmployee.car.carParking.parkingName:'' }}
+                    {{ currentEmployee.car!=null && currentEmployee.car.carParking!=null? ', Место стоянки: '+currentEmployee.car.carParking.parkingName:'' }}
                     {{ currentEmployee.car!=null? ', ***Комментарий: '+currentEmployee.car.carComment:'' }}
                 </div>
                 <div v-if="currentEmployee.employeeComment!=null && currentEmployee.employeeComment.length!=0">
