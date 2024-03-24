@@ -59,7 +59,7 @@
                     <label><strong>Временно передан:</strong></label>
                     <span :class="{'text-danger fw-bold':currentTool.inMoving==true}"> {{currentTool.inMoving==true? ' да': ' нет' }} </span>
                     <span class="ms-2">{{ currentTool.dateMoving!=null? 'с '+currentTool.dateMoving.split('-').reverse().join('.'):''}}</span>
-                    <span>{{ ' '+currentTool.commentMoving }}</span>
+                    <span class="ms-2">{{ currentTool.commentMoving!=null? currentTool.commentMoving :'' }}</span>
                 </div>
 
                 <div v-if="showAdminBoard || showSuperAdminBoard || showToolerBoard">             

@@ -142,11 +142,11 @@
                         {{tool.toolNumber!=null? 'S/n: '+tool.toolNumber: 'S/n:' }}<br>
                         {{tool.toolComment!=null? 'Комментарий: '+tool.toolComment: '' }}<br v-if="tool.toolComment!=null">
                         Номер бухучета: {{tool.toolAccounting!=null? ' '+tool.toolAccounting: '' }}<br>
-                        {{tool.storePlace!=null? 'Место хранения: '+tool.storePlace: '' }}<br>
+                        {{tool.storePlace!=null? 'Место хранения: '+tool.storePlace: '' }}<br v-if="tool.storePlace!=null">
                         Временно передан:
                         <span :class="{'text-danger fw-bold':tool.inMoving==true}"> {{tool.inMoving==true? ' да': ' нет' }} </span>
                         <span class="ms-2">{{ tool.dateMoving!=null? 'с '+tool.dateMoving.split('-').reverse().join('.'):''}}</span>
-                        <span>{{ ' '+tool.commentMoving }}</span>                        
+                        <span class="ms-2">{{ tool.commentMoving!=null? tool.commentMoving :'' }}</span>                        
                         </li>
                     </ul>
                 </div>
