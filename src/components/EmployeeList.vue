@@ -52,20 +52,24 @@
                 v-for="(employee, index) in employees"
                 :key="index"
                 @click="setActiveEmployee(employee,index)">
-                {{ employee.name }} <sub>{{employee.position.position}}</sub>
+                {{ employee.name }} <sub>{{employee.position.position.split('.')[0]}}</sub>
                 </li>
             </ul>
             </div>
         </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 currentEmpl">
             <div v-if="currentEmployee">
                 <h3> Сотрудник </h3>
+                <img v-bind:src="avatarImage" alt="Фото" class="avatar mb-3 img-thumbnail">
                 <div>
                     <label><strong>ФИО:</strong></label> {{ currentEmployee.name }}
                 </div>
                 <div>
-                    <label><strong>Должность:</strong></label> {{ currentEmployee.position!=null?currentEmployee.position.position:'' }}
+                    <label><strong>Должность:</strong></label> {{ currentEmployee.position!=null?currentEmployee.position.position.split('.')[0]:'' }}
+                </div>
+                <div>
+                    <label><strong>ШЕ:</strong></label> {{ currentEmployee.position!=null?currentEmployee.position.position:'' }}
                 </div>
                 <div>
                     <label><strong>Подразделение (факт):</strong></label> 
@@ -99,9 +103,13 @@
                     <label><strong>Дата рождения:</strong></label> {{ currentEmployee.birthday!=null?currentEmployee.birthday.split('-').reverse().join('.'):'' }}
                 </div>
                 <div>
+                    <label><strong>Шкафчик: </strong></label> {{ wardrobes!=null? wardrobes.map(wardrobe=>wardrobe.number).join(', '):'' }}
+                </div>
+                <div>
                     <label><strong>Автомобиль:</strong></label> 
                     {{ currentEmployee.car!=null? currentEmployee.car.carNumber:'' }}
                     {{ currentEmployee.car!=null? ', '+currentEmployee.car.carModel.carModel:'' }}
+                    {{ currentEmployee.car!=null && currentEmployee.car.carParking!=null? ', Место стоянки: '+currentEmployee.car.carParking.parkingName:'' }}
                     {{ currentEmployee.car!=null? ', ***Комментарий: '+currentEmployee.car.carComment:'' }}
                 </div>
                 <div v-if="currentEmployee.employeeComment!=null && currentEmployee.employeeComment.length!=0">
@@ -126,6 +134,23 @@
                     </ul>
                 </div>
                 <div>
+                    <label><strong>Инструменты:</strong></label> <button v-if="tools.length!=0" @click="toggle3" class="badge rounded-pill bg-info border-0">{{toolshow?'скрыть':'показать'}}</button>
+                    <ul v-if="toolshow">
+                        <li v-for="(tool,index) in tools" key="index">
+                        <mark>{{tool.toolType!=null? tool.toolType.toolTypeName+'. ' : ''}}</mark><br>
+                        {{tool.toolName!=null? 'Наименование: '+tool.toolName.toolName: '' }}<br>
+                        {{tool.toolNumber!=null? 'S/n: '+tool.toolNumber: 'S/n:' }}<br>
+                        {{tool.toolComment!=null? 'Комментарий: '+tool.toolComment: '' }}<br v-if="tool.toolComment!=null">
+                        Номер бухучета: {{tool.toolAccounting!=null? ' '+tool.toolAccounting: '' }}<br>
+                        {{tool.storePlace!=null? 'Место хранения: '+tool.storePlace: '' }}<br v-if="tool.storePlace!=null">
+                        Временно передан:
+                        <span :class="{'text-danger fw-bold':tool.inMoving==true}"> {{tool.inMoving==true? ' да': ' нет' }} </span>
+                        <span class="ms-2">{{ tool.dateMoving!=null? 'с '+tool.dateMoving.split('-').reverse().join('.'):''}}</span>
+                        <span class="ms-2">{{ tool.commentMoving!=null? tool.commentMoving :'' }}</span>                        
+                        </li>
+                    </ul>
+                </div>
+                <div>
                     <label><strong>Удостоверения:</strong></label> <button v-if="currentEmployee.sertificates.length!=0" @click="toggle" class="badge rounded-pill bg-info border-0">{{sertshow?'скрыть':'показать'}}</button>
                     <ul v-if="sertshow">
                         <li v-for="(sertificate,index) in sertificates" key="index">
@@ -141,10 +166,11 @@
                     </ul>
                 </div>
                 
-                <div v-if="showAdminBoard || showSuperAdminBoard">
+                <div v-if="showAdminBoard || showSuperAdminBoard" class="mt-3">
                 <RouterLink :to="'/employees/'+currentEmployee.id" class="badge rounded-pill bg-info edit">Редактировать</RouterLink>
-                <button @click="deleteEmployee" class="badge rounded-pill bg-danger ms-3 border-0 delete">Удалить</button>
-                <RouterLink :to="'/sertificates/'+currentEmployee.id" class="badge rounded-pill bg-warning ms-3 sertif">Удостоверения</RouterLink>
+                <RouterLink :to="'/avatars/'+currentEmployee.id" class="badge rounded-pill bg-success ms-3 sertif">Аватарка</RouterLink>
+                <button @click="deleteEmployee" class="badge rounded-pill bg-danger ms-3 border-0 delete">Удалить</button><br>
+                <RouterLink :to="'/sertificates/'+currentEmployee.id" class="badge rounded-pill bg-warning mt-3 sertif">Удостоверения</RouterLink>
                 </div>
 
             </div>
@@ -180,6 +206,9 @@ import EmployeesDataService from '../services/EmployeesDataService';
 import DepartmentsDataService from '../services/DepartmentsDataService';
 import SertificatesDataService from '../services/SertificatesDataService';
 import DeviceDataService from '../services/DeviceDataService';
+import ToolDataService from '../services/ToolDataService';
+import WardrobesDataService from '../services/WardrobesDataService'
+//import AvatarsDataService from '../services/AvatarsDataService';
 import EventBus from "../common/EventBus"
 
 export default{
@@ -195,8 +224,12 @@ export default{
             departments:[],
             sertificates:[],
             devices:[],
+            tools:[],
+            wardrobes:[],
             sertshow:false,
-            deviceshow:false
+            deviceshow:false,
+            toolshow:false,
+            avatarImage:''
         };
     },
     computed:{
@@ -268,7 +301,18 @@ export default{
             .then(response => {
                 this.devices = response.data;
                 console.log(response.data)})
+                .catch(e => {console.log(e);});
+            ToolDataService.getByEmployeeId(this.currentEmployee.id)
+            .then(response => {
+                this.tools = response.data;
+                console.log(response.data)})
+                .catch(e => {console.log(e);});
+            WardrobesDataService.getByEmployeeId(this.currentEmployee.id)
+            .then(response => {
+                this.wardrobes = response.data;
+                console.log(response.data)})
                 .catch(e => {console.log(e);});    
+            this.getAvatarByEmployeeId(this.currentEmployee.id)            
         },
         findByNameMobilePosition(){
             EmployeesDataService.findByNameMobilePosition(this.filter).
@@ -312,17 +356,23 @@ export default{
             })
             .catch(e=>{console.log(e)});
         },
+        getAvatarByEmployeeId(id){
+        this.avatarImage=`http://localhost:8080/api/v1/avatars/${id}`
+        },
         toggle(){
             this.sertshow =! this.sertshow;
         },
         toggle2(){
             this.deviceshow =! this.deviceshow;
+        },
+        toggle3(){
+            this.toolshow =! this.toolshow;
         }
         },       
 
     mounted(){
             this.retrieveEmployees();
-            this.retrieveDepartments();
+            this.retrieveDepartments()
         }
 };
 </script>
@@ -377,6 +427,18 @@ export default{
 }
 .listyle{
     list-style-type: none;
+}
+.avatar{
+    width: 200px;
+    height: 200px;
+    transition: transform .2s;
+}
+.avatar:hover{
+    transform: scale(2.0);
+    z-index:10
+}
+.currentEmpl{
+    z-index:10
 }
 </style>
 

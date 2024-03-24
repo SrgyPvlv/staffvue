@@ -1,4 +1,7 @@
 <template>
+
+<h5 class="mt-3 mb-4 text-success">{{ message }}</h5>
+
     <div v-if="currentEmployee" class="edit-form">
       <h4>Сотрудник</h4>
       <form class="was-validated">
@@ -19,12 +22,12 @@
 
         <div class="form-group mt-3">
           <label for="localPhone" class="fw-bold">Местный телефон</label>
-          <input type="number" class="form-control mt-1" id="localPhone" min="1" v-model="currentEmployee.localPhone" name="localPhone"/>
+          <input type="number" class="form-control mt-1" id="localPhone" v-model="currentEmployee.localPhone" name="localPhone"/>
         </div>
 
         <div class="form-group mt-3">
           <label for="employeeId" class="fw-bold">Табельный номер</label>
-          <input type="number" class="form-control mt-1" id="employeeId" min="1" v-model="currentEmployee.employeeId" name="employeeId"/>
+          <input type="number" class="form-control mt-1" id="employeeId" v-model="currentEmployee.employeeId" name="employeeId"/>
         </div>
 
         <div class="form-group mt-3">
@@ -67,6 +70,7 @@
         <div class="form-group mt-3">
           <label for="position" class="fw-bold">Должность</label>
           <select class="form-select mt-1" id="position" name="position" v-model="currentEmployee.position" required>
+           <option :value="currentEmployee.position">{{currentEmployee.position.position}}</option>
            <option v-for="(position,index) in positions" :key="index" :value="position">{{position.position}}</option>
           </select>
         </div>
@@ -85,7 +89,6 @@
       <button @click="updateEmployee" class="btn btn-outline-success me-3">Обновить</button>
       </div>
 
-      <h5 class="mt-3 text-success">{{ message }}</h5>
     </div>
 
     <div v-else>
@@ -122,6 +125,7 @@ export default {
         var currentEmployeeCar=null;
         if(currentEmployeeResponse.car!=null){
         currentEmployeeCar = {id: currentEmployeeResponse.car.id, carNumber : currentEmployeeResponse.car.carNumber, carComment : currentEmployeeResponse.car.carComment, carModel: currentEmployeeResponse.car.carModel};};
+        var currentEmployeePosition = {id: currentEmployeeResponse.position.id, position : currentEmployeeResponse.position.position};
         this.currentEmployee = {
           id: currentEmployeeResponse.id,
           name: currentEmployeeResponse.name,
@@ -135,7 +139,7 @@ export default {
           factDepartment: currentEmployeeResponse.factDepartment,
           staffDepartment: currentEmployeeResponse.staffDepartment,
           car: currentEmployeeCar,
-          position: currentEmployeeResponse.position
+          position: currentEmployeePosition
         };
         console.log(response.data)
       })
@@ -164,8 +168,11 @@ export default {
   retrievePositions(){
             PositionsDataService.getAll().
             then(response=>{
-                this.positions=response.data;
-                console.log(response.data);
+                var positionz=response.data;
+                this.positions=positionz.filter(e=>e.employee==null).map(p => {
+                  var newposition = {id: p.id, position: p.position};
+                  return newposition;});
+                console.log(this.positions);
             })
             .catch(e=>{console.log(e)});
           },

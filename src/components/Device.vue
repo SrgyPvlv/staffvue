@@ -1,4 +1,7 @@
 <template>
+
+<h5 class="mt-3 mb-4 text-success">{{ message }}</h5>
+
     <div v-if="currentDevice" class="edit-form">
       <h4>Прибор</h4>
       <form class="was-validated">
@@ -10,14 +13,14 @@
         </div>
 
         <div class="form-group mt-3">
-          <label for="devicetype" class="fw-bold">Наименование прибора</label>
-          <select class="form-select mt-1" id="devicetype" name="devicetype" v-model="currentDevice.deviceName" required>
+          <label for="devicename" class="fw-bold">Наименование прибора</label>
+          <select class="form-select mt-1" id="devicename" name="devicename" v-model="currentDevice.deviceName" required>
            <option v-for="(devicename,index) in devicenames" :key="index" :value="devicename">{{devicename.deviceName}}</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label for="devicetype" class="fw-bold">Номер прибора</label>
+          <label for="devicenumber" class="fw-bold">Номер прибора</label>
           <input type="text" class="form-control mt-1" id="devicenumber" name="devicenumber" required v-model="currentDevice.deviceNumber"/>
         </div>
 
@@ -71,7 +74,6 @@
       <button @click="updateDevice" class="btn btn-outline-success me-3">Обновить</button>
       </div>
 
-      <h5 class="mt-3 text-success">{{ message }}</h5>
     </div>
 
     <div v-else>

@@ -58,6 +58,11 @@
           <input type="radio" class="ms-3" id="inverification2" name="inverification2" value="false" v-model="device.inVerification"/>
           <label for="inverification2" class="ms-1 fw-bold">Нет</label>
         </div>
+
+        <div class="form-group mt-3">
+          <label for="datemoving" class="fw-bold">Дата сдачи/возврата прибора</label>
+          <input type="date" class="form-control mt-1" id="datemoving" name="datemoving" v-model="device.dateMoving"/>
+        </div>
   
         <button @click="saveDevice" class="btn btn-success mt-3">Сохранить</button>
       </div>
@@ -90,7 +95,8 @@
           deviceAccounting:"",
           storePlace:"",
           verificationNeed:false,
-          inVerification:false
+          inVerification:false,
+          dateMoving:""
         },
         submitted: false,
         devicetypes:[],
@@ -109,7 +115,8 @@
           deviceAccounting: this.device.deviceAccounting,
           storePlace: this.device.storePlace,
           verificationNeed: this.device.verificationNeed,
-          inVerification: this.device.inVerification
+          inVerification: this.device.inVerification,
+          dateMoving: this.device.dateMoving
         };
   
         DeviceDataService.create(data)
@@ -132,7 +139,19 @@
       
       newDevice() {
         this.submitted = false;
-        this.device = {};
+        this.device = {
+          id: null,
+          deviceTypeSelected:"",
+          deviceNameSelected:"",
+          deviceNumber:"",
+          employeeSelected:"",
+          deviceComment:"",
+          deviceAccounting:"",
+          storePlace:"",
+          verificationNeed:false,
+          inVerification:false,
+          dateMoving:""
+        };
       },
 
       retrieveDeviceTypes(){

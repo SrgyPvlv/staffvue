@@ -22,6 +22,13 @@
         </div>
 
         <div class="form-group mt-3">
+          <label for="parking" class="fw-bold">Место стоянки автомобиля</label>
+          <select class="form-select mt-1" id="parking" name="parking" v-model="car.carParkingSelected" required>
+           <option v-for="(carparking,index) in carparkings" :key="index" :value="carparking">{{carparking.parkingName}}</option>
+          </select>
+        </div>
+
+        <div class="form-group mt-3">
           <label for="comment" class="fw-bold">Комментарий</label>
           <input
             class="form-control mt-1"
@@ -44,6 +51,7 @@
   <script>
   import CarsDataService from '../services/CarsDataService'
   import CarModelsDataService from '../services/CarModelsDataService'
+  import CarParkingsDataService from '../services/CarParkingsDataService'
   import EventBus from "../common/EventBus"
   
   export default {
@@ -54,10 +62,12 @@
           id: null,
           carNumber: "",
           carComment: "",
-          carModelSelected:""
+          carModelSelected:"",
+          carParkingSelected:""
         },
         submitted: false,
-        carmodels:[]
+        carmodels:[],
+        carparkings:[]
       };
     },
     methods: {
@@ -65,7 +75,8 @@
         var data = {
           carNumber: this.car.carNumber,
           carComment: this.car.carComment,
-          carModel: this.car.carModelSelected
+          carModel: this.car.carModelSelected,
+          carParking: this.car.carParkingSelected
         };
   
         CarsDataService.create(data)
@@ -88,7 +99,13 @@
       
       newCar() {
         this.submitted = false;
-        this.car = {};
+        this.car = {
+          id: null,
+          carNumber: "",
+          carComment: "",
+          carModelSelected:"",
+          carParkingSelected:""
+        };
       },
 
       retrieveCarModel(){
@@ -98,10 +115,19 @@
                 console.log(response.data);
             })
             .catch(e=>{console.log(e)});
-          }
+          },
+      retrieveCarParking(){
+        CarParkingsDataService.getAll().
+            then(response=>{
+                this.carparkings=response.data;
+                console.log(response.data);
+            })
+            .catch(e=>{console.log(e)});
+          }    
     },
     mounted(){
       this.retrieveCarModel();
+      this.retrieveCarParking()
     }
   };
   </script>

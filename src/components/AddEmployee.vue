@@ -18,12 +18,12 @@
 
         <div class="form-group mt-3">
           <label for="localPhone" class="fw-bold">Местный телефон</label>
-          <input type="number" class="form-control mt-1" id="localPhone" min="1" v-model="employee.localPhone" name="localPhone"/>
+          <input type="number" class="form-control mt-1" id="localPhone" v-model="employee.localPhone" name="localPhone"/>
         </div>
 
         <div class="form-group mt-3">
           <label for="employeeId" class="fw-bold">Табельный номер</label>
-          <input type="number" class="form-control mt-1" id="employeeId" min="1" v-model="employee.employeeId" name="employeeId"/>
+          <input type="number" class="form-control mt-1" id="employeeId" v-model="employee.employeeId" name="employeeId"/>
         </div>
 
         <div class="form-group mt-3">
@@ -111,7 +111,7 @@
           factDepartmentSelected:"",
           staffDepartmentSelected:"",
           carSelected:null,
-          positionSelected: ""
+          positionSelected: null
         },
         submitted: false,
         positions:[],
@@ -155,13 +155,30 @@
       
       newEmployee() {
         this.submitted = false;
-        this.employee = {};
+        this.employee = {
+          id: null,
+          name: "",
+          mobilePhone:"",
+          birthday:"",
+          localPhone:"",
+          employeeId:"",
+          login:"",
+          email:"",
+          employeeComment:"",
+          factDepartmentSelected:"",
+          staffDepartmentSelected:"",
+          carSelected:null,
+          positionSelected: null
+        };
       },
 
       retrievePositions(){
             PositionsDataService.getAll().
             then(response=>{
-                this.positions=response.data;
+                var positionz=response.data;
+                this.positions=positionz.filter(e=>e.employee==null).map(p => {
+                  var newposition = {id: p.id, position: p.position};
+                  return newposition;});
                 console.log(response.data);
             })
             .catch(e=>{console.log(e)});

@@ -13,6 +13,12 @@
         <RouterLink to="/devices" class="nav-link">Приборы</RouterLink>
       </li>
       <li class="nav-item">
+        <RouterLink to="/tools" class="nav-link">Инструменты</RouterLink>
+      </li>
+      <li class="nav-item">
+        <RouterLink to="/wardrobes" class="nav-link">Шкафчики</RouterLink>
+      </li>
+      <li class="nav-item">
         <RouterLink to="/references" class="nav-link">Ссылки</RouterLink>
       </li>
       <li>
@@ -34,6 +40,12 @@
           <li>
             <Link @click="exelDownloadDevices" class="dropdown-item exelpointer">Приборы</Link>
           </li>
+          <li>
+            <Link @click="exelDownloadTools" class="dropdown-item exelpointer">Инструменты</Link>
+          </li>
+          <li>
+            <Link @click="exelDownloadWardrobes" class="dropdown-item exelpointer">Шкафчики</Link>
+          </li>
         </ul>
       </li>
       
@@ -48,6 +60,12 @@
           </li>
           <li>
             <RouterLink to="/addDevice" class="dropdown-item">Прибор</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/addTool" class="dropdown-item">Инструмент</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/addWardrobe" class="dropdown-item">Шкафчик</RouterLink>
           </li>
           <li>
             <RouterLink to="/addReference" class="dropdown-item">Ссылка</RouterLink>
@@ -79,6 +97,9 @@
             <RouterLink to="/carmodels" class="dropdown-item">Модели авто</RouterLink>
           </li>
           <li>
+            <RouterLink to="/carparkings" class="dropdown-item">Места стоянки авто</RouterLink>
+          </li>
+          <li>
             <RouterLink to="/sertificatenames" class="dropdown-item">Типы удостоверений</RouterLink>
           </li>
           <li>
@@ -89,6 +110,12 @@
           </li>
           <li>
             <RouterLink to="/devicenames" class="dropdown-item">Наименования приборов</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/tooltypes" class="dropdown-item">Типы инструментов</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/toolnames" class="dropdown-item">Наименования инструментов</RouterLink>
           </li>    
         </ul>
       </li>
@@ -161,6 +188,12 @@ export default{
     },
     exelDownloadDevices(){
       window.location.href="http://10.232.3.49:8083/api/v1/exel/download/devices";
+    },
+    exelDownloadTools(){
+      window.location.href="http://10.232.3.49:8083/api/v1/exel/download/tools";
+    },
+    exelDownloadWardrobes(){
+      window.location.href="http://10.232.3.49:8083/api/v1/exel/download/wardrobes";
     }
   },
 

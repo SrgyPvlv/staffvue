@@ -1,4 +1,7 @@
 <template>
+
+<h5 class="mt-3 mb-4 text-success">{{ message }}</h5>
+
       <div v-if="currentCar" class="edit-form">
         <h4>Автомобиль</h4>
         <form class="was-validated">
@@ -15,6 +18,13 @@
         </div>
 
         <div class="form-group mt-3">
+          <label for="parking" class="fw-bold">Место стоянки автомобиля</label>
+          <select class="form-select mt-1" id="parking" name="parking" v-model="currentCar.carParking" required>
+           <option v-for="(carparking,index) in carparkings" :key="index" :value="carparking">{{carparking.parkingName}}</option>
+          </select>
+        </div>
+
+        <div class="form-group mt-3">
           <label for="comment" class="fw-bold">Комментарий</label>
           <input class="form-control mt-1" id="comment" v-model="currentCar.carComment" name="comment"/>
         </div>
@@ -24,7 +34,6 @@
         <button @click="updateCar" class="btn btn-outline-success me-3">Обновить</button>
         </div>
 
-        <h5 class="mt-3 text-success">{{ message }}</h5>
       </div>
   
       <div v-else>
@@ -36,6 +45,7 @@
   <script>
   import CarsDataService from '../services/CarsDataService'
   import CarModelsDataService from '../services/CarModelsDataService'
+  import CarParkingsDataService from '../services/CarParkingsDataService'
   import EventBus from "../common/EventBus"
   
   export default {
@@ -44,7 +54,8 @@
       return {
         currentCar:null,
         message:"",
-        carmodels:[]
+        carmodels:[],
+        carparkings:[]
       };
     },
     methods: {
@@ -63,7 +74,8 @@
       var data = {
         carNumber: this.currentCar.carNumber,
         carComment: this.currentCar.carComment,
-        carModel: this.currentCar.carModel
+        carModel: this.currentCar.carModel,
+        carParking: this.currentCar.carParking
       };
       CarsDataService.update(this.currentCar.id, data)
         .then(response => {
@@ -87,13 +99,21 @@
                 console.log(response.data);
             })
             .catch(e=>{console.log(e)});
-          }
+          },
+    retrieveCarParking(){
+        CarParkingsDataService.getAll().
+            then(response=>{
+                this.carparkings=response.data;
+                console.log(response.data);
+            })
+            .catch(e=>{console.log(e)});
+          }      
     },
     mounted(){
       this.message = '';
       this.getCar(this.$route.params.id);
       this.retrieveCarModel();
-
+      this.retrieveCarParking()
     }
   };
   </script>
