@@ -357,7 +357,7 @@ export default{
             .catch(e=>{console.log(e)});
         },
         getAvatarByEmployeeId(id){
-        this.avatarImage=`http://localhost:8080/api/v1/avatars/${id}`
+        this.avatarImage=`http://10.232.3.49:8083/api/v1/avatars/${id}`
         },
         toggle(){
             this.sertshow =! this.sertshow;
