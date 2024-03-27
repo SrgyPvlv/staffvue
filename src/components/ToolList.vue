@@ -25,7 +25,7 @@
                 v-for="(tool, index) in tools"
                 :key="index"
                 @click="setActiveTool(tool,index)">
-                {{ tool.toolType.toolTypeName }} {{ tool.toolName.toolName }} s/n: {{ tool.toolNumber }}
+                {{ tool.toolType.toolTypeName }} {{ tool.toolName!=null ? tool.toolName.toolName : ''}} s/n: {{ tool.toolNumber }}
                 </li>
             </ul>
             </div>
@@ -38,7 +38,7 @@
                     <label><strong>Тип:</strong></label> {{ currentTool.toolType.toolTypeName }}
                 </div>
                 <div>
-                    <label><strong>Наименование:</strong></label> {{ currentTool.toolName.toolName }}
+                    <label><strong>Наименование:</strong></label> {{ currentTool.toolName!=null ? currentTool.toolName.toolName : '' }}
                 </div>
                 <div>
                     <label><strong>Номер:</strong></label> {{ currentTool.toolNumber }}

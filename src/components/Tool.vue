@@ -15,6 +15,7 @@
         <div class="form-group mt-3">
           <label for="toolname" class="fw-bold">Наименование инструмента</label>
           <select class="form-select mt-1" id="toolname" name="toolname" v-model="currentTool.toolName" required>
+           <option :value="null"> нет наименования </option> 
            <option v-for="(toolname,index) in toolnames" :key="index" :value="toolname">{{toolname.toolName}}</option>
           </select>
         </div>
