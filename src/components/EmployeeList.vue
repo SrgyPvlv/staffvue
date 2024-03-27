@@ -138,7 +138,7 @@
                     <ul v-if="toolshow">
                         <li v-for="(tool,index) in tools" key="index">
                         <mark>{{tool.toolType!=null? tool.toolType.toolTypeName+'. ' : ''}}</mark><br>
-                        {{tool.toolName!=null? 'Наименование: '+tool.toolName.toolName: '' }}<br>
+                        {{tool.toolName!=null? 'Наименование: '+tool.toolName.toolName: '' }}<br v-if="tool.toolName!=null">
                         {{tool.toolNumber!=null? 'S/n: '+tool.toolNumber: 'S/n:' }}<br>
                         {{tool.toolComment!=null? 'Комментарий: '+tool.toolComment: '' }}<br v-if="tool.toolComment!=null">
                         Номер бухучета: {{tool.toolAccounting!=null? ' '+tool.toolAccounting: '' }}<br>
