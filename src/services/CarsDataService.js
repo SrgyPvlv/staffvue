@@ -26,7 +26,7 @@ class CarsDataService{
         return api.delete(`/cars/${id}`);
     }
 
-    findByNumberModel(filter){
+    findByNumberModelEmployee(filter){
         return api.get(`/cars?filter=${filter}`);
     }
 };
