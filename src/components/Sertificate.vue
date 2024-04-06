@@ -212,8 +212,10 @@ export default {
     .then(response => {
         var currentEmployeeResponse = response.data;
         var currentEmployeeCar=null;
+        var currentEmployeePosition=null;
         if(currentEmployeeResponse.car!=null){
-        currentEmployeeCar = {id: currentEmployeeResponse.car.id, carNumber : currentEmployeeResponse.car.carNumber, carComment : currentEmployeeResponse.car.carComment, carModel: currentEmployeeResponse.car.carModel};};
+        currentEmployeeCar = {id: currentEmployeeResponse.car.id, carNumber : currentEmployeeResponse.car.carNumber, carComment : currentEmployeeResponse.car.carComment, carModel: currentEmployeeResponse.car.carModel, carParking: currentEmployeeResponse.car.carParking};};
+        currentEmployeePosition = {id: currentEmployeeResponse.position.id, position: currentEmployeeResponse.position.position};
         this.currentEmployee = {
           id: currentEmployeeResponse.id,
           name: currentEmployeeResponse.name,
@@ -227,7 +229,7 @@ export default {
           factDepartment: currentEmployeeResponse.factDepartment,
           staffDepartment: currentEmployeeResponse.staffDepartment,
           car: currentEmployeeCar,
-          position: currentEmployeeResponse.position
+          position: currentEmployeePosition
         };
         console.log(response.data)
       })

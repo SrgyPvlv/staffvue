@@ -1,11 +1,11 @@
 <template>
     <div class="list row">
         <div class="col-md-6">
-            <form @submit.prevent="findByNumberModel">
+            <form @submit.prevent="findByNumberModelEmployee">
             <div class="input-group mb-3"> 
-                <input type="text" class="form-control" placeholder="Поиск по номеру, модели" v-model="filter" />
+                <input type="text" class="form-control" placeholder="Поиск по номеру, модели, сотруднику" v-model="filter" />
                 <div class="input-group-append ms-3">
-                <button type="button" class="btn btn-outline-secondary" @click="findByNumberModel">Поиск</button>
+                <button type="button" class="btn btn-outline-secondary" @click="findByNumberModelEmployee">Поиск</button>
                 </div>
                 <div class="input-group-append ms-3">
                 <button type="button" class="btn btn-outline-danger" @click="refreshList">Сбросить</button>
@@ -133,8 +133,8 @@ export default{
             this.currentCar = car;
             this.currentIndex = car ? index : -1;
         }, 
-        findByNumberModel(){
-            CarsDataService.findByNumberModel(this.filter).
+        findByNumberModelEmployee(){
+            CarsDataService.findByNumberModelEmployee(this.filter).
             then(response=>{
                 this.cars=response.data;
                 this.currentCar = null;
