@@ -10,9 +10,17 @@
                     <input type="checkbox" class="me-3" :value="department" v-model="checkedDepartments" />
                     {{department.functionGroup!=null? department.functionGroup.functionGroup: department.groupe!=null?department.groupe.groupe: department.division.division}}  
                 </li>
-                <li class="list-group-item" v-for="(position, index) in positions" :key="index">
-                    <input type="checkbox" class="me-3" :value="position.position" v-model="checkedPositions" />
-                    {{position.position}}
+                <li class="list-group-item">
+                    <input type="checkbox" class="me-3" :value="true" v-model="boss" />
+                    начальник отдела
+                </li>
+                <li class="list-group-item">
+                    <input type="checkbox" class="me-3" :value="true" v-model="head" />
+                    руководители групп
+                </li>
+                <li class="list-group-item">
+                    <input type="checkbox" class="me-3" :value="true" v-model="expert" />
+                    эксперты
                 </li>
             </ul>
             </div>
@@ -20,15 +28,21 @@
         </div>
     
         <div class="col-md-4">
-            <div v-if="checkedDepartments.length!=0 || checkedPositions.length!=0">
+            <div v-if="checkedDepartments.length!=0 || boss==true || head==true || expert==true">
                 <h3> Адресаты </h3>
                 <div>
                     <ul>
                       <li  v-for="(checkedDepartment, index) in checkedDepartments" :key="index">
                        {{checkedDepartment.functionGroup!=null? checkedDepartment.functionGroup.functionGroup: checkedDepartment.groupe!=null?checkedDepartment.groupe.groupe: checkedDepartment.division.division}} 
                       </li>
-                      <li  v-for="(checkedPosition, index) in checkedPositions" :key="index">
-                       {{checkedPosition}} 
+                      <li  v-if="boss == true">
+                        начальник отдела 
+                      </li>
+                      <li  v-if="head == true">
+                        руководители групп 
+                      </li>
+                      <li  v-if="expert == true">
+                        эксперты 
                       </li>
                     </ul>   
                 </div>
@@ -58,7 +72,6 @@
 import DepartmentsDataService from '../services/DepartmentsDataService';
 import PositionsDataService from '../services/PositionsDataService';
 import EmployeesDataService from '../services/EmployeesDataService';
-import EventBus from "../common/EventBus"
 
 export default{
     name: "mail-send",
@@ -67,10 +80,24 @@ export default{
             departments:[],
             checkedDepartments:[],
             positions:[],
-            checkedPositions:[],
+            bossPositions:[],
+            headPositions:[],
+            expertPositions:[],
             employees:[],
-            loadMails: false    
+            loadMails: false,
+            boss: false,
+            head: false,
+            expert: false    
         };
+    },
+    
+    computed:{
+        newpositions(){
+            if(this.boss){ this.bossPositions = this.positions.filter(e=>e.position.includes('начальник отдела')).map(e=>e.position); } else {this.bossPositions = [];};
+            if(this.head){ this.headPositions = this.positions.filter(e=>e.position.includes('руководитель группы')).map(e=>e.position); } else {this.headPositions = [];};
+            if(this.expert){ this.expertPositions = this.positions.filter(e=>e.position.includes('эксперт')).map(e=>e.position); } else {this.expertPositions = [];};
+            return [...this.bossPositions, ...this.headPositions, ...this.expertPositions];
+        }
     },
 
     methods:{
@@ -78,7 +105,9 @@ export default{
             this.departments="";
             this.checkedDepartments="";
             this.positions="";
-            this.checkedPositions="";
+            this.bossPositions="",
+            this.headPositions="",
+            this.expertPositions="",
             this.retrieveDepartments();
             this.retrievePositions();
         },
@@ -93,7 +122,7 @@ export default{
         retrievePositions(){
             PositionsDataService.getAll().
             then(response=>{
-                this.positions=response.data.filter(e =>e.position=='руководитель группы' || e.position=='эксперт' || e.position=='начальник отдела');
+                this.positions=response.data;
                 console.log(response.data);
             })
             .catch(e=>{console.log(e)});
@@ -101,7 +130,7 @@ export default{
         selectedEmployees(){
             var newCheckedDepartments=this.checkedDepartments.map(e => e.functionGroup!=null? e.functionGroup.functionGroup: e.groupe!=null? e.groupe.groupe: e.division.division );
 
-            EmployeesDataService.findByFactDepartmentOrPositionIn(newCheckedDepartments,this.checkedPositions).
+            EmployeesDataService.findByFactDepartmentOrPositionIn(newCheckedDepartments,this.newpositions).
             then(response =>{
                 this.employees=response.data;
                 console.log(response.data);
