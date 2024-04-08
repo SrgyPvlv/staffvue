@@ -150,20 +150,30 @@
                         </li>
                     </ul>
                 </div>
+
                 <div>
-                    <label><strong>Удостоверения:</strong></label> <button v-if="currentEmployee.sertificates.length!=0" @click="toggle" class="badge rounded-pill bg-info border-0">{{sertshow?'скрыть':'показать'}}</button>
-                    <ul v-if="sertshow">
-                        <li v-for="(sertificate,index) in sertificates" key="index">
-                        <mark>{{sertificate.sertificateName!=null? sertificate.sertificateName.sertificateName+'. ' : ''}}</mark>
-                        {{sertificate.sertificateNumber!=null? '№: '+sertificate.sertificateNumber: '' }}
-                        {{sertificate.issueDate!=null? 'от '+sertificate.issueDate.split('-').reverse().join('.') : '' }}<br v-if="sertificate.sertificateNumber!=null">
-                        {{sertificate.approvalGruppa!=null? 'Группа допуска: '+sertificate.approvalGruppa.approvalGruppa : '' }}<br v-if="sertificate.approvalGruppa!=null">
-                        {{sertificate.expirationDate!=null? 'Действительно до: ':''}} 
-                        <span :class="{'text-bg-warning':(new Date(sertificate.expirationDate)-new Date())<3888000000,
-                        'text-bg-danger':new Date(sertificate.expirationDate)<new Date(),
-                        'text-bg-success':new Date(sertificate.expirationDate)>new Date()}">{{sertificate.expirationDate!=null? sertificate.expirationDate.split('-').reverse().join('.') : '' }}</span>
-                        </li>
-                    </ul>
+                    <label><strong>Удостоверения:</strong></label> <button v-if="currentEmployee.sertificates.length!=0" @click="showSertificates" class="badge rounded-pill bg-info border-0">показать</button>
+                </div>
+                <div id="myModal3" class="modal">
+                    <div class="modal-content">
+                      <span @click="hideSertificates" class="text-end close">&times;</span>
+                      <span class="text-center h4 text-primary">Удостоверения</span>
+                        <table class="mt-3 mb-3">
+                          <tr>
+                            <th style="width:18%">Название</th><th style="width:12%">Номер</th><th style="width:11%">Дата выдачи</th>
+                            <th style="width:27%">Группа допуска</th><th style="width:11%">Действителен до</th>
+                          </tr>
+                          <tr v-for="(sertificate,index) in sertificates" key="index">
+                            <td style="width:18%;font-weight: bold;">{{sertificate.sertificateName!=null? sertificate.sertificateName.sertificateName : ''}}</td>
+                            <td style="width:12%">{{sertificate.sertificateNumber!=null? sertificate.sertificateNumber: '' }}</td>
+                            <td style="width:11%">{{sertificate.issueDate!=null? sertificate.issueDate.split('-').reverse().join('.') : '' }}</td>
+                            <td style="width:27%">{{sertificate.approvalGruppa!=null? sertificate.approvalGruppa.approvalGruppa : '' }}</td>
+                            <td style="width:11%" :class="{'text-bg-warning':(new Date(sertificate.expirationDate)-new Date())<3888000000,
+                            'text-bg-danger':new Date(sertificate.expirationDate)<new Date(),
+                            'text-bg-success':new Date(sertificate.expirationDate)>new Date()}">{{sertificate.expirationDate!=null? sertificate.expirationDate.split('-').reverse().join('.') : '' }}</td>
+                           </tr> 
+                        </table>
+                    </div>
                 </div>
                 
                 <div v-if="showAdminBoard || showSuperAdminBoard" class="mt-3">
@@ -359,14 +369,19 @@ export default{
         getAvatarByEmployeeId(id){
         this.avatarImage=`http://localhost:8080/api/v1/avatars/${id}`
         },
-        toggle(){
-            this.sertshow =! this.sertshow;
-        },
         toggle2(){
             this.deviceshow =! this.deviceshow;
         },
         toggle3(){
             this.toolshow =! this.toolshow;
+        },
+        showSertificates(){
+            var modal = document.getElementById("myModal3");
+            modal.style.display = "block";
+        },
+        hideSertificates(){
+            var modal = document.getElementById("myModal3");
+            modal.style.display = "none";
         }
         },       
 
@@ -439,6 +454,62 @@ export default{
 }
 .currentEmpl{
     z-index:10
+}
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 2; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 12% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  animation-name: animatetop;
+  animation-duration: 0.6s
+}
+
+/* Add Animation */
+@keyframes animatetop {
+  from {top: -300px; opacity: 0}
+  to {top: 0; opacity: 1}
+}
+
+/* The Close Button */
+.close {
+  color: red;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+th, td {
+  border: 1px solid black;
+}
+th, td {
+  text-align: center;
+}
+th {
+    background-color: #96D4D4;
 }
 </style>
 
