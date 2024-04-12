@@ -10,6 +10,9 @@
                 <div class="input-group-append ms-3">
                 <button type="button" class="btn btn-outline-danger" @click="refreshList">Сбросить</button>
                 </div>
+                <div class="input-group-append ms-3">
+                <button type="button" class="btn btn-outline-success" @click="devicesInVerification">В поверке</button>
+                </div>
             </div>
             </form>
         </div>
@@ -123,6 +126,14 @@ export default{
             DeviceDataService.getAll().
             then(response=>{
                 this.devices=response.data;
+                console.log(response.data);
+            })
+            .catch(e=>{console.log(e)});
+        },
+        devicesInVerification(){
+            DeviceDataService.getAll().
+            then(response=>{
+                this.devices=response.data.filter(d => d.inVerification==true);
                 console.log(response.data);
             })
             .catch(e=>{console.log(e)});
