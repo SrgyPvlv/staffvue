@@ -115,55 +115,90 @@
                 <div v-if="currentEmployee.employeeComment!=null && currentEmployee.employeeComment.length!=0">
                     <label><strong>Комментарий:</strong></label> {{ currentEmployee.employeeComment }}
                 </div>
+                
                 <div>
-                    <label><strong>Приборы:</strong></label> <button v-if="devices.length!=0" @click="toggle2" class="badge rounded-pill bg-info border-0">{{deviceshow?'скрыть':'показать'}}</button>
-                    <ul v-if="deviceshow">
-                        <li v-for="(device,index) in devices" key="index">
-                        <mark>{{device.deviceType!=null? device.deviceType.deviceTypeName+'. ' : ''}}</mark><br>
-                        {{device.deviceName!=null? 'Наименование: '+device.deviceName.deviceName: '' }}<br>
-                        {{device.deviceNumber!=null? 'S/n: '+device.deviceNumber: '' }}<br>
-                        {{device.deviceComment!=null? 'Комментарий: '+device.deviceComment: '' }}<br v-if="device.deviceComment!=null">
-                        Номер бухучета: {{device.deviceAccounting!=null? ' '+device.deviceAccounting: '' }}<br>
-                        {{device.storePlace!=null? 'Место хранения: '+device.storePlace: '' }}<br>
-                        Подлежит поверке:
-                        <span :class="{'text-success fw-bold':device.verificationNeed==true}">{{device.verificationNeed==true? ' да': ' нет' }}</span><br>
-                        Находится в поверке:
-                        <span :class="{'text-danger fw-bold':device.inVerification==true}"> {{device.inVerification==true? ' да': ' нет' }} </span>
-                        <span class="ms-2">{{ device.dateMoving!=null? 'с '+device.dateMoving.split('-').reverse().join('.'):''}}</span>                        
-                        </li>
-                    </ul>
+                    <label><strong>Приборы:</strong></label> <button v-if="devices.length!=0" @click="showDevices" class="badge rounded-pill bg-info border-0">показать</button>
                 </div>
-                <div>
-                    <label><strong>Инструменты:</strong></label> <button v-if="tools.length!=0" @click="toggle3" class="badge rounded-pill bg-info border-0">{{toolshow?'скрыть':'показать'}}</button>
-                    <ul v-if="toolshow">
-                        <li v-for="(tool,index) in tools" key="index">
-                        <mark>{{tool.toolType!=null? tool.toolType.toolTypeName+'. ' : ''}}</mark><br>
-                        {{tool.toolName!=null? 'Наименование: '+tool.toolName.toolName: '' }}<br v-if="tool.toolName!=null">
-                        {{tool.toolNumber!=null? 'S/n: '+tool.toolNumber: 'S/n:' }}<br>
-                        {{tool.toolComment!=null? 'Комментарий: '+tool.toolComment: '' }}<br v-if="tool.toolComment!=null">
-                        Номер бухучета: {{tool.toolAccounting!=null? ' '+tool.toolAccounting: '' }}<br>
-                        {{tool.storePlace!=null? 'Место хранения: '+tool.storePlace: '' }}<br v-if="tool.storePlace!=null">
-                        Временно передан:
-                        <span :class="{'text-danger fw-bold':tool.inMoving==true}"> {{tool.inMoving==true? ' да': ' нет' }} </span>
-                        <span class="ms-2">{{ tool.dateMoving!=null? 'с '+tool.dateMoving.split('-').reverse().join('.'):''}}</span>
-                        <span class="ms-2">{{ tool.commentMoving!=null? tool.commentMoving :'' }}</span>                        
-                        </li>
-                    </ul>
+                <div id="myModal1" class="modal">
+                    <div class="modal-content">
+                      <span @click="hideDevices" class="text-end close">&times;</span>
+                      <span class="text-center h4 text-primary">Приборы</span>
+                        <table class="mt-3 mb-3">
+                          <tr>
+                            <th style="width:16%">Тип</th><th style="width:14%">Наименование</th><th style="width:12%">Номер s/n</th>
+                            <th style="width:14%">Комментарий</th><th style="width:12%">Номер бухучета</th>
+                            <th style="width:13%">Место хранения</th><th style="width:8%">Подлежит поверке</th><th style="width:11%">Находится в поверке</th>
+                          </tr>
+                          <tr v-for="(device,index) in devices" key="index">
+                            <td style="width:16%;font-weight: bold;">{{device.deviceType!=null? device.deviceType.deviceTypeName : ''}}</td>
+                            <td style="width:14%">{{device.deviceName!=null? device.deviceName.deviceName: '' }}</td>
+                            <td style="width:12%">{{device.deviceNumber!=null? device.deviceNumber: '' }}</td>
+                            <td style="width:14%">{{device.deviceComment!=null? device.deviceComment: '' }}</td>
+                            <td style="width:12%">{{device.deviceAccounting!=null? device.deviceAccounting: '' }}</td>
+                            <td style="width:13%">{{device.storePlace!=null? device.storePlace: '' }}</td>
+                            <td style="width:8%" :class="{'text-success fw-bold':device.verificationNeed==true}">{{device.verificationNeed==true? 'да': 'нет' }}</td>
+                            <td style="width:11%">
+                            <p :class="{'text-danger fw-bold':device.inVerification==true}"> {{device.inVerification==true? 'да': 'нет' }} </p>
+                            <p>{{ device.dateMoving!=null? 'с '+device.dateMoving.split('-').reverse().join('.'):''}}</p>
+                            </td>
+                           </tr> 
+                        </table>
+                    </div>
                 </div>
+                
                 <div>
-                    <label><strong>Удостоверения:</strong></label> <button v-if="currentEmployee.sertificates.length!=0" @click="toggle" class="badge rounded-pill bg-info border-0">{{sertshow?'скрыть':'показать'}}</button>
-                    <ul v-if="sertshow">
-                        <li v-for="(sertificate,index) in sertificates" key="index">
-                        <mark>{{sertificate.sertificateName!=null? sertificate.sertificateName.sertificateName+'. ' : ''}}</mark>
-                        {{sertificate.sertificateNumber!=null? '№: '+sertificate.sertificateNumber: '' }}
-                        {{sertificate.issueDate!=null? 'от '+sertificate.issueDate.split('-').reverse().join('.') : '' }}<br v-if="sertificate.sertificateNumber!=null">
-                        {{sertificate.approvalGruppa!=null? 'Группа допуска: '+sertificate.approvalGruppa.approvalGruppa : '' }}<br v-if="sertificate.approvalGruppa!=null">
-                        {{sertificate.expirationDate!=null? 'Действительно до: ':''}} 
-                        <span :class="{'text-bg-warning':(new Date(sertificate.expirationDate)-new Date())<3888000000,
-                        'text-bg-danger':new Date(sertificate.expirationDate)<new Date(),
-                        'text-bg-success':new Date(sertificate.expirationDate)>new Date()}">{{sertificate.expirationDate!=null? sertificate.expirationDate.split('-').reverse().join('.') : '' }}</span>
-                        </li>
-                    </ul>
+                    <label><strong>Инструменты:</strong></label> <button v-if="tools.length!=0" @click="showTools" class="badge rounded-pill bg-info border-0">показать</button>
+                </div>
+                <div id="myModal2" class="modal">
+                    <div class="modal-content">
+                      <span @click="hideTools" class="text-end close">&times;</span>
+                      <span class="text-center h4 text-primary">Инструменты</span>
+                        <table class="mt-3 mb-3">
+                          <tr>
+                            <th style="width:16%">Тип</th><th style="width:16%">Наименование</th><th style="width:11%">Номер s/n</th>
+                            <th style="width:16%">Комментарий</th><th style="width:11%">Номер бухучета</th>
+                            <th style="width:16%">Место хранения</th><th style="width:14%">Временно передан</th>
+                          </tr>
+                          <tr v-for="(tool,index) in tools" key="index">
+                            <td style="width:16%;font-weight: bold;">{{tool.toolType!=null? tool.toolType.toolTypeName : ''}}</td>
+                            <td style="width:16%">{{tool.toolName!=null? tool.toolName.toolName: '' }}</td>
+                            <td style="width:11%">{{tool.toolNumber!=null? tool.toolNumber: '' }}</td>
+                            <td style="width:16%">{{tool.toolComment!=null? tool.toolComment: '' }}</td>
+                            <td style="width:11%">{{tool.toolAccounting!=null? tool.toolAccounting: '' }}</td>
+                            <td style="width:16%">{{tool.storePlace!=null? tool.storePlace: '' }}</td>
+                            <td style="width:14%">
+                            <p :class="{'text-danger fw-bold':tool.inMoving==true}"> {{tool.inMoving==true? 'да': 'нет' }} </p>
+                            <p>{{ tool.dateMoving!=null? 'с '+tool.dateMoving.split('-').reverse().join('.'):''}}</p>
+                            <p>{{ tool.commentMoving!=null? tool.commentMoving :'' }}</p>
+                            </td>
+                           </tr> 
+                        </table>
+                    </div>
+                </div>
+
+                <div>
+                    <label><strong>Удостоверения:</strong></label> <button v-if="currentEmployee.sertificates.length!=0" @click="showSertificates" class="badge rounded-pill bg-info border-0">показать</button>
+                </div>
+                <div id="myModal3" class="modal">
+                    <div class="modal-content">
+                      <span @click="hideSertificates" class="text-end close">&times;</span>
+                      <span class="text-center h4 text-primary">Удостоверения</span>
+                        <table class="mt-3 mb-3">
+                          <tr>
+                            <th style="width:18%">Название</th><th style="width:12%">Номер</th><th style="width:11%">Дата выдачи</th>
+                            <th style="width:27%">Группа допуска</th><th style="width:11%">Действителен до</th>
+                          </tr>
+                          <tr v-for="(sertificate,index) in sertificates" key="index">
+                            <td style="width:18%;font-weight: bold;">{{sertificate.sertificateName!=null? sertificate.sertificateName.sertificateName : ''}}</td>
+                            <td style="width:12%">{{sertificate.sertificateNumber!=null? sertificate.sertificateNumber: '' }}</td>
+                            <td style="width:11%">{{sertificate.issueDate!=null? sertificate.issueDate.split('-').reverse().join('.') : '' }}</td>
+                            <td style="width:27%">{{sertificate.approvalGruppa!=null? sertificate.approvalGruppa.approvalGruppa : '' }}</td>
+                            <td style="width:11%" :class="{'text-bg-warning':(new Date(sertificate.expirationDate)-new Date())<3888000000,
+                            'text-bg-danger':new Date(sertificate.expirationDate)<new Date(),
+                            'text-bg-success':new Date(sertificate.expirationDate)>new Date()}">{{sertificate.expirationDate!=null? sertificate.expirationDate.split('-').reverse().join('.') : '' }}</td>
+                           </tr> 
+                        </table>
+                    </div>
                 </div>
                 
                 <div v-if="showAdminBoard || showSuperAdminBoard" class="mt-3">
@@ -226,9 +261,6 @@ export default{
             devices:[],
             tools:[],
             wardrobes:[],
-            sertshow:false,
-            deviceshow:false,
-            toolshow:false,
             avatarImage:''
         };
     },
@@ -359,14 +391,29 @@ export default{
         getAvatarByEmployeeId(id){
         this.avatarImage=`http://10.232.3.49:8083/api/v1/avatars/${id}`
         },
-        toggle(){
-            this.sertshow =! this.sertshow;
+        showDevices(){
+            var modal = document.getElementById("myModal1");
+            modal.style.display = "block";
         },
-        toggle2(){
-            this.deviceshow =! this.deviceshow;
+        hideDevices(){
+            var modal = document.getElementById("myModal1");
+            modal.style.display = "none";
         },
-        toggle3(){
-            this.toolshow =! this.toolshow;
+        showTools(){
+            var modal = document.getElementById("myModal2");
+            modal.style.display = "block";
+        },
+        hideTools(){
+            var modal = document.getElementById("myModal2");
+            modal.style.display = "none";
+        },
+        showSertificates(){
+            var modal = document.getElementById("myModal3");
+            modal.style.display = "block";
+        },
+        hideSertificates(){
+            var modal = document.getElementById("myModal3");
+            modal.style.display = "none";
         }
         },       
 
@@ -439,6 +486,62 @@ export default{
 }
 .currentEmpl{
     z-index:10
+}
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 2; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 12% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  animation-name: animatetop;
+  animation-duration: 0.6s
+}
+
+/* Add Animation */
+@keyframes animatetop {
+  from {top: -300px; opacity: 0}
+  to {top: 0; opacity: 1}
+}
+
+/* The Close Button */
+.close {
+  color: red;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+th, td {
+  border: 1px solid black;
+}
+th, td {
+  text-align: center;
+}
+th {
+    background-color: #96D4D4;
 }
 </style>
 
